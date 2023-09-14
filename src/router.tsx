@@ -5,7 +5,7 @@ import Homepage from "./pages/Homepage";
 import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
 import Login from "./pages/auth/Login";
-import Logout from "./pages/auth/Logout";
+import Register from "./pages/auth/Register";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       {path:'shop', element:<Shop/>},
       {path:'blog', element:<Blog/>},
       {path:'login', element:<Login/>},
-      {path:'logout', element:<Logout/>},
+      {path:'register', element:<Register/>},
     ],
   },
 ]);
