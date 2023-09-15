@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily:{
+      'inclusiveSans' : ['Inclusive Sans', 'sans-serif'],
+      'poppins' : ['Poppins', 'sans-serif'],
+      'Raleway': ['Raleway', 'sans-serif'],
+      'dancingScript':['Dancing Script', 'cursive']
+    }
   },
   plugins: [],
 }
