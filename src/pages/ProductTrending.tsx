@@ -1,131 +1,139 @@
 import { Rate } from "antd";
 import React from "react";
 import "../App.css";
-import { FaCartPlus } from "@react-icons/all-files/fa/FaCartPlus";
-import { Link } from "react-router-dom";
+
 const ProductTrending = () => {
   return (
     <div className="mt-8">
-      <h2 className="font-bold font-poppins">Collection</h2>
-      <div className="grid grid-cols-2 gap-3 my-3">
-        {/* item */}
-        <div className="border rounded-md shadow-md p-1">
-          <div className="">
-            <img
-              src="./images/book2.jpg"
-              alt=""
-              className="rounded-md shadow-lg"
-            />
+      <h2 className="font-bold font-poppins md:text-xl">Collection</h2>
+      <div className=" md:grid md:grid-cols-3 md:gap-3">
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
           </div>
-          <div className="my-2">
-            <span className="text-lg line-clamp-1">
-              Tuổi trẻ đáng giá bao nhiêu ?
-            </span>
-            <span>
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </span>
-          </div>
-          <div className="space-y-1 flex justify-between items-center">
-            <div className="shadow-lg w-20 h-9 border p-1 rounded-full hover:text-white relative hv-btn-buy transition-all">
-              <Link to={"products/:id/detail"}>
-                <button className="">Buy</button>
-                <span className="rounded-full text-white p-1 absolute top-0 right-0 h-full btn-cart">
-                  $18
-                </span>
-              </Link>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
             </div>
-            <button className="border hover:bg-red-500 hover:text-white text-sm p-2 rounded-full font-poppins shadow-md">
-              <FaCartPlus />
-            </button>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
-        {/* item */}
-        <div className="border rounded-md shadow-md p-1">
-          <div className="">
-            <img
-              src="./images/book2.jpg"
-              alt=""
-              className="rounded-md shadow-lg"
-            />
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
           </div>
-          <div className="my-2">
-            <span className="text-lg line-clamp-1">
-              Tuổi trẻ đáng giá bao nhiêu ?
-            </span>
-            <span>
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </span>
-          </div>
-          <div className="space-y-1 flex justify-between items-center">
-            <div className="shadow-lg w-20 h-9 border p-1 rounded-full hover:text-white relative hv-btn-buy transition-all">
-              <button className="">Buy</button>
-              <span className="rounded-full text-white p-1 absolute top-0 right-0 h-full btn-cart">
-                $18
-              </span>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
             </div>
-            <button className="border hover:bg-red-500 hover:text-white text-sm p-2 rounded-full font-poppins shadow-md">
-              <FaCartPlus />
-            </button>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
-        {/* item */}
-        <div className="border rounded-md shadow-md p-1">
-          <div className="">
-            <img
-              src="./images/book2.jpg"
-              alt=""
-              className="rounded-md shadow-lg"
-            />
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
           </div>
-          <div className="my-2">
-            <span className="text-lg line-clamp-1">
-              Tuổi trẻ đáng giá bao nhiêu ?
-            </span>
-            <span>
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </span>
-          </div>
-          <div className="space-y-1 flex justify-between items-center">
-            <div className="shadow-lg w-20 h-9 border p-1 rounded-full hover:text-white relative hv-btn-buy transition-all">
-              <button className="">Buy</button>
-              <span className="rounded-full text-white p-1 absolute top-0 right-0 h-full btn-cart">
-                $18
-              </span>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
             </div>
-            <button className="border hover:bg-red-500 hover:text-white text-sm p-2 rounded-full font-poppins shadow-md">
-              <FaCartPlus />
-            </button>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
-        {/* item */}
-        <div className="border rounded-md shadow-md p-1">
-          <div className="">
-            <img
-              src="./images/book2.jpg"
-              alt=""
-              className="rounded-md shadow-lg"
-            />
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
           </div>
-          <div className="my-2">
-            <span className="text-lg line-clamp-1">
-              Tuổi trẻ đáng giá bao nhiêu ?
-            </span>
-            <span>
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </span>
-          </div>
-          <div className="space-y-1 flex justify-between items-center">
-            <div className="shadow-lg w-20 h-9 border p-1 rounded-full hover:text-white relative hv-btn-buy transition-all">
-              <button className="">Buy</button>
-              <span className="rounded-full text-white p-1 absolute top-0 right-0 h-full btn-cart">
-                $18
-              </span>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
             </div>
-            <button className="border hover:bg-red-500 hover:text-white text-sm p-2 rounded-full font-poppins shadow-md">
-              <FaCartPlus />
-            </button>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
+          </div>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
+            </div>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* item product */}
+        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+          <div className="shadow-md w-24 mx-auto">
+            <img src="./images/book1.webp" alt="" className="" />
+          </div>
+          <div className="flex flex-col gap-y-3">
+            <Rate allowHalf defaultValue={3} className="text-xs" />
+            <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              Đừng lựa chọn an nhàn khi còn trẻ
+            </label>
+            <div className="">
+              <span className="font-bold text-xl">$ 18.00 </span>
+              <span className="line-through text-gray-400">$ 28.00 </span>
+            </div>
+            <div className="">
+              <button className="border py-1 px-3 rounded-md text-orange-400 hover:bg-orange-400 hover:text-white">
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+       
       </div>
     </div>
   );

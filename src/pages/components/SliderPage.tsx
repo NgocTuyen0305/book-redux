@@ -1,38 +1,49 @@
 import React from "react";
 import { Carousel } from "antd";
-
+import "../../App.css";
+const styleSlide: React.CSSProperties = {
+  backgroundImage: `url('./images/background-slide.jpg')`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover'
+}
 const SliderPage = () => {
   return (
-    <div className="px-2 my-4">
-      <div className="shadow-xl p-1 rounded-md">
-        <Carousel autoplay dots={false}>
-          <div className="relative">
-            <img src="./images/banner-slide1.jpg" alt=""  className="rounded-md"/>
-            <div className="absolute text-white bottom-0 p-2">
-              <span className="font-dancingScript text-xl">Đắc Nhân Tâm</span>
-              <p className="text-xs">
-              Biết khen ngợi và cảm ơn những người xung quanh một cách chân thành chính là chiếc đũa thần tạo nên thân ái và nguồn động viên tinh thần to lớn
-              </p>
+    <div className="px-2 md:max-w-6xl md:mx-auto ">
+      <div className="shadow-xl md:h-72 sm:h-[160px]">
+        <Carousel autoplay dots={false} style={styleSlide}>
+          <div>
+            <div className="md:h-72  bg-no-repeat bg-cover grid grid-cols-2 items-center justify-around p-2">
+              <div className="flex flex-col md:gap-y-6 items-center">
+                <h3 className="font-poppins md:text-xl font-bold li sm:text-xs">ĐỪNG LỰA CHỌN AN NHÀN KHI CÒN TRẺ</h3>
+                <p className="font-dancingScript md:text-2xl font-bold sm:text-xs">"Hành trình vạn dặm khởi đầu từ từng bước chân nhỏ."</p>
+                <span className="font-dancingScript md:text-xl font-bold sm:text-xs">Cảnh Thiên.</span>
+              </div>
+              <div className="">
+                <img
+                  src="./images/book1.webp"
+                  alt=""
+                  className="md:w-36 sm:w-24 object-cover sm:mx-auto shadow-md shadow-gray-700 skew-y-3"
+                />
+              </div>
             </div>
           </div>
-          <div className="relative">
-            <img src="./images/banner-slide2.jpg" alt="" className="rounded-md"/>
-            <div className="absolute text-white bottom-0 p-2">
-              <span className="font-dancingScript text-xl">Nhà giả kim</span>
-              <p className="text-xs">
-              Đừng lãng phí thời gian giải thích, mọi người chỉ thích nghe những gì họ muốn nghe thôi.
-              </p>
+          <div>
+            <div className="md:h-72  bg-no-repeat bg-cover grid grid-cols-2 items-center justify-around p-2">
+              <div className="flex flex-col md:gap-y-6 items-center">
+                <h3 className="font-poppins md:text-xl font-bold li sm:text-xs">ĐỪNG LỰA CHỌN AN NHÀN KHI CÒN TRẺ</h3>
+                <p className="font-dancingScript md:text-2xl font-bold sm:text-xs">"Hành trình vạn dặm khởi đầu từ từng bước chân nhỏ."</p>
+                <span className="font-dancingScript md:text-xl font-bold sm:text-xs">Cảnh Thiên.</span>
+              </div>
+              <div className="">
+                <img
+                  src="./images/book1.webp"
+                  alt=""
+                  className="md:w-36 sm:w-24 object-cover sm:mx-auto shadow-md shadow-gray-700 skew-y-3"
+                />
+              </div>
             </div>
           </div>
-          <div className="relative">
-            <img src="./images/banner-slide3.jpg" alt="" className="rounded-md"/>
-            <div className="absolute text-white bottom-0 p-2">
-              <span className="font-dancingScript text-xl">Hành trình về phương Đông</span>
-              <p className="text-xs">
-              Chúng ta càng ham muốn lại càng sợ hãi và càng sợ hãi lại càng đau khổ.
-              </p>
-            </div>
-          </div>
+         
           
         </Carousel>
       </div>

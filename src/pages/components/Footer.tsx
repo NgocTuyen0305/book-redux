@@ -5,7 +5,7 @@ import { AiFillInstagram } from "@react-icons/all-files/ai/AiFillInstagram";
 const Footer = () => {
   return (
     <div className="p-2 bg-gray-200">
-      <div className="flex justify-between">
+      <div className="flex justify-between md:max-w-6xl md:mx-auto">
         <div className="flex flex-col">
           <span className="text-xs font-bold font-poppins">Book Genuine</span>
           <span className="text-xs">Sách hay uy tín tạo thương hiệu</span>

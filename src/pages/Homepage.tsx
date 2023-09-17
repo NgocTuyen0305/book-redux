@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import Products from "./Products";
 import ProductTrending from "./ProductTrending";
 import SliderPage from "./components/SliderPage";
+import '../App.css'
 const Homepage = () => {
   const settings = {
     dots: false,
@@ -15,94 +16,77 @@ const Homepage = () => {
     rtl: true,
   };
   return (
-    <div className="p-2">
+    <div className="p-2 md:max-w-6xl md:mx-auto md:space-y-12">
       <SliderPage/>
       <div className="">
-        <h2 className="py-2 font-bold font-poppins">New Books</h2>
+        <h2 className="py-2 font-bold font-poppins md:text-xl">New Books</h2>
         <Slider {...settings}>
           {/* **** */}
-          <div className="p-1 border rounded-xl shadow-md">
-            <div className="">
+          <div className="p-2">
+            <div className="space-y-2">
               <div className="">
-                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto"/>
+                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto "/>
               </div>
-              <div className="">
-                <p className="text-sm font-bold line-clamp-1">
-                  Đừng lựa chọn an nhàn khi còn trẻ
-                </p>
-              </div>
-              <div className="">
-                <Rate allowHalf defaultValue={3} className="text-xs" />
-              </div>
-              <div className="">
-                <button className="border px-3 rounded-full mt-2 text-sm bg-red-400 shadow-md text-white">
-                  $18
-                </button>
-              </div>
+             <div className="flex flex-col md:items-center md:justify-start">
+              <span className="font-bold font-inclusiveSans text-sm ">Cảnh thiên</span>
+              <span className="text-xs text-gray-400 line-clamp-1"> Đừng lựa chọn an nhàn khi còn trẻ</span>
+             </div>
             </div>
           </div>
           {/* **** */}
-          <div className="p-1 border rounded-xl shadow-md ">
-            <div className="">
-              <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto"/>
-            </div>
-            <div className="">
-              <p className="text-sm font-bold line-clamp-1">
-                Đừng lựa chọn an nhàn khi còn trẻ
-              </p>
-            </div>
-            <div className="">
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </div>
-            <div className="">
-              <button className="border px-3 rounded-full mt-2 text-sm bg-red-400 shadow-md text-white">
-                $18
-              </button>
+          <div className="p-2">
+            <div className="space-y-2">
+              <div className="">
+                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto "/>
+              </div>
+             <div className="flex flex-col md:items-center md:justify-start">
+              <span className="font-bold font-inclusiveSans text-sm ">Cảnh thiên</span>
+              <span className="text-xs text-gray-400 line-clamp-1"> Đừng lựa chọn an nhàn khi còn trẻ</span>
+             </div>
             </div>
           </div>
           {/* **** */}
-          <div className="p-1 border rounded-xl shadow-md ">
-            <div className="">
-              <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto"/>
-            </div>
-            <div className="">
-              <p className="text-sm font-bold line-clamp-1">
-                Đừng lựa chọn an nhàn khi còn trẻ
-              </p>
-            </div>
-            <div className="">
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </div>
-            <div className="">
-              <button className="border px-3 rounded-full mt-2 text-sm bg-red-400 shadow-md text-white">
-                $18
-              </button>
+          <div className="p-2">
+            <div className="space-y-2">
+              <div className="">
+                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto "/>
+              </div>
+             <div className="flex flex-col md:items-center md:justify-start">
+              <span className="font-bold font-inclusiveSans text-sm ">Cảnh thiên</span>
+              <span className="text-xs text-gray-400 line-clamp-1"> Đừng lựa chọn an nhàn khi còn trẻ</span>
+             </div>
             </div>
           </div>
           {/* **** */}
-          <div className="p-1 border rounded-xl shadow-md ">
-            <div className="">
-              <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto"/>
+          <div className="p-2">
+            <div className="space-y-2">
+              <div className="">
+                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto "/>
+              </div>
+             <div className="flex flex-col md:items-center md:justify-start">
+              <span className="font-bold font-inclusiveSans text-sm ">Cảnh thiên</span>
+              <span className="text-xs text-gray-400 line-clamp-1"> Đừng lựa chọn an nhàn khi còn trẻ</span>
+             </div>
             </div>
-            <div className="">
-              <p className="text-sm font-bold line-clamp-1">
-                Đừng lựa chọn an nhàn khi còn trẻ
-              </p>
-            </div>
-            <div className="">
-              <Rate allowHalf defaultValue={2.5} className="text-xs" />
-            </div>
-            <div className="">
-              <button className="border px-3 rounded-full mt-2 text-sm bg-red-400 shadow-md text-white">
-                $18
-              </button>
+          </div>
+          {/* **** */}
+          <div className="p-2">
+            <div className="space-y-2">
+              <div className="">
+                <img src="./images/book1.webp" alt="" className="w-[100px] mx-auto "/>
+              </div>
+             <div className="flex flex-col md:items-center md:justify-start">
+              <span className="font-bold font-inclusiveSans text-sm ">Cảnh thiên</span>
+              <span className="text-xs text-gray-400 line-clamp-1"> Đừng lựa chọn an nhàn khi còn trẻ</span>
+             </div>
             </div>
           </div>
           
+          
         </Slider>
       </div>
-      <ProductTrending/>
       <Products/>
+      <ProductTrending/>
     </div>
   );
 };

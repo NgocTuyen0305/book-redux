@@ -6,7 +6,7 @@ import Footer from '../pages/components/Footer'
 
 const LayoutClient = () => {
   return (
-    <div>
+    <div className=''>
       <Header/>
       <Outlet/>
       <Footer/>
