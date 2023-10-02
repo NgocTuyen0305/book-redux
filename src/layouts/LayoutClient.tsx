@@ -1,17 +1,16 @@
-
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Header from '../pages/components/Header'
-import Footer from '../pages/components/Footer'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const LayoutClient = () => {
   return (
-    <div className=''>
-      <Header/>
-      <Outlet/>
-      <Footer/>
+    <div className="">
+      <Header />
+      <Outlet />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default LayoutClient
+export default LayoutClient;

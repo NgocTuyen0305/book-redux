@@ -22,7 +22,7 @@ const Header = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
   const items: MenuProps["items"] = [
     {
-      label: <span>Login</span>,
+      label: <Link to={'/signup'}>Signup</Link>,
       key: "0",
     },
     {
@@ -121,6 +121,9 @@ const Header = () => {
                 </Link>
                 <Link to={"blog"}>
                   <span>Categories</span>
+                </Link>
+                <Link to={"/signup"}>
+                  <span>Signup</span>
                 </Link>
               </div>
             </Drawer>

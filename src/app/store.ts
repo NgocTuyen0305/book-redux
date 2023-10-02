@@ -15,15 +15,21 @@ import {
   persistStore,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import productApi, { productReducer } from "../redux/api/productApi";
+import authApi, { authReducer } from "../redux/api/auth";
+import { authSliceReducer } from "../redux/slices/authSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["Authentication","cart"],
+  whitelist: ["Authentication"],
 };
 const rootReducer = combineReducers({
+  [productApi.reducerPath]: productReducer,
+  [authApi.reducerPath]: authReducer,
+  Authentication: authSliceReducer,
 });
+const middleware = [productApi.middleware, authApi.middleware];
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
@@ -33,7 +39,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(),
+    }).concat(...middleware),
 });
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

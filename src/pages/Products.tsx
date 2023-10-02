@@ -1,6 +1,5 @@
 import { Rate } from "antd";
 import React from "react";
-import { FaCartPlus } from "@react-icons/all-files/fa/FaCartPlus";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { BiDollar } from "@react-icons/all-files/bi/BiDollar";
@@ -14,7 +13,7 @@ const Products = () => {
       </h3>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -64,7 +63,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -114,7 +113,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -164,7 +163,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -214,7 +213,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -264,7 +263,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -314,7 +313,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -364,7 +363,7 @@ const Products = () => {
           </div>
         </div>
         {/* item */}
-        <div className="border rounded-md p-1 group shadow-md">
+        <div className="border p-1 group hover:shadow-md">
           <div className="relative">
             <img
               src="./images/book2.jpg"
@@ -413,7 +412,7 @@ const Products = () => {
             </button>
           </div>
         </div>
-
+        
         
       </div>
     </div>

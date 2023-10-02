@@ -1,6 +1,6 @@
 import React from "react";
 import { Carousel } from "antd";
-import "../../App.css";
+import '../App.css'
 const styleSlide: React.CSSProperties = {
   backgroundImage: `url('./images/background-slide.jpg')`,
   backgroundRepeat: 'no-repeat',

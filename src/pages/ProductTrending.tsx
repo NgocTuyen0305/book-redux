@@ -8,7 +8,7 @@ const ProductTrending = () => {
       <h2 className="font-bold font-poppins md:text-xl md:my-6">Collection</h2>
       <div className=" md:grid md:grid-cols-3 md:gap-3">
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>
@@ -29,7 +29,7 @@ const ProductTrending = () => {
           </div>
         </div>
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>
@@ -50,7 +50,7 @@ const ProductTrending = () => {
           </div>
         </div>
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>
@@ -71,7 +71,7 @@ const ProductTrending = () => {
           </div>
         </div>
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>
@@ -92,7 +92,7 @@ const ProductTrending = () => {
           </div>
         </div>
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>
@@ -113,7 +113,7 @@ const ProductTrending = () => {
           </div>
         </div>
         {/* item product */}
-        <div className="grid grid-cols-2 gap-x-3 rounded-lg p-2 shadow-sm items-center border">
+        <div className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border">
           <div className="shadow-md w-24 mx-auto">
             <img src="./images/book1.webp" alt="" className="" />
           </div>

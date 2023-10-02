@@ -3,7 +3,7 @@ import React from "react";
 import Slider from "react-slick";
 import Products from "./Products";
 import ProductTrending from "./ProductTrending";
-import SliderPage from "./components/SliderPage";
+import SliderPage from "../components/SliderPage";
 import "../App.css";
 const Homepage = () => {
   const setting = {
@@ -21,23 +21,41 @@ const Homepage = () => {
         <h2 className=" font-bold font-poppins md:text-xl md:my-6">
           New Books
         </h2>
-        <Slider {...setting} >
+        <Slider {...setting}>
           {/* **** */}
           <div className="">
             <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
               <div className="md:grid grid-cols-2">
                 <div className="">
-                  <img src="./images/book2.jpg" alt="" className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600" />
+                  <img
+                    src="./images/book2.jpg"
+                    alt=""
+                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
+                  />
                 </div>
                 <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">Tuổi trẻ đáng bao nhiêu?</span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">Rosie Nguyễn</span>
-                  <span className="sm:hidden md:block"><Rate/></span>
-                 <div className="sm:hidden md:block"> <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">Views</button></div>
+                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
+                    Tuổi trẻ đáng bao nhiêu?
+                  </span>
+                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
+                    Rosie Nguyễn
+                  </span>
+                  <span className="sm:hidden md:block">
+                    <Rate />
+                  </span>
+                  <div className="sm:hidden md:block">
+                    {" "}
+                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
+                      Views
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque praesentium necessitatibus distinctio veritatis eos alias quam sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta, fugiat officiis saepe odio sint!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+                praesentium necessitatibus distinctio veritatis eos alias quam
+                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
+                fugiat officiis saepe odio sint!
               </div>
             </div>
           </div>
@@ -45,17 +63,35 @@ const Homepage = () => {
             <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
               <div className="md:grid grid-cols-2">
                 <div className="">
-                  <img src="./images/book2.jpg" alt="" className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600" />
+                  <img
+                    src="./images/book2.jpg"
+                    alt=""
+                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
+                  />
                 </div>
                 <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">Tuổi trẻ đáng bao nhiêu?</span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">Rosie Nguyễn</span>
-                  <span className="sm:hidden md:block"><Rate/></span>
-                 <div className="sm:hidden md:block"> <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">Views</button></div>
+                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
+                    Tuổi trẻ đáng bao nhiêu?
+                  </span>
+                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
+                    Rosie Nguyễn
+                  </span>
+                  <span className="sm:hidden md:block">
+                    <Rate />
+                  </span>
+                  <div className="sm:hidden md:block">
+                    {" "}
+                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
+                      Views
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque praesentium necessitatibus distinctio veritatis eos alias quam sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta, fugiat officiis saepe odio sint!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+                praesentium necessitatibus distinctio veritatis eos alias quam
+                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
+                fugiat officiis saepe odio sint!
               </div>
             </div>
           </div>
@@ -63,17 +99,35 @@ const Homepage = () => {
             <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
               <div className="md:grid grid-cols-2">
                 <div className="">
-                  <img src="./images/book2.jpg" alt="" className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600" />
+                  <img
+                    src="./images/book2.jpg"
+                    alt=""
+                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
+                  />
                 </div>
                 <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">Tuổi trẻ đáng bao nhiêu?</span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">Rosie Nguyễn</span>
-                  <span className="sm:hidden md:block"><Rate/></span>
-                 <div className="sm:hidden md:block"> <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">Views</button></div>
+                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
+                    Tuổi trẻ đáng bao nhiêu?
+                  </span>
+                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
+                    Rosie Nguyễn
+                  </span>
+                  <span className="sm:hidden md:block">
+                    <Rate />
+                  </span>
+                  <div className="sm:hidden md:block">
+                    {" "}
+                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
+                      Views
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque praesentium necessitatibus distinctio veritatis eos alias quam sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta, fugiat officiis saepe odio sint!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+                praesentium necessitatibus distinctio veritatis eos alias quam
+                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
+                fugiat officiis saepe odio sint!
               </div>
             </div>
           </div>
@@ -81,23 +135,38 @@ const Homepage = () => {
             <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
               <div className="md:grid grid-cols-2">
                 <div className="">
-                  <img src="./images/book2.jpg" alt="" className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600" />
+                  <img
+                    src="./images/book2.jpg"
+                    alt=""
+                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
+                  />
                 </div>
                 <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">Tuổi trẻ đáng bao nhiêu?</span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">Rosie Nguyễn</span>
-                  <span className="sm:hidden md:block"><Rate/></span>
-                 <div className="sm:hidden md:block"> <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">Views</button></div>
+                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
+                    Tuổi trẻ đáng bao nhiêu?
+                  </span>
+                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
+                    Rosie Nguyễn
+                  </span>
+                  <span className="sm:hidden md:block">
+                    <Rate />
+                  </span>
+                  <div className="sm:hidden md:block">
+                    {" "}
+                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
+                      Views
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque praesentium necessitatibus distinctio veritatis eos alias quam sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta, fugiat officiis saepe odio sint!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+                praesentium necessitatibus distinctio veritatis eos alias quam
+                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
+                fugiat officiis saepe odio sint!
               </div>
             </div>
           </div>
-          
-          
-         
         </Slider>
       </div>
       <Products />
