@@ -1,16 +1,14 @@
 import { pause } from "../../utils/pause";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/products";
+import { getToken } from "../../config/getToken";
 const productApi = createApi({
   reducerPath: "product",
   tagTypes: ["Product"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:5000/api",
     prepareHeaders: (headers) => {
-      const Authentication = localStorage.getItem("persist:root");
-      const authenString = JSON.parse(Authentication);
-      const authData = JSON.parse(authenString.Authentication);
-      const { token } = authData;
+      const token = getToken();
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
         return headers;
@@ -22,15 +20,15 @@ const productApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getProducts: builder.query<IProduct[],void>({
+    getProducts: builder.query<IProduct[], void>({
       query: () => `/products`,
       providesTags: ["Product"],
     }),
-    getProductById: builder.query<IProduct,number|string>({
+    getProductById: builder.query<IProduct, number | string>({
       query: (id) => `/products/${id}`,
       providesTags: ["Product"],
     }),
-    addProduct: builder.mutation<IProduct,IProduct>({
+    addProduct: builder.mutation<IProduct, IProduct>({
       query: (product) => ({
         url: "/products",
         method: "POST",
@@ -38,14 +36,14 @@ const productApi = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
-    removeProduct: builder.mutation<IProduct,number |string>({
+    removeProduct: builder.mutation<IProduct, number | string>({
       query: (id) => ({
         url: `/products/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Product"],
     }),
-    updateProduct: builder.mutation<IProduct,IProduct>({
+    updateProduct: builder.mutation<IProduct, IProduct>({
       query: (product) => ({
         url: `/products/${product._id}`,
         method: "PUT",

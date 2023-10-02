@@ -12,10 +12,13 @@ import {
 import { useAddProductMutation } from "../../../redux/api/productApi";
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import { AnyAction } from "@reduxjs/toolkit";
+import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const CreateProduct = () => {
   const [form] = Form.useForm();
   const [addProduct, { isLoading, error }] = useAddProductMutation();
-
+  const { data: category, isLoading: LoadingCategory } =
+    useGetCategoriesQuery();
+  console.log("category: ", category);
   const onFinish = (values: AnyAction) => {
     addProduct(values)
       .unwrap()
@@ -28,7 +31,7 @@ const CreateProduct = () => {
         return document.querySelector("#form")?.reset();
       });
   };
-  console.log('error create product: ',error);
+  console.log("error create product: ", error);
   if (error)
     return notification.error({
       message: "Thêm sản phẩm thất bại",
@@ -121,15 +124,12 @@ const CreateProduct = () => {
         </Form.Item>
         <Form.Item label="Category" name="categoryId">
           <Select
-            options={[
-              {
-                label: "Category Id",
-                options: [
-                  { label: "Jack", value: "650c6d0212805d1b5348498a" },
-                  { label: "Lucy", value: "650c6d0c12805d1b5348498c" },
-                ],
-              },
-            ]}
+            options={category?.result?.map((item)=>{
+              return {
+                value: item._id,
+                label: item.name
+              }
+            })}
           ></Select>
         </Form.Item>
         <Form.Item>

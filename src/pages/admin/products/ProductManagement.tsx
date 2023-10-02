@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Modal,
-  Popconfirm,
-  Space,
-  Spin,
-  Table,
-  notification,
-} from "antd";
+import { Button, Modal, Popconfirm, Space, Spin, Table, Tag } from "antd";
 import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import { AiFillEdit } from "@react-icons/all-files/ai/AiFillEdit";
 import CreateProduct from "./CreateProduct";
@@ -18,15 +10,20 @@ import {
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import { IProduct } from "../../../interfaces/products";
 import { Link } from "react-router-dom";
+import { warning } from "../../../effect/notification";
+import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { data, isLoading: loadingProduct } = useGetProductsQuery();
   const [removeProduct, { isLoading: loadingRemove, error: errorRemove }] =
     useRemoveProductMutation();
+  const { data: category } = useGetCategoriesQuery();
+  // console.log("category: ", category);
+
   useEffect(() => {
     if (errorRemove) {
-      notification.warning({ message: errorRemove?.data?.message });
+      warning(errorRemove);
     }
   }, [errorRemove]);
   if (loadingProduct)
@@ -114,7 +111,22 @@ const ProductManagement = () => {
       dataIndex: "quantityStock",
     },
     { title: "Description", key: "description", dataIndex: "description" },
-    { title: "CategoryId", key: "categoryId", dataIndex: "categoryId" },
+    {
+      title: "CategoryId",
+      key: "categoryId",
+      render: ({ categoryId }: recod) => {
+        // console.log('category: ',categoryId);
+        const findCategoryId = category?.result?.filter((item) => {
+          return item._id === categoryId;
+        });
+        // console.log('find id:', findCategoryId);
+        return findCategoryId?.map((categoryId) => {
+          return <Tag color="magenta">{categoryId.name}</Tag>;
+        });
+
+        // return
+      },
+    },
     {
       title: "Action",
       key: "action",

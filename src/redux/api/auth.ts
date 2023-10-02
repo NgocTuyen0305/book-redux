@@ -5,12 +5,6 @@ const authApi = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:5000/api",
-    prepareHeaders: (Headers) => {
-      const token = localStorage.getItem("Authentication");
-
-      Headers.set("authorization", `Bearer ${token}`);
-      return Headers;
-    },
     fetchFn: async (...arg) => {
       await pause(1000);
       return await fetch(...arg);

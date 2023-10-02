@@ -15,6 +15,7 @@ import ProductManagement from "./pages/admin/products/ProductManagement";
 import PrivateRouter from "./components/PrivateRouter";
 import UpdateProduct from "./pages/admin/products/UpdateProduct";
 import CategoriesManager from "./pages/admin/categories/CategoriesManager";
+import UpdateCategory from "./pages/admin/categories/UpdateCategory";
 
 
 export const router = createBrowserRouter([
@@ -54,12 +55,16 @@ export const router = createBrowserRouter([
             element: <ProductManagement />,
           },
           {
+            path: "products/:id/edit",
+            element: <UpdateProduct />,
+          },
+          {
             path: "categories",
             element: <CategoriesManager />,
           },
           {
-            path: "products/:id/edit",
-            element: <UpdateProduct />,
+            path: "categories/:id/edit",
+            element: <UpdateCategory />,
           },
         ],
       },
