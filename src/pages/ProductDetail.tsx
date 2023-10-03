@@ -1,15 +1,41 @@
-import { Rate } from "antd";
-import React from "react";
+import { Avatar, Badge, Button, Rate, Spin, Tag } from "antd";
+import React, { useState } from "react";
 import Slider from "react-slick";
-import '../App.css'
+import "../App.css";
+import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import { useGetProductByIdQuery } from "../redux/api/productApi";
+import Item from "antd/es/list/Item";
 const ProductDetail = () => {
-  const baseUrl = '../../images'
+  const [count, setCount] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const { id } = useParams();
+  const { data: productDetail, isLoading, error } = useGetProductByIdQuery(id);
+  console.log("product detail: ", productDetail);
+  const ListImage = productDetail?.data?.images.map((items) => {
+    return items?.response?.uploadedFiles[0].url;
+  });
+  console.log("list image: ", ListImage);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        Loading...
+        <Spin />
+      </div>
+    );
+  }
+
   const settings = {
-    customPaging: function(i) {
+    customPaging: () => {
       return (
-        <a className="w-56">
-          <img src={`${baseUrl}/book2-detail-${i + 1}.jpg`} />
-        </a>
+        <div>
+          {ListImage.map((item,index) => {
+            return (
+              <img src={item} alt="" key={index} onClick={()=> setActiveSlide(index)}/>
+            );
+          })}
+        </div>
       );
     },
     dots: true,
@@ -17,54 +43,89 @@ const ProductDetail = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+  };
+  const increase = () => {
+    setCount(count + 1);
+  };
+
+  const decline = () => {
+    let newCount = count - 1;
+    if (newCount < 0) {
+      newCount = 0;
+    }
+    setCount(newCount);
   };
   return (
-    <div className="p-2">
+    <div className="p-2 md:max-w-6xl md:mx-auto">
       <h2 className="font-bold font-poppins">ProductDetail</h2>
-      <div className="">
-        <div className="py-3 border my-2 shadow-md rounded-md container-img-detail">
-          {/* <img src="../../" alt="" className="mx-auto" /> */}
+      <div className="md:grid md:grid-cols-3 gap-3">
+        <div className="p-2 border shadow-md rounded-md container-img-detail">
           <Slider {...settings}>
-          <div>
-            <img src={baseUrl + "/book2-detail-1.jpg"} className="w-full object-cover"/>
+            {ListImage.map((item, index) => {
+              return (
+                <div className="" key={index}>
+                  <img src={item} alt="" />
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+        <div className="p-2 border shadow-md rounded-md space-y-3">
+          <div className="">
+            <span className="text-sm text-gray-400">
+              Tác giả: {productDetail?.data?.author}
+            </span>
+            <span className="md:text-xl font-bold font-poppins line-clamp-2">
+              {productDetail?.data?.name}
+            </span>
           </div>
-          <div>
-            <img src={baseUrl + "/book2-detail-2.jpg"} className="w-full object-cover"/>
+          <div className="flex sm:flex-col space-y-3">
+            <span>
+              <Rate
+                allowHalf
+                defaultValue={productDetail?.data?.rate}
+                className="text-base"
+              />
+            </span>
+            <span className="text-gray-400">
+              {productDetail?.data?.sold}k lượt bán
+            </span>
           </div>
-          <div>
-            <img src={baseUrl + "/book2-detail-3.jpg"} className="w-full object-cover"/>
+          <div className="py-2 space-x-3">
+            <span className="text-gray-400">Thể loại:</span>
+            <Tag color="red">{productDetail?.data?.categoryId?.name}</Tag>
           </div>
-        </Slider>
+          <div className="">
+            <span className="font-poppins">Mô tả sản phẩm:</span>
+            <p className="text-gray-500 line-clamp-5">
+              {productDetail?.data?.description}
+            </p>
+          </div>
         </div>
-        <div className="">
-          <span className="text-xl font-bold font-poppins line-clamp-2">
-            Tuổi trẻ đáng bao nhiêu? Sách hay những bạn trẻ nên đọc để không lãng phí tuổi trẻ
-          </span>
-        </div>
-        <div className="flex flex-col space-y-3">
-          <span>
-            <Rate allowHalf defaultValue={2.5} className="text-base" />
-          </span>
-          <span className="text-gray-400">3.2k lượt bán</span>
-        </div>
-        <div className="py-2 space-x-3">
-          <span className="text-gray-400">Thể loại:</span>
-          <span className="bg-pink-700 text-white px-2 py-1 rounded-full text-xs">
-            Cuộc sống
-          </span>
-          <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-            Văn học
-          </span>
-        </div>
-        <div className="py-2 flex justify-between border-b-2 shadow-md rounded-md">
-          <span className="text-2xl font-bold">$18</span>
-          <div className="space-x-3">
-            <button className="py-1 px-3 border shadow-md bg-[#E26868] rounded-md text-white">
-              Add To Cart
+        <div className="p-2 border rounded-md shadow-md sm:mt-4 md:mt-0 space-y-6">
+          <div className="space-y-3">
+            <span className="font-poppins text-xl">Số lượng</span>
+            <div className="md:flex items-center space-x-3">
+              <Button icon={<PlusOutlined />} onClick={increase}></Button>
+              <Badge count={count}>
+                <InboxOutlined className="text-xl" />
+              </Badge>
+              <Button icon={<MinusOutlined />} onClick={decline}></Button>
+            </div>
+          </div>
+          <div className="md:flex flex-col space-y-3 space-x-3">
+            <span className="md:text-2xl">Tạm tính</span>
+            <span className="font-poppins text-red-500">
+              {productDetail?.data?.price} đ
+            </span>
+          </div>
+          <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">
+            <button className="border-orange-400 border hover:bg-orange-400 hover:text-white py-2 px-4">
+              MUA NGAY
             </button>
-            <button className="py-1 px-3 border shadow-md bg-[#E26868] rounded-md text-white">
-              Buy Now
+            <button className="border-orange-400 border hover:bg-orange-400 hover:text-white py-2 px-4">
+              THÊM VÀO GIỎ HÀNG
             </button>
           </div>
         </div>

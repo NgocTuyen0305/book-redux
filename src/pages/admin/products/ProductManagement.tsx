@@ -15,11 +15,13 @@ import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { data, isLoading: loadingProduct } = useGetProductsQuery();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(100);
+  const query = { page, limit };
+  const { data, isLoading: loadingProduct } = useGetProductsQuery(query);
   const [removeProduct, { isLoading: loadingRemove, error: errorRemove }] =
     useRemoveProductMutation();
   const { data: category } = useGetCategoriesQuery();
-  // console.log("category: ", category);
 
   useEffect(() => {
     if (errorRemove) {
@@ -41,10 +43,12 @@ const ProductManagement = () => {
       images,
       price,
       rate,
+      sold,
       quantityStock,
       author,
       categoryId,
       description,
+      createdAt,
     }: IProduct) => {
       return {
         key: _id,
@@ -52,13 +56,19 @@ const ProductManagement = () => {
         images,
         price,
         rate,
+        sold,
         quantityStock,
         author,
         description,
         categoryId,
+        createdAt,
       };
     }
   );
+  const sortData = dataSource.sort((a: any, b: any) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -105,12 +115,20 @@ const ProductManagement = () => {
     },
     { title: "Author", key: "author", dataIndex: "author" },
     { title: "Rate", key: "rate", dataIndex: "rate" },
+    { title: "Sold", key: "sold", dataIndex: "sold" },
     {
       title: "QuantityStock",
       key: "quantityStock",
       dataIndex: "quantityStock",
     },
-    { title: "Description", key: "description", dataIndex: "description" },
+    {
+      title: "Description",
+      key: "description",
+      dataIndex: "description",
+      render: (recod) => {
+        return <p className="line-clamp-3">{recod}</p>;
+      },
+    },
     {
       title: "CategoryId",
       key: "categoryId",
@@ -206,8 +224,14 @@ const ProductManagement = () => {
       <Table
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={sortData}
         scroll={{ x: 1300 }}
+        pagination={{
+          defaultCurrent: 1,
+          defaultPageSize: 12,
+          onChange: (page) => setPage(page),
+          // total: data?.pagination?.totalItems,
+        }}
       />
       <div className="">
         <Button className="" onClick={showModal}>

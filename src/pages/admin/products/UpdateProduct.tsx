@@ -17,16 +17,19 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import { useNavigate, useParams } from "react-router-dom";
+import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
+import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-    const [form] = Form.useForm();
+  const [form] = Form.useForm();
   const { data: productById, isLoading } = useGetProductByIdQuery(id);
   const [updateProduct, { isLoading: loadingProduct, error }] =
     useUpdateProductMutation();
-
+  const { data: category, isLoading: LoadingCategory } =
+    useGetCategoriesQuery();
   console.log("error: ", error);
-  
+
   useEffect(() => {
     form.setFieldsValue({
       name: productById?.data?.name,
@@ -35,6 +38,7 @@ const UpdateProduct = () => {
       author: productById?.data?.author,
       description: productById?.data?.description,
       rate: productById?.data?.rate,
+      sold: productById?.data?.sold,
       quantityStock: productById?.data?.quantityStock,
       categoryId: productById?.data?.categoryId,
     });
@@ -48,7 +52,7 @@ const UpdateProduct = () => {
       </div>
     );
   const onFinish = async (values: any) => {
-    const respones = await updateProduct({ ...values,_id:id});
+    const respones = await updateProduct({ ...values, _id: id });
     if (respones) {
       notification.success({
         message: "Cập nhật sản phẩm thành công",
@@ -92,6 +96,18 @@ const UpdateProduct = () => {
           <InputNumber />
         </Form.Item>
         <Form.Item
+          label="Số lượng đã bán"
+          name="sold"
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập số lượng đã bán sản phẩm",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
           label="Tác giả"
           name="author"
           rules={[
@@ -112,7 +128,6 @@ const UpdateProduct = () => {
           }}
         >
           <Upload
-            accept=".jpg,.jpeg,.png,.gif"
             listType="picture"
             onChange={onChange}
             multiple={true}
@@ -148,15 +163,12 @@ const UpdateProduct = () => {
         </Form.Item>
         <Form.Item label="Category" name="categoryId">
           <Select
-            options={[
-              {
-                label: "Category Id",
-                options: [
-                  { label: "Jack", value: "650c6d0212805d1b5348498a" },
-                  { label: "Lucy", value: "650c6d0c12805d1b5348498c" },
-                ],
-              },
-            ]}
+            options={category?.result?.map((item) => {
+              return {
+                value: item._id,
+                label: item.name,
+              };
+            })}
           ></Select>
         </Form.Item>
         <Form.Item>
@@ -164,7 +176,7 @@ const UpdateProduct = () => {
             {isLoading ? (
               <AiOutlineLoading3Quarters className="animate-spin text-blue-500" />
             ) : (
-              "Submit"
+              <AiOutlineUpload />
             )}
           </Button>
         </Form.Item>

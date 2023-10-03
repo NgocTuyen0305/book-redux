@@ -15,9 +15,9 @@ const Homepage = () => {
     slidesToScroll: 1,
   };
   return (
-    <div className="p-2 md:max-w-6xl md:mx-auto md:space-y-12">
+    <div className="">
       <SliderPage />
-      <div className=" p-2">
+      <div className="p-2 md:max-w-6xl md:mx-auto md:space-y-12">
         <h2 className=" font-bold font-poppins md:text-xl md:my-6">
           New Books
         </h2>
@@ -168,9 +168,9 @@ const Homepage = () => {
             </div>
           </div>
         </Slider>
+        <Products />
+        <ProductTrending />
       </div>
-      <Products />
-      <ProductTrending />
     </div>
   );
 };

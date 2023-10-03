@@ -20,8 +20,8 @@ const productApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getProducts: builder.query<IProduct[], void>({
-      query: () => `/products`,
+    getProducts: builder.query<IProduct[], number|string>({
+      query: ({page,limit}) => `/products?_page=${page}&_limit=${limit}`,
       providesTags: ["Product"],
     }),
     getProductById: builder.query<IProduct, number | string>({

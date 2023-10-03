@@ -13,6 +13,7 @@ import { useAddProductMutation } from "../../../redux/api/productApi";
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
+import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
 const CreateProduct = () => {
   const [form] = Form.useForm();
   const [addProduct, { isLoading, error }] = useAddProductMutation();
@@ -67,6 +68,13 @@ const CreateProduct = () => {
           <InputNumber />
         </Form.Item>
         <Form.Item
+          label="Số lượng đã bán"
+          name="sold"
+          rules={[{ required: true, message: "Vui lòng nhập số lượng đã bán sản phẩm" }]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
           label="Tác giả"
           name="author"
           rules={[
@@ -87,7 +95,6 @@ const CreateProduct = () => {
           }}
         >
           <Upload
-            accept=".jpg,.jpeg,.png,.gif"
             listType="picture"
             beforeUpload={beforeUpload}
             onChange={onChange}
@@ -137,7 +144,7 @@ const CreateProduct = () => {
             {isLoading ? (
               <AiOutlineLoading3Quarters className="animate-spin text-blue-500" />
             ) : (
-              "Submit"
+              <AiOutlineUpload/>
             )}
           </Button>
         </Form.Item>

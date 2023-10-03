@@ -34,11 +34,11 @@ const Header = () => {
     <div className="border-b-2 shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
         <Link to={"/"}>
-          <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg">
-            <span className=" text-orange-400 font-extrabold font-Raleway text-2xl">
+          <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg text-[#FF9B50]">
+            <span className="font-Raleway text-2xl">
               Book
             </span>
-            <span className="font-bold text-xl text-orange-400">
+            <span className="text-xl">
               <GiOpenBook />
             </span>
           </div>
@@ -46,13 +46,13 @@ const Header = () => {
         <div className="sm:hidden md:block">
           <div className="flex space-x-12">
             <Link to={"abc"}>
-              <div className="text-orange-400">Categories</div>
+              <div className="">Categories</div>
             </Link>
             <Link to={"abc"}>
-              <div className="text-orange-400">Deals</div>
+              <div className="">Deals</div>
             </Link>
             <Link to={"abc"}>
-              <div className="text-orange-400">Blog</div>
+              <div className="">Blog</div>
             </Link>
           </div>
         </div>
@@ -74,7 +74,7 @@ const Header = () => {
               className="cursor-pointer"
             >
               <a onClick={(e) => e.preventDefault()}>
-                <Space className="text-orange-400">
+                <Space className="">
                   <BiUser className="text-xl" />
                   Account
                   {/* <DownOutlined /> */}
@@ -82,7 +82,7 @@ const Header = () => {
               </a>
             </Dropdown>
           </div>
-          <div className="flex space-x-2 items-center text-orange-400">
+          <div className="flex space-x-2 items-center ">
             <AiOutlineShoppingCart className="text-xl" />
             <button className="">Cart</button>
           </div>
@@ -91,7 +91,7 @@ const Header = () => {
           <div className="">
             <button
               onClick={showDrawer}
-              className="bg-orange-400 p-2 rounded-full text-white shadow-lg"
+              className=" p-2 rounded-full text-white shadow-lg"
             >
               <FaBars className="text-xl" />
             </button>
