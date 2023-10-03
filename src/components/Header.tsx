@@ -2,16 +2,34 @@ import React, { useState } from "react";
 // import { DownOutlined } from '@ant-design/icons';
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
-import { Drawer, Dropdown, Space } from "antd";
+import { Drawer, Dropdown, Modal, Space } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { BiUser } from "@react-icons/all-files/bi/BiUser";
 import type { MenuProps } from "antd";
+import { useAppDispatch, useAppSelector } from "../app/hook";
+import { logout } from "../redux/slices/authSlice";
+import CartShop from "./CartShop";
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.Authentication);
+  const dispatch = useAppDispatch();
+  console.log("user: ", user);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const showDrawer = () => {
     setOpen(true);
   };
@@ -22,22 +40,24 @@ const Header = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
   const items: MenuProps["items"] = [
     {
-      label: <Link to={'/signup'}>Signup</Link>,
+      label: <Link to={"/signin"}>ĐĂNG NHẬP</Link>,
       key: "0",
     },
     {
-      label: <span>Logout</span>,
+      label: user ? (
+        <button onClick={() => dispatch(logout())}>ĐĂNG XUẤT</button>
+      ) : (
+        <Link to={"/signup"}>ĐĂNG KÍ</Link>
+      ),
       key: "1",
     },
   ];
   return (
-    <div className="border-b-2 shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20">
+    <div className="border-b-2 shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-inclusiveSans">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
         <Link to={"/"}>
           <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg text-[#FF9B50]">
-            <span className="font-Raleway text-2xl">
-              Book
-            </span>
+            <span className="font-Raleway text-2xl">Book</span>
             <span className="text-xl">
               <GiOpenBook />
             </span>
@@ -76,15 +96,14 @@ const Header = () => {
               <a onClick={(e) => e.preventDefault()}>
                 <Space className="">
                   <BiUser className="text-xl" />
-                  Account
-                  {/* <DownOutlined /> */}
+                  {user ? user?.name : "Tài Khoản"}
                 </Space>
               </a>
             </Dropdown>
           </div>
           <div className="flex space-x-2 items-center ">
             <AiOutlineShoppingCart className="text-xl" />
-            <button className="">Cart</button>
+            <button className="" onClick={showModal}>Giỏ Hàng</button>
           </div>
         </div>
         <div className="flex space-x-5 md:hidden">
@@ -130,6 +149,9 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <Modal open={isModalOpen} onOk={handleOk} okType="default" onCancel={handleCancel}>
+       <CartShop/>
+      </Modal>
     </div>
   );
 };
