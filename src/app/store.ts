@@ -19,17 +19,19 @@ import productApi, { productReducer } from "../redux/api/productApi";
 import authApi, { authReducer } from "../redux/api/auth";
 import { authSliceReducer } from "../redux/slices/authSlice";
 import categoriesApi, { categoriesReducer } from "../redux/api/categoriesApi";
+import { cartReducer } from "../redux/slices/cartSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["Authentication"],
+  whitelist: ["Authentication","Cart"],
 };
 const rootReducer = combineReducers({
   [productApi.reducerPath]: productReducer,
   [authApi.reducerPath]: authReducer,
   [categoriesApi.reducerPath]: categoriesReducer,
   Authentication: authSliceReducer,
+  Cart: cartReducer
 });
 const middleware = [productApi.middleware, authApi.middleware,categoriesApi.middleware];
 const persistedReducer = persistReducer(persistConfig, rootReducer);

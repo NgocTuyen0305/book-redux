@@ -1,4 +1,4 @@
-import { Pagination, Rate, Spin } from "antd";
+import { Pagination, Rate, Spin, message } from "antd";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
@@ -6,13 +6,15 @@ import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../redux/api/productApi";
 import { IProduct } from "../interfaces/products";
 import { useState } from "react";
+import { useAppDispatch } from "../app/hook";
+import { addItemCart } from "../redux/slices/cartSlice";
 const Products = () => {
-  const [page,setPage] = useState(1);
-  const [limit,setLimit] = useState(12);
-  const query = {page,limit};
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(12);
+  const query = { page, limit };
   const { data, isLoading } = useGetProductsQuery(query);
-  
-  console.log("list products: ", data);
+  const dispatch = useAppDispatch();
+  // console.log("list products: ", data);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
@@ -28,7 +30,7 @@ const Products = () => {
       </h3>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        {data?.products?.map((product:IProduct) => {
+        {data?.products?.map((product: IProduct) => {
           return (
             <div className="border p-1 group hover:shadow-md">
               <div className="relative">
@@ -74,7 +76,13 @@ const Products = () => {
                 </div>
               </div>
               <div className="mt-3">
-                <button className="flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md text-orange-400 border hover:bg-orange-400 hover:text-white">
+                <button
+                  className="flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md text-orange-400 border hover:bg-orange-400 hover:text-white"
+                  onClick={() => {
+                    dispatch(addItemCart({...product,quantity: 1}));
+                    message.success("Đã thêm vào giỏ hàng!")
+                  }}
+                >
                   <FaShoppingBasket />
                   <span>Basket</span>
                 </button>

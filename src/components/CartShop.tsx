@@ -1,48 +1,119 @@
-import { DeleteOutlined } from "@ant-design/icons";
-import { Table } from "antd";
-import React from "react";
+import {
+  DeleteOutlined,
+  InboxOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Popconfirm,
+  Space,
+  Table,
+} from "antd";
+import { useAppDispatch, useAppSelector } from "../app/hook";
+import { IProduct } from "../interfaces/products";
+import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
 
 const CartShop = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
-
+  const { items } = useAppSelector((state) => state.Cart);
+  const dispatch = useAppDispatch();
+  // console.log("item cart: ", items);
+  const dataSource = items.map(({ _id, name, price, images, quantity }) => {
+    return {
+      key: _id,
+      name,
+      price,
+      images,
+      quantity,
+    };
+  });
   const columns = [
     {
       title: "Sản phẩm",
       dataIndex: "name",
+      width: 400,
       key: "name",
+      render: (_: string, recod: IProduct) => {
+        // console.log('recod: ',recod)
+        const image = recod.images.map((item) => {
+          return item.response.uploadedFiles[0].url;
+        });
+        return (
+          <div className="flex items-center gap-x-3">
+            <img src={image[0]} alt="" className="w-36" />
+            <span className="line-clamp-2 font-poppins">{_}</span>
+          </div>
+        );
+      },
     },
     {
       title: "Đơn giá",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "price",
+      key: "price",
+      render: (_: number) => {
+        return <span className="text-red-500 text-xl">{_} đ</span>;
+      },
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
+      render: (_, { quantity, key }: record) => {
+        // console.log("quantity: ", quantity, key);
+        return (
+          <Space>
+            <Button
+              icon={<PlusOutlined />}
+              onClick={() => dispatch(increase(key))}
+            ></Button>
+            <Badge count={quantity}>
+              <Avatar shape="square" icon={<InboxOutlined />} className="" />
+            </Badge>
+            <Button
+              icon={<MinusOutlined />}
+              onClick={() => dispatch(decrease(key))}
+            ></Button>
+          </Space>
+        );
+      },
     },
     {
       title: "Thành tiền",
       dataIndex: "total",
       key: "total",
+      render: (_, recod) => {
+        return (
+          <span className=" text-blue-500 text-xl">
+            {recod.quantity * recod.price} đ
+          </span>
+        );
+      },
     },
     {
-      title: <DeleteOutlined/>,
+      title: <DeleteOutlined />,
       dataIndex: "total",
       key: "total",
+      render: (_, recod) => {
+        // console.log('infor item delete: ',_,recod);
+        // return <Button onClick={() => handleRemove(recod.key)}>click</Button>;
+        return (
+          <Popconfirm
+            title="Xóa sản phẩm"
+            description="Bạn có muốn xóa khỏi giỏ hàng?"
+            onConfirm={() => {
+              dispatch(removeItemCart(recod.key))
+              // dispatch
+            }}
+            okText="Yes"
+            cancelText="No"
+            okType="danger"
+          >
+            <Button danger icon={<DeleteOutlined />}></Button>
+          </Popconfirm>
+        );
+      },
     },
   ];
   return (

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 // import { DownOutlined } from '@ant-design/icons';
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
-import { Drawer, Dropdown, Modal, Space } from "antd";
+import { Badge, Drawer, Dropdown, Modal, Space } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
@@ -16,8 +16,9 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAppSelector((state) => state.Authentication);
+  const { items:itemsCart } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -102,8 +103,12 @@ const Header = () => {
             </Dropdown>
           </div>
           <div className="flex space-x-2 items-center ">
-            <AiOutlineShoppingCart className="text-xl" />
-            <button className="" onClick={showModal}>Giỏ Hàng</button>
+            <Badge count={itemsCart.length} size="small">
+              <AiOutlineShoppingCart className="text-xl" />
+            </Badge>
+            <button className="" onClick={showModal}>
+              Giỏ Hàng
+            </button>
           </div>
         </div>
         <div className="flex space-x-5 md:hidden">
@@ -149,8 +154,14 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <Modal open={isModalOpen} onOk={handleOk} okType="default" onCancel={handleCancel}>
-       <CartShop/>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        okType="default"
+        onCancel={handleCancel}
+        width={1000}
+      >
+        <CartShop />
       </Modal>
     </div>
   );
