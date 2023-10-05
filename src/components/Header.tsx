@@ -41,14 +41,14 @@ const Header = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
   const items: MenuProps["items"] = [
     {
-      label: <Link to={"/signin"}>ĐĂNG NHẬP</Link>,
+      label: user ? 'Tài Khoản' : <Link to={"/account"}>Đăng Nhập</Link>,
       key: "0",
     },
     {
       label: user ? (
-        <button onClick={() => dispatch(logout())}>ĐĂNG XUẤT</button>
+        <button onClick={() => dispatch(logout())}>Đăng Xuất</button>
       ) : (
-        <Link to={"/signup"}>ĐĂNG KÍ</Link>
+        <Link to={"/account"}>Đăng Kí</Link>
       ),
       key: "1",
     },

@@ -16,6 +16,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import UpdateProduct from "./pages/admin/products/UpdateProduct";
 import CategoriesManager from "./pages/admin/categories/CategoriesManager";
 import UpdateCategory from "./pages/admin/categories/UpdateCategory";
+import Account from "./pages/auth/Account";
 
 
 export const router = createBrowserRouter([
@@ -34,8 +35,7 @@ export const router = createBrowserRouter([
       { path: "shop", element: <Shop /> },
       { path: "products/:id/detail", element: <ProductDetail /> },
       { path: "blog", element: <Blog /> },
-      { path: "signin", element: <Login /> },
-      { path: "signup", element: <Register /> },
+      { path: "account", element: <Account /> },
     ],
   },
   {

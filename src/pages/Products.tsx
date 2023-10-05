@@ -59,7 +59,7 @@ const Products = () => {
                 <div className="flex flex-col justify-between items-center">
                   <div className="flex justify-center items-center gap-x-3">
                     <div className="flex items-center justify-center">
-                      <span className="font-poppins">{product.price} đ</span>
+                      <span className="font-poppins">{product.price / 1000 + ".000"} đ</span>
                     </div>
                     <span className="text-gray-400 text-sm">
                       Đã bán: {product.sold}k

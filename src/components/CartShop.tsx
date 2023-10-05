@@ -15,10 +15,13 @@ import {
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { IProduct } from "../interfaces/products";
 import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
+import { useState } from "react";
 
 const CartShop = () => {
   const { items } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
   // console.log("item cart: ", items);
   const dataSource = items.map(({ _id, name, price, images, quantity }) => {
     return {
@@ -116,9 +119,17 @@ const CartShop = () => {
       },
     },
   ];
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />;
+      <Table rowSelection={rowSelection} dataSource={dataSource} columns={columns} />;
     </div>
   );
 };

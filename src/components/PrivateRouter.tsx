@@ -7,9 +7,9 @@ const PrivateRouter = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAuth) {
-      navigate("/signin");
+      navigate("/account");
     }
   }, [isAuth]);
-  return isAuth ? <Outlet /> : <Navigate to={"/signin"} />;
+  return isAuth ? <Outlet /> : <Navigate to={"/account"} />;
 };
 export default PrivateRouter

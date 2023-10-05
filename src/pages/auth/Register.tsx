@@ -1,44 +1,18 @@
-import { UserOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Form,
-  Input,
-  Space,
-  Spin,
-  notification,
-  theme,
-  Typography,
-  message,
-} from "antd";
+import { Button, Form, Input, Space, notification } from "antd";
 import { useSignupMutation } from "../../redux/api/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
 const Register = () => {
-  const { useToken } = theme;
-  const { token } = useToken();
   const navigate = useNavigate();
-  const { Link } = Typography;
   const [signup, { isLoading, error }] = useSignupMutation();
   useEffect(() => {
-    if (isLoading) {
-      return (
-        <Space
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Loading...
-          <Spin />
-        </Space>
-      );
-    } else if (error) {
+    if (error) {
       return message.error("Đăng kí tài khoản thất bại");
     }
-  }, [isLoading, error]);
+  }, [error]);
   const onFinish = async (values) => {
     signup(values)
       .unwrap()
@@ -49,15 +23,7 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="md:w-80 mx-auto border rounded-md shadow-md my-6"
-      style={{ height: "calc(100vh - 59px - 212px)", padding: 10 }}
-    >
-      <Space
-        style={{ width: "100%", display: "flex", justifyContent: "center" }}
-      >
-        <Avatar size={64} icon={<UserOutlined />} />
-      </Space>
+    <div className="">
       <Form
         layout="vertical"
         labelCol={{ span: 20 }}
@@ -69,7 +35,7 @@ const Register = () => {
           name={"name"}
           rules={[{ required: true, message: "Vui lòng nhập tên" }]}
         >
-          <Input />
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} />
         </Form.Item>
         <Form.Item
           label="Email"
@@ -79,7 +45,7 @@ const Register = () => {
             { type: "email", message: "Email không đúng định dạng" },
           ]}
         >
-          <Input />
+          <Input prefix={<MailOutlined />}/>
         </Form.Item>
         <Form.Item
           label="Password"
@@ -89,7 +55,7 @@ const Register = () => {
             { min: 6, message: "Password tối thiểu 6 kí tự" },
           ]}
         >
-          <Input.Password />
+          <Input.Password prefix={<LockOutlined />}/>
         </Form.Item>
         <Form.Item
           label="Confirm password"
@@ -107,22 +73,18 @@ const Register = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password  prefix={<LockOutlined />}/>
         </Form.Item>
         <Form.Item>
           <Space style={{ display: "flex", justifyContent: "space-between" }}>
-            <Button
-              htmlType="submit"
-              style={{
-                background: token.bgColormain,
-                color: token.colorSecondary,
-              }}
-            >
-              Submit
+            <Button htmlType="submit">
+              {" "}
+              {isLoading ? (
+                <AiOutlineLoading3Quarters className="animate-spin" />
+              ) : (
+                "Register"
+              )}{" "}
             </Button>
-            <Link href="/signin" style={{ color: token.bgColormain }}>
-              Login
-            </Link>
           </Space>
         </Form.Item>
       </Form>
