@@ -54,29 +54,16 @@ const Header = () => {
     },
   ];
   return (
-    <div className="border-b-2 shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-inclusiveSans">
+    <div className=" shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-poppins">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
         <Link to={"/"}>
-          <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg text-[#FF9B50]">
+          <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg text-[#B0578D]">
             <span className="font-Raleway text-2xl">Book</span>
             <span className="text-xl">
               <GiOpenBook />
             </span>
           </div>
         </Link>
-        <div className="sm:hidden md:block">
-          <div className="flex space-x-12">
-            <Link to={"abc"}>
-              <div className="">Categories</div>
-            </Link>
-            <Link to={"abc"}>
-              <div className="">Deals</div>
-            </Link>
-            <Link to={"abc"}>
-              <div className="">Blog</div>
-            </Link>
-          </div>
-        </div>
         <div className="sm:hidden md:flex items-center space-x-6">
           <div className="w-56 relative rounded-full shadow-md">
             <input
@@ -111,6 +98,7 @@ const Header = () => {
             </button>
           </div>
         </div>
+        {/* screen mobile */}
         <div className="flex space-x-5 md:hidden">
           <div className="">
             <button
@@ -152,6 +140,15 @@ const Header = () => {
               </div>
             </Drawer>
           </div>
+        </div>
+        {/* end screen mobile */}
+      </div>
+      <div className="bg-[#B0578D] p-2 text-white font-poppins sm:text-sm">
+        <div className="space-x-6 md:max-w-6xl mx-auto text-right">
+        <Link to={"..."}>Thể Loại</Link>
+        <Link to={"..."}>Đơn Hàng</Link>
+        <Link to={"..."}>Tác Giả</Link>
+        <Link to={"..."}>Bài Viết</Link>
         </div>
       </div>
       <Modal

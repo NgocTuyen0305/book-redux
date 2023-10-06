@@ -19,7 +19,7 @@ const CartShop = () => {
   const itemSelectlCart = items.filter((item) =>
     selectedRowKeys.includes(item._id)
   );
-  console.log("item select cart: ", totalPrice);
+  // console.log("item select cart: ", totalPrice);
 
   useEffect(() => {
     if (itemSelectlCart) {

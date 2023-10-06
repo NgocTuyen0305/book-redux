@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 const LayoutClient = () => {
   return (
-    <div className="">
+    <div className="bg-[#f8f8fa]">
       <Header />
       <Outlet />
       <Footer />

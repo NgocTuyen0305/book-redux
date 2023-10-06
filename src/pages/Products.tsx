@@ -32,7 +32,7 @@ const Products = () => {
         {/* item */}
         {data?.products?.map((product: IProduct) => {
           return (
-            <div className="border p-1 group hover:shadow-md" key={product._id}>
+            <div className="border p-1 group hover:shadow-md bg-white" key={product._id}>
               <div className="relative">
                 <img
                   src={product?.images[0].response.uploadedFiles[0].url}
@@ -41,11 +41,11 @@ const Products = () => {
                 />
                 <div className="hidden group-hover:block transition-all">
                   <div className="absolute top-0 left-0 z-10 w-full h-full backdrop-blur-sm flex justify-center items-center gap-x-6">
-                    <button className="bg-white text-xl p-1 hover:bg-orange-400 hover:text-white rounded-sm">
+                    <button className="bg-white text-xl p-1 hover:bg-[#B0578D] hover:text-white rounded-sm">
                       <AiOutlineHeart />
                     </button>
                     <Link to={`products/${product._id}/detail`}>
-                      <button className="bg-white text-xl p-1 hover:bg-orange-400 hover:text-white rounded-sm">
+                      <button className="bg-white text-xl p-1 hover:bg-[#B0578D] hover:text-white rounded-sm">
                         <AiOutlineEye />
                       </button>
                     </Link>
@@ -53,7 +53,7 @@ const Products = () => {
                 </div>
               </div>
               <div className="my-2 space-y-2">
-                <span className="text-base line-clamp-1 font-poppins px-2 group-hover:text-orange-400 text-center">
+                <span className="text-base line-clamp-1 font-poppins px-2 group-hover:text-[#B0578D] text-center">
                   {product.name}
                 </span>
                 <div className="flex flex-col justify-between items-center">
@@ -77,7 +77,7 @@ const Products = () => {
               </div>
               <div className="mt-3">
                 <button
-                  className="flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md text-orange-400 border hover:bg-orange-400 hover:text-white"
+                  className="flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md text-[#B0578D] border hover:bg-[#B0578D] hover:text-white"
                   onClick={() => {
                     dispatch(addItemCart({...product,quantity: 1}));
                     message.success("Đã thêm vào giỏ hàng!")
