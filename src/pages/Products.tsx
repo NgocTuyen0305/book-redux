@@ -32,7 +32,7 @@ const Products = () => {
         {/* item */}
         {data?.products?.map((product: IProduct) => {
           return (
-            <div className="border p-1 group hover:shadow-md">
+            <div className="border p-1 group hover:shadow-md" key={product._id}>
               <div className="relative">
                 <img
                   src={product?.images[0].response.uploadedFiles[0].url}

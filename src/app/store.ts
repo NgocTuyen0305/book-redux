@@ -20,6 +20,7 @@ import authApi, { authReducer } from "../redux/api/auth";
 import { authSliceReducer } from "../redux/slices/authSlice";
 import categoriesApi, { categoriesReducer } from "../redux/api/categoriesApi";
 import { cartReducer } from "../redux/slices/cartSlice";
+import { orderReducer } from "../redux/slices/orderSlice";
 
 const persistConfig = {
   key: "root",
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authReducer,
   [categoriesApi.reducerPath]: categoriesReducer,
   Authentication: authSliceReducer,
-  Cart: cartReducer
+  Cart: cartReducer,
+  Order: orderReducer
 });
 const middleware = [productApi.middleware, authApi.middleware,categoriesApi.middleware];
 const persistedReducer = persistReducer(persistConfig, rootReducer);

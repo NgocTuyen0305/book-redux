@@ -4,25 +4,37 @@ import {
   MinusOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Badge,
-  Button,
-  Popconfirm,
-  Space,
-  Table,
-} from "antd";
+import { Avatar, Badge, Button, Popconfirm, Space, Table } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
-import { IProduct } from "../interfaces/products";
 import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { IProduct } from "../interfaces/products";
+import { addItemsCart } from "../redux/slices/orderSlice";
 
 const CartShop = () => {
   const { items } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const itemSelectlCart = items.filter((item) =>
+    selectedRowKeys.includes(item._id)
+  );
+  console.log("item select cart: ", totalPrice);
 
-  // console.log("item cart: ", items);
+  useEffect(() => {
+    if (itemSelectlCart) {
+      const totalPriceCart = itemSelectlCart.reduce(
+        (accumulator, currentValue) => {
+          return accumulator + (currentValue.price * currentValue.quantity);
+        },
+        0
+      );
+      setTotalPrice(totalPriceCart);
+    }
+  }, [itemSelectlCart]);
+  if (selectedRowKeys) {
+    dispatch(addItemsCart(itemSelectlCart));
+  }
   const dataSource = items.map(({ _id, name, price, images, quantity }) => {
     return {
       key: _id,
@@ -45,7 +57,7 @@ const CartShop = () => {
         });
         return (
           <div className="flex items-center gap-x-3">
-            <img src={image[0]} alt="" className="w-36" />
+            <img src={image[0]} alt="" className="w-24" />
             <span className="line-clamp-2 font-poppins">{_}</span>
           </div>
         );
@@ -56,7 +68,9 @@ const CartShop = () => {
       dataIndex: "price",
       key: "price",
       render: (_: number) => {
-        return <span className="text-red-500 text-xl">{_} đ</span>;
+        return (
+          <span className="text-red-500 text-base">{_ / 1000 + ".000"} đ</span>
+        );
       },
     },
     {
@@ -88,8 +102,8 @@ const CartShop = () => {
       key: "total",
       render: (_, recod) => {
         return (
-          <span className=" text-blue-500 text-xl">
-            {recod.quantity * recod.price} đ
+          <span className=" text-blue-500 text-base">
+            {(recod.quantity * recod.price) / 1000 + ".000"} đ
           </span>
         );
       },
@@ -106,7 +120,7 @@ const CartShop = () => {
             title="Xóa sản phẩm"
             description="Bạn có muốn xóa khỏi giỏ hàng?"
             onConfirm={() => {
-              dispatch(removeItemCart(recod.key))
+              dispatch(removeItemCart(recod.key));
               // dispatch
             }}
             okText="Yes"
@@ -120,7 +134,7 @@ const CartShop = () => {
     },
   ];
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    // console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection = {
@@ -129,7 +143,26 @@ const CartShop = () => {
   };
   return (
     <div>
-      <Table rowSelection={rowSelection} dataSource={dataSource} columns={columns} />;
+      <Table
+        rowSelection={rowSelection}
+        dataSource={dataSource}
+        columns={columns}
+      />
+      <Space className="flex flex-col gap-y-3 text-lg">
+        <Space>
+          <span>Thành tiền</span>
+          <span>{totalPrice != 0 ? totalPrice / 1000 + ".000" : "0"} đ</span>
+        </Space>
+        <Space>
+          <span className="font-bold">Tổng số tiền(gồm VAT)</span>
+          <span className="text-red-700 font-bold">
+            {totalPrice != 0 ? totalPrice / 1000 + ".000" : "0"} đ
+          </span>
+        </Space>
+        <Space>
+          <Button disabled={itemSelectlCart.length == 0}>Thanh toán</Button>
+        </Space>
+      </Space>
     </div>
   );
 };
