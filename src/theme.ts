@@ -1,7 +1,7 @@
 export const theme = {
   token:{
-    bgColormain: '#D988B9',
-    colorPrimary: '#D988B9',
+    bgColormain: '#b0578d',
+    colorPrimary: '#b0578d',
     colorSecondary: '#EEEDED'
   }
 }

@@ -1,8 +1,8 @@
-import{ useState } from "react";
+import { useState } from "react";
 // import { DownOutlined } from '@ant-design/icons';
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
-import { Badge, Drawer, Dropdown, Modal, Space } from "antd";
+import { Badge, Drawer, Dropdown, Modal, Select, Space } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
@@ -12,11 +12,12 @@ import type { MenuProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
 import CartShop from "./CartShop";
+import { DownOutlined } from "@ant-design/icons";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAppSelector((state) => state.Authentication);
-  const { items:itemsCart } = useAppSelector((state) => state.Cart);
+  const { items: itemsCart } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
   // console.log("user: ", user);
 
@@ -41,7 +42,7 @@ const Header = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
   const items: MenuProps["items"] = [
     {
-      label: user ? 'Tài Khoản' : <Link to={"/account"}>Đăng Nhập</Link>,
+      label: user ? "Tài Khoản" : <Link to={"/account"}>Đăng Nhập</Link>,
       key: "0",
     },
     {
@@ -103,7 +104,7 @@ const Header = () => {
           <div className="">
             <button
               onClick={showDrawer}
-              className=" p-2 rounded-full text-white shadow-lg"
+              className=" p-2 rounded-full shadow-lg"
             >
               <FaBars className="text-xl" />
             </button>
@@ -143,12 +144,13 @@ const Header = () => {
         </div>
         {/* end screen mobile */}
       </div>
+      
       <div className="bg-[#B0578D] p-2 text-white font-poppins sm:text-sm">
         <div className="space-x-6 md:max-w-6xl mx-auto text-right">
-        <Link to={"..."}>Thể Loại</Link>
-        <Link to={"..."}>Đơn Hàng</Link>
-        <Link to={"..."}>Tác Giả</Link>
-        <Link to={"..."}>Bài Viết</Link>
+          <Link to={"..."}>Thể Loại</Link>
+          <Link to={"..."}>Đơn Hàng</Link>
+          <Link to={"..."}>Tác Giả</Link>
+          <Link to={"..."}>Bài Viết</Link>
         </div>
       </div>
       <Modal

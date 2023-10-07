@@ -8,7 +8,7 @@ const styleSlide: React.CSSProperties = {
 }
 const SliderPage = () => {
   return (
-    <div className="md:mt-8">
+    <div className="">
       <div className="shadow-xl md:h-72 sm:h-[160px]">
         <Carousel autoplay dots={false} style={styleSlide}>
           <div>

@@ -1,46 +1,47 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import {
-  Layout,
-  Menu,
-  Button,
-  theme,
-  Badge,
-  Dropdown,
-  Avatar,
-  Space,
-} from "antd";
-import { AiOutlineMenuUnfold } from "@react-icons/all-files/ai/AiOutlineMenuUnfold";
-import { AiOutlineMenuFold } from "@react-icons/all-files/ai/AiOutlineMenuFold";
+import { Layout, Menu, Button, theme, Space, Badge, Avatar } from "antd";
 import { AiFillDashboard } from "@react-icons/all-files/ai/AiFillDashboard";
-import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import { BiUser } from "@react-icons/all-files/bi/BiUser";
 import { AiOutlineInbox } from "@react-icons/all-files/ai/AiOutlineInbox";
 import { FcAddressBook } from "@react-icons/all-files/fc/FcAddressBook";
-import { BsFillBellFill } from "@react-icons/all-files/bs/BsFillBellFill";
 import { FaProductHunt } from "@react-icons/all-files/fa/FaProductHunt";
 
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  BellOutlined,
+  LogoutOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
+import BreadcrumbAdmin from "../components/BreadcrumbAdmin";
+import Search, { SearchProps } from "antd/es/input/Search";
 // import '../App.css'
 const LayoutAdmin = () => {
-  const { Header, Sider, Content } = Layout;
+  const { Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const { useToken } = theme;
   const { token } = useToken();
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { bgColormain } = token;
   const dispatch = useAppDispatch();
-  const items = [
-    {
-      label: "Đăng nhập",
-      key: "0",
-    },
-    {
-      label: "Đăng xuất",
-      key: "1",
-    },
-  ];
+  const { user } = useAppSelector((state) => state.Authentication);
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    console.log(info?.source, value);
+  };
+
+  // const items = [
+  //   {
+  //     label: "Đăng nhập",
+  //     key: "0",
+  //   },
+  //   {
+  //     label: "Đăng xuất",
+  //     key: "1",
+  //   },
+  // ];
 
   return (
     <Layout>
@@ -89,62 +90,44 @@ const LayoutAdmin = () => {
         />
       </Sider>
       <Layout>
-        <Header
+        <header
           style={{
-            color: token.colorSecondary,
-            padding: 0,
-            background: token.bgColormain,
+            backgroundColor: bgColormain,
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
+            padding: 10,
           }}
         >
-          <Button
-            type="text"
-            className="flex-none"
-            icon={collapsed ? <AiOutlineMenuFold /> : <AiOutlineMenuUnfold />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
-          <div className="w-2/3 flex gap-x-6 mr-4 items-center justify-between">
-            <div className="h-2/4 w-64 relative">
-              <input
-                type="text"
-                className="h-full w-full absolute top-0 border rounded-full shadow-md outline-none px-1 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                placeholder="search..."
-              />
-              <button className="text-2xl absolute top-2/4 text-gray-400 right-0 -translate-x-2/4 -translate-y-2/4">
-                <AiOutlineSearch />
-              </button>
-            </div>
-            <div className="flex gap-x-6 items-center">
-              <Space className="">
-                <Badge count={5} size="small">
-                  <BsFillBellFill className="text-xl" />
-                </Badge>
-              </Space>
-              <Space className="flex gap-x-3 items-center">
-                <Dropdown menu={{ items }} trigger={["click"]}>
-                  <Space className="">
-                    <Avatar
-                      size={34}
-                      icon={<UserOutlined />}
-                      className="text-center"
-                    />
-                  </Space>
-                </Dropdown>
-                <Space className="">
-                  <div className="font-poppins">
-                    {user ? user.name : "HO TEN"}
-                  </div>
-                </Space>
-              </Space>
-            </div>
+          <div className="">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+            />
           </div>
-        </Header>
+          <div className="">
+            <Search
+              placeholder="search..."
+              onSearch={onSearch}
+              enterButton
+              style={{ width: 400 }}
+            />
+          </div>
+          <div className="flex gap-x-6 items-center">
+            <Badge count={5} size="small">
+              <MailOutlined className="text-xl text-white" />
+            </Badge>
+            <Badge count={5} size="small">
+              <BellOutlined className="text-xl text-white" />
+            </Badge>
+            <Space>
+              <Avatar size="small" icon={<UserOutlined />} />
+              <span className="text-white">{user ? user.name : "HO TEN"}</span>
+            </Space>
+          </div>
+        </header>
+        <BreadcrumbAdmin />
         <Content
           style={{
             padding: 10,
