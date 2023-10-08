@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { DownOutlined } from '@ant-design/icons';
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
-import { Badge, Drawer, Dropdown, Modal, Select, Space } from "antd";
+import { Badge, Drawer, Dropdown, Modal, Space, theme } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
@@ -12,12 +12,18 @@ import type { MenuProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
 import CartShop from "./CartShop";
-import { DownOutlined } from "@ant-design/icons";
 const Header = () => {
+ 
+  // console.log('color main: ',bgColormain);
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAppSelector((state) => state.Authentication);
   const { items: itemsCart } = useAppSelector((state) => state.Cart);
+
+  const { useToken } = theme;
+  const { token } = useToken();
+  const { bgColormain } = token;
+
   const dispatch = useAppDispatch();
   // console.log("user: ", user);
 
@@ -58,7 +64,7 @@ const Header = () => {
     <div className=" shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-poppins">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
         <Link to={"/"}>
-          <div className="flex items-center space-x-2 border p-1 rounded-lg shadow-lg text-[#B0578D]">
+          <div style={{color: bgColormain}} className={`flex items-center space-x-2 border p-1 rounded-lg shadow-lg`}>
             <span className="font-Raleway text-2xl">Book</span>
             <span className="text-xl">
               <GiOpenBook />
@@ -145,7 +151,7 @@ const Header = () => {
         {/* end screen mobile */}
       </div>
       
-      <div className="bg-[#B0578D] p-2 text-white font-poppins sm:text-sm">
+      <div style={{backgroundColor: bgColormain}} className={`p-2 text-white font-poppins sm:text-sm`}>
         <div className="space-x-6 md:max-w-6xl mx-auto text-right">
           <Link to={"..."}>Thể Loại</Link>
           <Link to={"..."}>Đơn Hàng</Link>

@@ -15,10 +15,7 @@ import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(100);
-  const query = { page, limit };
-  const { data, isLoading: loadingProduct } = useGetProductsQuery(query);
+  const { data, isLoading: loadingProduct } = useGetProductsQuery();
   const [removeProduct, { isLoading: loadingRemove, error: errorRemove }] =
     useRemoveProductMutation();
   const { data: category } = useGetCategoriesQuery();
@@ -65,9 +62,7 @@ const ProductManagement = () => {
       };
     }
   );
-  const sortData = dataSource.sort((a: any, b: any) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -224,14 +219,14 @@ const ProductManagement = () => {
       <Table
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={sortData}
+        dataSource={dataSource}
         scroll={{ x: 1300 }}
-        pagination={{
-          defaultCurrent: 1,
-          defaultPageSize: 12,
-          onChange: (page) => setPage(page),
-          // total: data?.pagination?.totalItems,
-        }}
+        // pagination={{
+        //   defaultCurrent: 1,
+        //   defaultPageSize: 12,
+        //   onChange: (page) => setPage(page),
+        //   // total: data?.pagination?.totalItems,
+        // }}
       />
       <div className="">
         <Button className="" onClick={showModal}>

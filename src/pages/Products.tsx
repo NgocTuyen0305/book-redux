@@ -2,18 +2,26 @@ import { Pagination, Rate, Spin, message } from "antd";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
-import { Link } from "react-router-dom";
-import { useGetProductsQuery } from "../redux/api/productApi";
+import { Link, useNavigate } from "react-router-dom";
+import { useGetProductsPaginateQuery } from "../redux/api/productApi";
 import { IProduct } from "../interfaces/products";
-import { useState } from "react";
 import { useAppDispatch } from "../app/hook";
 import { addItemCart } from "../redux/slices/cartSlice";
+import { useState } from "react";
+import QueryUrl from "../utils/QueryUrl";
 const Products = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
-  const query = { page, limit };
-  const { data, isLoading } = useGetProductsQuery(query);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(12);
+  const { data, isLoading } = useGetProductsPaginateQuery({
+    page: currentPage,
+    limit: limitPage,
+  });
+  QueryUrl({currentPage,limitPage});
+
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+
   // console.log("list products: ", data);
   if (isLoading) {
     return (
@@ -32,7 +40,10 @@ const Products = () => {
         {/* item */}
         {data?.products?.map((product: IProduct) => {
           return (
-            <div className="border p-1 group hover:shadow-md bg-white" key={product._id}>
+            <div
+              className="border p-1 group hover:shadow-md bg-white"
+              key={product._id}
+            >
               <div className="relative">
                 <img
                   src={product?.images[0].response.uploadedFiles[0].url}
@@ -41,11 +52,15 @@ const Products = () => {
                 />
                 <div className="hidden group-hover:block transition-all">
                   <div className="absolute top-0 left-0 z-10 w-full h-full backdrop-blur-sm flex justify-center items-center gap-x-6">
-                    <button className="bg-white text-xl p-1 hover:bg-[#B0578D] hover:text-white rounded-sm">
+                    <button
+                      className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                    >
                       <AiOutlineHeart />
                     </button>
                     <Link to={`products/${product._id}/detail`}>
-                      <button className="bg-white text-xl p-1 hover:bg-[#B0578D] hover:text-white rounded-sm">
+                      <button
+                        className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                      >
                         <AiOutlineEye />
                       </button>
                     </Link>
@@ -53,13 +68,17 @@ const Products = () => {
                 </div>
               </div>
               <div className="my-2 space-y-2">
-                <span className="text-base line-clamp-1 font-poppins px-2 group-hover:text-[#B0578D] text-center">
+                <span
+                  className={`text-base line-clamp-1 font-poppins px-2 group-hover:text-[#3AA6B9] text-center`}
+                >
                   {product.name}
                 </span>
                 <div className="flex flex-col justify-between items-center">
                   <div className="flex justify-center items-center gap-x-3">
                     <div className="flex items-center justify-center">
-                      <span className="font-poppins">{product.price / 1000 + ".000"} đ</span>
+                      <span className="font-poppins">
+                        {product.price / 1000 + ".000"} đ
+                      </span>
                     </div>
                     <span className="text-gray-400 text-sm">
                       Đã bán: {product.sold}k
@@ -77,10 +96,10 @@ const Products = () => {
               </div>
               <div className="mt-3">
                 <button
-                  className="flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md text-[#B0578D] border hover:bg-[#B0578D] hover:text-white"
+                  className={`flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md border hover:bg-[#3AA6B9] hover:text-white text-[#3AA6B9]`}
                   onClick={() => {
-                    dispatch(addItemCart({...product,quantity: 1}));
-                    message.success("Đã thêm vào giỏ hàng!")
+                    dispatch(addItemCart({ ...product, quantity: 1 }));
+                    message.success("Đã thêm vào giỏ hàng!");
                   }}
                 >
                   <FaShoppingBasket />
@@ -94,7 +113,11 @@ const Products = () => {
       <Pagination
         defaultCurrent={1}
         defaultPageSize={12}
-        onChange={(page) => setPage(page)}
+        onChange={(page, limit) => {
+          navigate(`?page=${page}&limit=${limit}`);
+          setCurrentPage(page);
+          setLimitPage(limit);
+        }}
         total={data?.pagination?.totalItems}
         className="text-center my-6"
       />

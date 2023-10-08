@@ -21,6 +21,10 @@ const productApi = createApi({
   }),
   endpoints: (builder) => ({
     getProducts: builder.query<IProduct[], number|string>({
+      query: () => `/products`,
+      providesTags: ["Product"],
+    }),
+    getProductsPaginate: builder.query<IProduct[], number|string>({
       query: ({page,limit}) => `/products?_page=${page}&_limit=${limit}`,
       providesTags: ["Product"],
     }),
@@ -56,6 +60,7 @@ const productApi = createApi({
 export const {
   useAddProductMutation,
   useGetProductByIdQuery,
+  useGetProductsPaginateQuery,
   useGetProductsQuery,
   useRemoveProductMutation,
   useUpdateProductMutation,

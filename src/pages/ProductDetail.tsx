@@ -1,21 +1,24 @@
-import { Avatar, Badge, Button, Rate, Spin, Tag } from "antd";
+import { Badge, Button, Rate, Spin, Tag, theme } from "antd";
 import React, { useState } from "react";
 import Slider from "react-slick";
 import "../App.css";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/api/productApi";
-import Item from "antd/es/list/Item";
+import SimilarProduct from "../components/SimilarProduct";
 const ProductDetail = () => {
+  const { useToken } = theme;
+  const { token } = useToken();
+  const { bgColormain } = token;
   const [count, setCount] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const { id } = useParams();
-  const { data: productDetail, isLoading, error } = useGetProductByIdQuery(id);
-  console.log("product detail: ", productDetail);
+  const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
+  // console.log("product detail: ", productDetail);
   const ListImage = productDetail?.data?.images.map((items) => {
     return items?.response?.uploadedFiles[0].url;
   });
-  console.log("list image: ", ListImage);
+  // console.log("list image: ", ListImage);
 
   if (isLoading) {
     return (
@@ -30,9 +33,14 @@ const ProductDetail = () => {
     customPaging: () => {
       return (
         <div>
-          {ListImage.map((item,index) => {
+          {ListImage.map((item, index) => {
             return (
-              <img src={item} alt="" key={index} onClick={()=> setActiveSlide(index)}/>
+              <img
+                src={item}
+                alt=""
+                key={index}
+                onClick={() => setActiveSlide(index)}
+              />
             );
           })}
         </div>
@@ -57,10 +65,10 @@ const ProductDetail = () => {
     setCount(newCount);
   };
   return (
-    <div className="p-2 md:max-w-6xl md:mx-auto">
-      <h2 className="font-bold font-poppins">ProductDetail</h2>
-      <div className="md:grid md:grid-cols-3 gap-3">
-        <div className="p-2 border shadow-md rounded-md container-img-detail">
+    <div className="p-2 md:max-w-6xl md:mx-auto ">
+      {" "}
+      <div className="md:grid md:grid-cols-3 gap-3 bg-white">
+        <div className="p-2 container-img-detail">
           <Slider {...settings}>
             {ListImage.map((item, index) => {
               return (
@@ -71,7 +79,7 @@ const ProductDetail = () => {
             })}
           </Slider>
         </div>
-        <div className="p-2 border shadow-md rounded-md space-y-3">
+        <div className="p-2 space-y-3">
           <div className="">
             <span className="text-sm text-gray-400">
               Tác giả: {productDetail?.data?.author}
@@ -103,7 +111,7 @@ const ProductDetail = () => {
             </p>
           </div>
         </div>
-        <div className="p-2 border rounded-md shadow-md sm:mt-4 md:mt-0 space-y-6">
+        <div className="p-2 sm:mt-4 md:mt-0 space-y-6">
           <div className="space-y-3">
             <span className="font-poppins text-xl">Số lượng</span>
             <div className="md:flex items-center space-x-3">
@@ -121,15 +129,16 @@ const ProductDetail = () => {
             </span>
           </div>
           <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">
-            <button className="border-orange-400 border hover:bg-orange-400 hover:text-white py-2 px-4">
+            <button className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}>
               MUA NGAY
             </button>
-            <button className="border-orange-400 border hover:bg-orange-400 hover:text-white py-2 px-4">
+            <button className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}>
               THÊM VÀO GIỎ HÀNG
             </button>
           </div>
         </div>
       </div>
+      <SimilarProduct productsCate={productDetail?.data?.categoryId?.products}/>
     </div>
   );
 };
