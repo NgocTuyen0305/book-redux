@@ -1,31 +1,47 @@
 import { pause } from "../../utils/pause";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/products";
-import { getToken } from "../../config/getToken";
+import queryString from "query-string";
 const productApi = createApi({
   reducerPath: "product",
   tagTypes: ["Product"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:5000/api",
-    prepareHeaders: (headers) => {
-      const token = getToken();
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-        return headers;
-      }
-    },
     fetchFn: async (...arg) => {
       await pause(1000);
       return await fetch(...arg);
     },
   }),
   endpoints: (builder) => ({
-    getProducts: builder.query<IProduct[], number|string>({
-      query: () => `/products`,
-      providesTags: ["Product"],
-    }),
-    getProductsPaginate: builder.query<IProduct[], number|string>({
-      query: ({page,limit}) => `/products?_page=${page}&_limit=${limit}`,
+    getProducts: builder.query<
+      IProduct[],
+      {
+        _page?: number | string;
+        _limit?: number | string;
+        _sort?: string;
+        _order?: string;
+        _search?: string;
+      }
+    >({
+      query: (args) => {
+        const { _page, _limit, _sort, _order, _search } = args;
+        const queryParams = {
+          _page,
+          _limit,
+          _sort,
+          _order,
+          _search,
+        };
+        //Tìm key:value nào không có giá trị thì tự động xóa
+        Object.keys(queryParams).forEach((key) => {
+          if (queryParams[key] === undefined || queryParams[key] === null) {
+            delete queryParams[key];
+          }
+        });
+        //Chuyển object thành chuỗi
+        const queryUrl = queryString.stringify(queryParams);
+        return `/products?${queryUrl ? `${queryUrl}` : ""}`;
+      },
       providesTags: ["Product"],
     }),
     getProductById: builder.query<IProduct, number | string>({
@@ -60,7 +76,6 @@ const productApi = createApi({
 export const {
   useAddProductMutation,
   useGetProductByIdQuery,
-  useGetProductsPaginateQuery,
   useGetProductsQuery,
   useRemoveProductMutation,
   useUpdateProductMutation,

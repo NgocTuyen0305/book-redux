@@ -3,26 +3,30 @@ import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetProductsPaginateQuery } from "../redux/api/productApi";
+import { useGetProductsQuery } from "../redux/api/productApi";
 import { IProduct } from "../interfaces/products";
-import { useAppDispatch } from "../app/hook";
+import { useAppDispatch, useAppSelector } from "../app/hook";
 import { addItemCart } from "../redux/slices/cartSlice";
-import { useState } from "react";
-import QueryUrl from "../utils/QueryUrl";
+import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
+import { queryParams } from "../utils/queryParams";
+import { useEffect } from "react";
 const Products = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [limitPage, setLimitPage] = useState(12);
-  const { data, isLoading } = useGetProductsPaginateQuery({
-    page: currentPage,
-    limit: limitPage,
-  });
-  QueryUrl({currentPage,limitPage});
-
-  const navigate = useNavigate();
+  const { _page, _limit, _sort, _order, _search } = useAppSelector(
+    (state) => state.Pagination
+  );
   const dispatch = useAppDispatch();
+  const { data, isLoading } = useGetProductsQuery({
+    _page,
+    _limit,
+  });
+  const params = { _page, _limit, _sort, _order, _search };
+  const navigate = useNavigate();
+  const queries = queryParams(params);
+  useEffect(() => {
+    navigate(`?${queries}`);
+  }, [queries,navigate]);
+  // console.log("queries: ", queries);
 
-
-  // console.log("list products: ", data);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
@@ -114,9 +118,9 @@ const Products = () => {
         defaultCurrent={1}
         defaultPageSize={12}
         onChange={(page, limit) => {
-          navigate(`?page=${page}&limit=${limit}`);
-          setCurrentPage(page);
-          setLimitPage(limit);
+          console.log("page: ", page, limit);
+          dispatch(setCurrentPage(page));
+          dispatch(setLimitPage(limit));
         }}
         total={data?.pagination?.totalItems}
         className="text-center my-6"

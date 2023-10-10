@@ -1,15 +1,25 @@
+import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
+import { Pagination, Rate, Spin, message } from "antd";
+import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hook";
+import { IProduct } from "../interfaces/products";
+import { addItemCart } from "../redux/slices/cartSlice";
+import { useState } from "react";
+import QueryUrl from "../utils/QueryUrl";
 
-const SimilarProduct = ({productsCate}:any[]) => {
-  // const {data,isLoading} = useGetProductsQuery();
-  console.log('List product silimar',productsCate);
-  // console.log('product data: ',data);
+const SimilarProduct = ({ productSilimar }) => {
   
-  // const productSilimar = 
-  return (
-    <div>
-      Silimar Product
-    </div>
-  )
-}
+  console.log("props: ", productSilimar.listProductSimilar);
+  // console.log("data product", productSilimar);
+  // console.log("pagination :", pagination);
 
-export default SimilarProduct
+  const dispatch = useAppDispatch();
+
+  return (
+   
+  );
+};
+
+export default SimilarProduct;

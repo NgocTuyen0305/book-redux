@@ -1,20 +1,40 @@
-import { Badge, Button, Rate, Spin, Tag, theme } from "antd";
+import {
+  Badge,
+  Button,
+  Pagination,
+  Rate,
+  Spin,
+  Tag,
+  message,
+  theme,
+} from "antd";
 import React, { useState } from "react";
 import Slider from "react-slick";
 import "../App.css";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/api/productApi";
-import SimilarProduct from "../components/SimilarProduct";
+import { addItemCart } from "../redux/slices/cartSlice";
+import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
+import { useAppDispatch } from "../app/hook";
 const ProductDetail = () => {
   const { useToken } = theme;
   const { token } = useToken();
   const { bgColormain } = token;
   const [count, setCount] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limitPage, setlimitPage] = useState(8);
+
   const { id } = useParams();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
-  // console.log("product detail: ", productDetail);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+ 
+  // console.log("list currents product: ", currentProducts);
+
   const ListImage = productDetail?.data?.images.map((items) => {
     return items?.response?.uploadedFiles[0].url;
   });
@@ -129,16 +149,109 @@ const ProductDetail = () => {
             </span>
           </div>
           <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">
-            <button className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}>
+            <button
+              className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}
+            >
               MUA NGAY
             </button>
-            <button className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}>
+            <button
+              className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}
+            >
               THÊM VÀO GIỎ HÀNG
             </button>
           </div>
         </div>
       </div>
-      <SimilarProduct productsCate={productDetail?.data?.categoryId?.products}/>
+      <div>
+        <div className="text-xl font-inclusiveSans mt-12">
+          Sản phẩm tương tự
+        </div>
+        <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
+          {/* item */}
+          {currentProducts?.map((product: IProduct) => {
+            return (
+              <div
+                className="border p-1 group hover:shadow-md bg-white"
+                key={product._id}
+              >
+                <div className="relative">
+                  <img
+                    src={product?.images[0].response.uploadedFiles[0].url}
+                    alt=""
+                    className="rounded-md shadow-md shadow-gray-400 mx-auto md:w-44"
+                  />
+                  <div className="hidden group-hover:block transition-all">
+                    <div className="absolute top-0 left-0 z-10 w-full h-full backdrop-blur-sm flex justify-center items-center gap-x-6">
+                      <button
+                        className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                      >
+                        <AiOutlineHeart />
+                      </button>
+                      <Link to={`/products/${product._id}/detail`}>
+                        <button
+                          className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                        >
+                          <AiOutlineEye />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="my-2 space-y-2">
+                  <span
+                    className={`text-base line-clamp-1 font-poppins px-2 group-hover:text-[#3AA6B9] text-center`}
+                  >
+                    {product.name}
+                  </span>
+                  <div className="flex flex-col justify-between items-center">
+                    <div className="flex justify-center items-center gap-x-3">
+                      <div className="flex items-center justify-center">
+                        <span className="font-poppins">
+                          {product.price / 1000 + ".000"} đ
+                        </span>
+                      </div>
+                      <span className="text-gray-400 text-sm">
+                        Đã bán: {product.sold}k
+                      </span>
+                    </div>
+
+                    <span>
+                      <Rate
+                        allowHalf
+                        defaultValue={product.rate}
+                        className="text-xs md:text-sm"
+                      />
+                    </span>
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <button
+                    className={`flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md border hover:bg-[#3AA6B9] hover:text-white text-[#3AA6B9]`}
+                    onClick={() => {
+                      dispatch(addItemCart({ ...product, quantity: 1 }));
+                      message.success("Đã thêm vào giỏ hàng!");
+                    }}
+                  >
+                    <FaShoppingBasket />
+                    <span>Basket</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <Pagination
+          defaultCurrent={1}
+          defaultPageSize={4}
+          onChange={(page, limit) => {
+            navigate(`?page=${page}&limit=${limit}`);
+            setCurrentPage(page);
+            setlimitPage(limit);
+          }}
+          total={currentProducts.length}
+          className="text-center my-6"
+        />
+      </div>
     </div>
   );
 };
