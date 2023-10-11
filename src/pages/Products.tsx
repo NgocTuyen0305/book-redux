@@ -11,7 +11,7 @@ import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
 import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
 const Products = () => {
-  const { _page, _limit, _sort, _order, _search,_category } = useAppSelector(
+  const { _page, _limit, _sort, _order, _search, _category } = useAppSelector(
     (state) => state.Pagination
   );
   const dispatch = useAppDispatch();
@@ -19,18 +19,16 @@ const Products = () => {
     _page,
     _limit,
     _search,
-    _category
+    _category,
   });
-  const params = { _page, _limit, _sort, _order, _search,_category };
+  
+  const params = { _page, _limit, _sort, _order, _search, _category };
   const navigate = useNavigate();
   const queries = queryParams(params);
-  console.log('queries: ',queries);
-  
+  // console.log("queries: ", queries);
   useEffect(() => {
     navigate(`?${queries}`);
   }, [queries, navigate]);
-
-  console.log("list product: ", data);
 
   if (isLoading) {
     return (
@@ -40,6 +38,7 @@ const Products = () => {
       </div>
     );
   }
+
   return (
     <div className="my-6 p-2 rounded-lg">
       <h3 className="py-3 font-bold font-poppins md:text-xl">
@@ -123,7 +122,7 @@ const Products = () => {
         defaultCurrent={1}
         defaultPageSize={12}
         onChange={(page, limit) => {
-          console.log("page: ", page, limit);
+          // console.log("page: ", page, limit);
           dispatch(setCurrentPage(page));
           dispatch(setLimitPage(limit));
         }}

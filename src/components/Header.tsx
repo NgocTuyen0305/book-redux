@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
-import { Badge, Drawer, Dropdown, Modal, Space, theme } from "antd";
+import { Badge, Button, Drawer, Dropdown, Modal, Space, theme } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { BiUser } from "@react-icons/all-files/bi/BiUser";
-import type { MenuProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
 import CartShop from "./CartShop";
@@ -63,7 +62,7 @@ const Header = () => {
   return (
     <div className=" shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-poppins">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
-        <Link to={"/"}>
+        <a href="/">
           <div
             style={{ color: bgColormain }}
             className={`flex items-center space-x-2`}
@@ -73,7 +72,7 @@ const Header = () => {
               <GiOpenBook />
             </span>
           </div>
-        </Link>
+        </a>
         <div className=" text-gray-400 sm:hidden md:flex gap-x-4">
           <DropdownCate />
           <Link to={"..."} className={`hover:text-[#3AA6B9]`}>
@@ -121,35 +120,19 @@ const Header = () => {
               <FaBars className="text-xl" />
             </button>
             <Drawer
-              title="Basic Drawer"
+              title={user?user.name:''}
               placement="right"
               onClose={onClose}
               open={open}
               width={200}
             >
-              <div className="text-gray-400 mb-6">
-                <Search
-                  placeholder="search..."
-                  onSearch={onSearch}
-                  style={{ width: "auto" }}
-                />
-              </div>
-              <div className="flex flex-col items-center space-y-8 font-bold text-base">
-                <Link to={"/"}>
-                  <span>Home</span>
-                </Link>
-                <Link to={"blog"}>
-                  <span>About</span>
-                </Link>
-                <Link to={"blog"}>
-                  <span>Blog</span>
-                </Link>
-                <Link to={"blog"}>
-                  <span>Categories</span>
-                </Link>
-                <Link to={"/signup"}>
-                  <span>Signup</span>
-                </Link>
+              <div className=" text-gray-400 flex flex-col gap-y-3">
+                <Button type="link">
+                  <DropdownCate />
+                </Button>
+                <Button type="link">Đơn Hàng</Button>
+                <Button type="link">Bài Viết</Button>
+                <Button type="link">Tài Khoản</Button>
               </div>
             </Drawer>
           </div>
@@ -157,17 +140,6 @@ const Header = () => {
         {/* end screen mobile */}
       </div>
 
-      <div
-        style={{ backgroundColor: bgColormain }}
-        className={`p-2 text-white font-poppins sm:text-sm md:hidden`}
-      >
-        <div className="space-x-6 md:max-w-6xl mx-auto text-right">
-          <Link to={"..."}>Thể Loại</Link>
-          <Link to={"..."}>Đơn Hàng</Link>
-          <Link to={"..."}>Tác Giả</Link>
-          <Link to={"..."}>Bài Viết</Link>
-        </div>
-      </div>
       <Modal
         open={isModalOpen}
         onOk={handleOk}

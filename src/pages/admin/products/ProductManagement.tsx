@@ -15,7 +15,7 @@ import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { data, isLoading: loadingProduct } = useGetProductsQuery();
+  const { data, isLoading: loadingProduct } = useGetProductsQuery({_limit: 100,_order:"desc"});
   const [removeProduct, { isLoading: loadingRemove, error: errorRemove }] =
     useRemoveProductMutation();
   const { data: category } = useGetCategoriesQuery();
@@ -134,7 +134,7 @@ const ProductManagement = () => {
         });
         // console.log('find id:', findCategoryId);
         return findCategoryId?.map((categoryId) => {
-          return <Tag color="magenta">{categoryId.name}</Tag>;
+          return <Tag color="magenta" key={categoryId._id}>{categoryId.name}</Tag>;
         });
 
         // return
@@ -221,12 +221,6 @@ const ProductManagement = () => {
         columns={columns}
         dataSource={dataSource}
         scroll={{ x: 1300 }}
-        // pagination={{
-        //   defaultCurrent: 1,
-        //   defaultPageSize: 12,
-        //   onChange: (page) => setPage(page),
-        //   // total: data?.pagination?.totalItems,
-        // }}
       />
       <div className="">
         <Button className="" onClick={showModal}>

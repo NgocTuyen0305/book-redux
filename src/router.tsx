@@ -1,12 +1,7 @@
-import {
-  createBrowserRouter,
-
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
 import ProductDetail from "./pages/ProductDetail";
 import LayoutClient from "./layouts/LayoutClient";
 import LayoutAdmin from "./layouts/LayoutAdmin";
@@ -17,7 +12,7 @@ import UpdateProduct from "./pages/admin/products/UpdateProduct";
 import CategoriesManager from "./pages/admin/categories/CategoriesManager";
 import UpdateCategory from "./pages/admin/categories/UpdateCategory";
 import Account from "./pages/auth/Account";
-
+import NotFoundPage from "./pages/NotFoundPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +35,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <PrivateRouter/>,
+    element: <PrivateRouter />,
     children: [
       {
         element: <LayoutAdmin />,
@@ -69,5 +64,9 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);

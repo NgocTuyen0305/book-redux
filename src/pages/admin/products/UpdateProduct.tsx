@@ -19,6 +19,7 @@ import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLo
 import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
+import { warning } from "../../../effect/notification";
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ const UpdateProduct = () => {
   const { data: category, isLoading: LoadingCategory } =
     useGetCategoriesQuery();
   console.log("error: ", error);
-
+  useEffect(() => {
+    if (error) {
+      warning(error);
+    }
+  }, [error]);
   useEffect(() => {
     form.setFieldsValue({
       name: productById?.data?.name,
@@ -43,7 +48,6 @@ const UpdateProduct = () => {
       categoryId: productById?.data?.categoryId,
     });
   }, [productById]);
-
   if (loadingProduct)
     return (
       <div className="flex justify-center items-center">
@@ -51,14 +55,15 @@ const UpdateProduct = () => {
         <Spin />
       </div>
     );
-  const onFinish = async (values: any) => {
-    const respones = await updateProduct({ ...values, _id: id });
-    if (respones) {
-      notification.success({
-        message: "Cập nhật sản phẩm thành công",
+  const onFinish = (values: any) => {
+    updateProduct({ ...values, _id: id })
+      .unwrap()
+      .then(() => {
+        notification.success({
+          message: "Cập nhật sản phẩm thành công",
+        });
+        navigate("/admin/products");
       });
-      navigate("/admin/products");
-    }
   };
 
   const onFinishFailed = (errorInfo: any) => {

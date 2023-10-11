@@ -2,11 +2,30 @@ import { pause } from "../../utils/pause";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/products";
 import queryString from "query-string";
+import { getToken, parseJwt } from "../../config/getToken";
 const productApi = createApi({
   reducerPath: "product",
   tagTypes: ["Product"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:5000/api",
+    prepareHeaders: (headers) => {
+      const token = getToken();
+      if (!token) {
+        console.log("token không tồn tại");
+      } else {
+        const decotedToken = parseJwt(token);
+        // console.log('decotedToken',decotedToken)
+        const currentTimestamp = Date.now() / 1000;
+        if (decotedToken.exp && decotedToken.exp < currentTimestamp) {
+          // Token đã hết hạn, xử lý lỗi hoặc đăng nhập lại
+          throw new Error("Token đã hết hạn vui lòng đăng nhập lại");
+        } else {
+          // Token hợp lệ và chưa hết hạn, bạn có thể sử dụng nó
+          headers.set("authorization", `Bearer ${token}`);
+          return headers;
+        }
+      }
+    },
     fetchFn: async (...arg) => {
       await pause(1000);
       return await fetch(...arg);
@@ -25,14 +44,14 @@ const productApi = createApi({
       }
     >({
       query: (args) => {
-        const { _page, _limit, _sort, _order, _search,_category } = args;
+        const { _page, _limit, _sort, _order, _search, _category } = args;
         const queryParams = {
           _page,
           _limit,
           _sort,
           _order,
           _search,
-          _category
+          _category,
         };
         //Tìm key:value nào không có giá trị thì tự động xóa
         Object.keys(queryParams).forEach((key) => {

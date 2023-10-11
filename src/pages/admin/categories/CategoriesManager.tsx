@@ -15,9 +15,10 @@ import { Link } from "react-router-dom";
 const CategoriesManager = () => {
   const { data, isLoading, error } = useGetCategoriesQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [removeCategory, { isLoading: removeLoading, error: removeError }] =
     useRemoveCategoryMutation();
+    // console.log('categories: ',data);
+    
   useEffect(() => {
     if (removeError) {
       warning(removeError);
@@ -62,7 +63,7 @@ const CategoriesManager = () => {
             // onChange={handleChange}
           >
             {products?.map((product) => {
-              return <Option value={product}>{product}</Option>;
+              return <Option value={product} key={product}>{product}</Option>;
             })}
           </Select>
         );
