@@ -18,19 +18,21 @@ const productApi = createApi({
       {
         _page?: number | string;
         _limit?: number | string;
+        _category?: number | string;
         _sort?: string;
         _order?: string;
         _search?: string;
       }
     >({
       query: (args) => {
-        const { _page, _limit, _sort, _order, _search } = args;
+        const { _page, _limit, _sort, _order, _search,_category } = args;
         const queryParams = {
           _page,
           _limit,
           _sort,
           _order,
           _search,
+          _category
         };
         //Tìm key:value nào không có giá trị thì tự động xóa
         Object.keys(queryParams).forEach((key) => {

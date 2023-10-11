@@ -1,11 +1,9 @@
 import { useState } from "react";
-// import { DownOutlined } from '@ant-design/icons';
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { GiOpenBook } from "@react-icons/all-files/gi/GiOpenBook";
 import { Badge, Drawer, Dropdown, Modal, Space, theme } from "antd";
 import { Link } from "react-router-dom";
 import Search from "antd/es/input/Search";
-import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { BiUser } from "@react-icons/all-files/bi/BiUser";
 import type { MenuProps } from "antd";
@@ -13,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
 import CartShop from "./CartShop";
 import SearchComponent from "./SearchComponent";
+import DropdownCate from "./DropdownCate";
 const Header = () => {
   // console.log('color main: ',bgColormain);
   const [open, setOpen] = useState(false);
@@ -46,7 +45,7 @@ const Header = () => {
     setOpen(false);
   };
   const onSearch = (value, _e, info) => console.log(info?.source, value);
-  const items: MenuProps["items"] = [
+  const items = [
     {
       label: user ? "Tài Khoản" : <Link to={"/account"}>Đăng Nhập</Link>,
       key: "0",
@@ -60,6 +59,7 @@ const Header = () => {
       key: "1",
     },
   ];
+
   return (
     <div className=" shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-poppins">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
@@ -74,11 +74,17 @@ const Header = () => {
             </span>
           </div>
         </Link>
-        <div className="space-x-3 text-gray-400">
-          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Thể Loại</Link>
-          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Đơn Hàng</Link>
-          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Tác Giả</Link>
-          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Bài Viết</Link>
+        <div className=" text-gray-400 sm:hidden md:flex gap-x-4">
+          <DropdownCate />
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>
+            Đơn Hàng
+          </Link>
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>
+            Tác Giả
+          </Link>
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>
+            Bài Viết
+          </Link>
         </div>
         <div className="sm:hidden md:flex items-center space-x-6 text-gray-400">
           <SearchComponent />
@@ -151,14 +157,17 @@ const Header = () => {
         {/* end screen mobile */}
       </div>
 
-      {/* <div style={{backgroundColor: bgColormain}} className={`p-2 text-white font-poppins sm:text-sm`}>
+      <div
+        style={{ backgroundColor: bgColormain }}
+        className={`p-2 text-white font-poppins sm:text-sm md:hidden`}
+      >
         <div className="space-x-6 md:max-w-6xl mx-auto text-right">
           <Link to={"..."}>Thể Loại</Link>
           <Link to={"..."}>Đơn Hàng</Link>
           <Link to={"..."}>Tác Giả</Link>
           <Link to={"..."}>Bài Viết</Link>
         </div>
-      </div> */}
+      </div>
       <Modal
         open={isModalOpen}
         onOk={handleOk}

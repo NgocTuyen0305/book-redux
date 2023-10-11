@@ -8,6 +8,7 @@ const paginationSlice = createSlice({
     _sort: "",
     _order: "",
     _search: "",
+    _category: "",
   },
   reducers: {
     setCurrentPage: (state, action:PayloadAction<number>) => {
@@ -25,7 +26,10 @@ const paginationSlice = createSlice({
     setSearch: (state, action:PayloadAction<string>) => {
       state._search = action.payload;
     },
+    setCategories: (state, action:PayloadAction<string>) => {
+      state._category = action.payload;
+    },
   },
 });
-export const { setCurrentPage, setLimitPage,setOrder,setSearch,setSort } = paginationSlice.actions;
+export const { setCurrentPage, setLimitPage,setOrder,setSearch,setSort,setCategories } = paginationSlice.actions;
 export const paginationReducer = paginationSlice.reducer;

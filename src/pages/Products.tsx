@@ -11,7 +11,7 @@ import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
 import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
 const Products = () => {
-  const { _page, _limit, _sort, _order, _search } = useAppSelector(
+  const { _page, _limit, _sort, _order, _search,_category } = useAppSelector(
     (state) => state.Pagination
   );
   const dispatch = useAppDispatch();
@@ -19,10 +19,13 @@ const Products = () => {
     _page,
     _limit,
     _search,
+    _category
   });
-  const params = { _page, _limit, _sort, _order, _search };
+  const params = { _page, _limit, _sort, _order, _search,_category };
   const navigate = useNavigate();
   const queries = queryParams(params);
+  console.log('queries: ',queries);
+  
   useEffect(() => {
     navigate(`?${queries}`);
   }, [queries, navigate]);
@@ -80,13 +83,13 @@ const Products = () => {
                   {product.name}
                 </span>
                 <div className="flex flex-col justify-between items-center">
-                  <div className="flex justify-center items-center gap-x-3">
+                  <div className="flex justify-center items-center gap-x-3 sm:text-xs md:text-base">
                     <div className="flex items-center justify-center">
-                      <span className="font-poppins">
+                      <span className="font-poppins line-clamp-1">
                         {product.price / 1000 + ".000"} đ
                       </span>
                     </div>
-                    <span className="text-gray-400 text-sm">
+                    <span className="text-gray-400 text-sm line-clamp-1">
                       Đã bán: {product.sold}k
                     </span>
                   </div>
