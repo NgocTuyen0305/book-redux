@@ -12,8 +12,8 @@ import type { MenuProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { logout } from "../redux/slices/authSlice";
 import CartShop from "./CartShop";
+import SearchComponent from "./SearchComponent";
 const Header = () => {
- 
   // console.log('color main: ',bgColormain);
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,24 +64,24 @@ const Header = () => {
     <div className=" shadow-md sticky top-0 right-0 left-0 bottom-0 backdrop-blur-md z-20 font-poppins">
       <div className="flex justify-between p-2 items-center md:max-w-6xl md:mx-auto">
         <Link to={"/"}>
-          <div style={{color: bgColormain}} className={`flex items-center space-x-2 border p-1 rounded-lg shadow-lg`}>
+          <div
+            style={{ color: bgColormain }}
+            className={`flex items-center space-x-2`}
+          >
             <span className="font-Raleway text-2xl">Book</span>
             <span className="text-xl">
               <GiOpenBook />
             </span>
           </div>
         </Link>
-        <div className="sm:hidden md:flex items-center space-x-6">
-          <div className="w-56 relative rounded-full shadow-md">
-            <input
-              type="text"
-              placeholder="search..."
-              className="rounded-full p-1 outline-none w-full"
-            />
-            <button className="text-2xl absolute top-2/4 text-gray-400 right-0 -translate-x-2/4 -translate-y-2/4">
-              <AiOutlineSearch />
-            </button>
-          </div>
+        <div className="space-x-3 text-gray-400">
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Thể Loại</Link>
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Đơn Hàng</Link>
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Tác Giả</Link>
+          <Link to={"..."} className={`hover:text-[#3AA6B9]`}>Bài Viết</Link>
+        </div>
+        <div className="sm:hidden md:flex items-center space-x-6 text-gray-400">
+          <SearchComponent />
           <div className="">
             <Dropdown
               menu={{ items }}
@@ -89,16 +89,16 @@ const Header = () => {
               className="cursor-pointer"
             >
               <a onClick={(e) => e.preventDefault()}>
-                <Space className="">
+                <Space className="hover:text-[#3AA6B9]">
                   <BiUser className="text-xl" />
                   {user ? user?.name : "Tài Khoản"}
                 </Space>
               </a>
             </Dropdown>
           </div>
-          <div className="flex space-x-2 items-center ">
+          <div className="flex space-x-2 items-center hover:text-[#3AA6B9]">
             <Badge count={itemsCart.length} size="small">
-              <AiOutlineShoppingCart className="text-xl" />
+              <AiOutlineShoppingCart className="text-xl text-gray-400" />
             </Badge>
             <button className="" onClick={showModal}>
               Giỏ Hàng
@@ -150,15 +150,15 @@ const Header = () => {
         </div>
         {/* end screen mobile */}
       </div>
-      
-      <div style={{backgroundColor: bgColormain}} className={`p-2 text-white font-poppins sm:text-sm`}>
+
+      {/* <div style={{backgroundColor: bgColormain}} className={`p-2 text-white font-poppins sm:text-sm`}>
         <div className="space-x-6 md:max-w-6xl mx-auto text-right">
           <Link to={"..."}>Thể Loại</Link>
           <Link to={"..."}>Đơn Hàng</Link>
           <Link to={"..."}>Tác Giả</Link>
           <Link to={"..."}>Bài Viết</Link>
         </div>
-      </div>
+      </div> */}
       <Modal
         open={isModalOpen}
         onOk={handleOk}

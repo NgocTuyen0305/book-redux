@@ -1,11 +1,27 @@
-import { Rate } from "antd";
-import React from "react";
+import { Rate, Spin } from "antd";
 import Slider from "react-slick";
 import Products from "./Products";
 import ProductTrending from "./ProductTrending";
 import SliderPage from "../components/SliderPage";
 import "../App.css";
+import { useGetProductsQuery } from "../redux/api/productApi";
+import { IProduct } from "../interfaces/products";
+import { Link } from "react-router-dom";
 const Homepage = () => {
+  const { data, isLoading } = useGetProductsQuery({
+    _order: "desc",
+    _limit: 5,
+  });
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        Loading...
+        <Spin />
+      </div>
+    );
+  }
+  // console.log("new products: ", data?.products);
+
   const setting = {
     dots: false,
     infinite: true,
@@ -22,151 +38,44 @@ const Homepage = () => {
           New Books
         </h2>
         <Slider {...setting}>
-          {/* **** */}
-          <div className="">
-            <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
-              <div className="md:grid grid-cols-2">
-                <div className="">
-                  <img
-                    src="./images/book2.jpg"
-                    alt=""
-                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
-                  />
-                </div>
-                <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
-                    Tuổi trẻ đáng bao nhiêu?
-                  </span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
-                    Rosie Nguyễn
-                  </span>
-                  <span className="sm:hidden md:block">
-                    <Rate />
-                  </span>
-                  <div className="sm:hidden md:block">
-                    {" "}
-                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
-                      Views
-                    </button>
+          {data?.products?.map((product: IProduct) => {
+            return (
+              <div className="" key={product._id}>
+                <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
+                  <div className="md:grid grid-cols-2 gap-3">
+                    <div className="">
+                      <img
+                        src={product?.images[0].response.uploadedFiles[0].url}
+                        alt=""
+                        className=" md:-translate-y-12 shadow-md shadow-gray-600"
+                      />
+                    </div>
+                    <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
+                      <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
+                        {product.name}
+                      </span>
+                      <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
+                        {product.author}
+                      </span>
+                      <span className="sm:hidden md:block">
+                        <Rate allowHalf value={product.rate}/>
+                      </span>
+                      <div className="sm:hidden md:block mx-auto">
+                        <Link to={`products/${product._id}/detail`}>
+                          <button className="px-6 py-1 shadow-md rounded-md hover:bg-[#3AA6B9] hover:text-white">
+                            Views
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
+                    {product.description}
                   </div>
                 </div>
               </div>
-              <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-                praesentium necessitatibus distinctio veritatis eos alias quam
-                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
-                fugiat officiis saepe odio sint!
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
-              <div className="md:grid grid-cols-2">
-                <div className="">
-                  <img
-                    src="./images/book2.jpg"
-                    alt=""
-                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
-                  />
-                </div>
-                <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
-                    Tuổi trẻ đáng bao nhiêu?
-                  </span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
-                    Rosie Nguyễn
-                  </span>
-                  <span className="sm:hidden md:block">
-                    <Rate />
-                  </span>
-                  <div className="sm:hidden md:block">
-                    {" "}
-                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
-                      Views
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-                praesentium necessitatibus distinctio veritatis eos alias quam
-                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
-                fugiat officiis saepe odio sint!
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
-              <div className="md:grid grid-cols-2">
-                <div className="">
-                  <img
-                    src="./images/book2.jpg"
-                    alt=""
-                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
-                  />
-                </div>
-                <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
-                    Tuổi trẻ đáng bao nhiêu?
-                  </span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
-                    Rosie Nguyễn
-                  </span>
-                  <span className="sm:hidden md:block">
-                    <Rate />
-                  </span>
-                  <div className="sm:hidden md:block">
-                    {" "}
-                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
-                      Views
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-                praesentium necessitatibus distinctio veritatis eos alias quam
-                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
-                fugiat officiis saepe odio sint!
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
-              <div className="md:grid grid-cols-2">
-                <div className="">
-                  <img
-                    src="./images/book2.jpg"
-                    alt=""
-                    className="md:w-32 md:-translate-y-12 shadow-md shadow-gray-600"
-                  />
-                </div>
-                <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
-                  <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
-                    Tuổi trẻ đáng bao nhiêu?
-                  </span>
-                  <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
-                    Rosie Nguyễn
-                  </span>
-                  <span className="sm:hidden md:block">
-                    <Rate />
-                  </span>
-                  <div className="sm:hidden md:block">
-                    {" "}
-                    <button className="border rounded-md md:border-orange-400 md:px-3 md:py-1 text-xs sm:px-2">
-                      Views
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="md:line-clamp-3 text-sm text-gray-400 sm:hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-                praesentium necessitatibus distinctio veritatis eos alias quam
-                sequi beatae mollitia quo? Necessitatibus ut nulla odit dicta,
-                fugiat officiis saepe odio sint!
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </Slider>
         <Products />
         <ProductTrending />

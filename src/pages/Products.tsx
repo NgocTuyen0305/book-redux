@@ -18,14 +18,16 @@ const Products = () => {
   const { data, isLoading } = useGetProductsQuery({
     _page,
     _limit,
+    _search,
   });
   const params = { _page, _limit, _sort, _order, _search };
   const navigate = useNavigate();
   const queries = queryParams(params);
   useEffect(() => {
     navigate(`?${queries}`);
-  }, [queries,navigate]);
-  // console.log("queries: ", queries);
+  }, [queries, navigate]);
+
+  console.log("list product: ", data);
 
   if (isLoading) {
     return (

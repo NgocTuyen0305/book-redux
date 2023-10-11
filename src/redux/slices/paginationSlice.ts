@@ -27,5 +27,5 @@ const paginationSlice = createSlice({
     },
   },
 });
-export const { setCurrentPage, setLimitPage } = paginationSlice.actions;
+export const { setCurrentPage, setLimitPage,setOrder,setSearch,setSort } = paginationSlice.actions;
 export const paginationReducer = paginationSlice.reducer;
