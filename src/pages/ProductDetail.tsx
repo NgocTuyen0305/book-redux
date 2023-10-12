@@ -1,7 +1,5 @@
 import { Badge, Button, Rate, Spin, Tag, theme } from "antd";
-import{ useState } from "react";
-import Slider from "react-slick";
-import "../App.css";
+import { useState } from "react";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/api/productApi";
@@ -13,7 +11,7 @@ const ProductDetail = () => {
   const { token } = useToken();
   const { bgColormain } = token;
   const [count, setCount] = useState(1);
-
+  const [currentImage, setCurrentImage] = useState<number | string>(0);
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
@@ -23,7 +21,7 @@ const ProductDetail = () => {
       return item._id !== id;
     }
   );
-  console.log('product detail: ',productDetail);
+  // console.log("product detail: ", productDetail);
 
   const ListImage = productDetail?.data?.images.map((items) => {
     return items?.response?.uploadedFiles[0].url;
@@ -38,30 +36,8 @@ const ProductDetail = () => {
       </div>
     );
   }
-
-  const settings = {
-    customPaging: () => {
-      return (
-        <div>
-          {ListImage.map((item, index) => {
-            return (
-              <img
-                src={item}
-                alt=""
-                key={index}
-                onClick={() => setActiveSlide(index)}
-              />
-            );
-          })}
-        </div>
-      );
-    },
-    dots: true,
-    dotsClass: "slick-dots slick-thumb",
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  const gotoImage = (index: number | string) => {
+    setCurrentImage(index);
   };
   const increase = () => {
     setCount(count + 1);
@@ -78,16 +54,20 @@ const ProductDetail = () => {
     <div className="p-2 md:max-w-6xl md:mx-auto ">
       {" "}
       <div className="md:grid md:grid-cols-3 gap-3 bg-white">
-        <div className="p-2 container-img-detail">
-          <Slider {...settings}>
-            {ListImage.map((item, index) => {
+        <div className="p-2 space-y-6">
+          {/* slider image product detail */}
+          <div className="duration-500 ease-in-out h-64 bg-center bg-cover" style={{backgroundImage: `url(${ListImage[currentImage]})`}} >
+            {/* <img src={ListImage[currentImage]} alt="" /> */}
+          </div>
+          <div className="grid grid-cols-3 gap-8">
+            {ListImage.map((image, index: number | string) => {
               return (
-                <div className="" key={index}>
-                  <img src={item} alt="" />
-                </div>
+                <button onClick={() => gotoImage(index)} key={index}>
+                  <img src={image} alt="" />
+                </button>
               );
             })}
-          </Slider>
+          </div>
         </div>
         <div className="p-2 space-y-3">
           <div className="">
@@ -125,23 +105,17 @@ const ProductDetail = () => {
           <div className="space-y-3">
             <span className="font-poppins text-xl">Số lượng</span>
             <div className="md:flex items-center space-x-3">
-              <Button
-                icon={<PlusOutlined />}
-                onClick={increase}
-              ></Button>
+              <Button icon={<PlusOutlined />} onClick={increase}></Button>
               <Badge count={count}>
                 <InboxOutlined className="text-xl" />
               </Badge>
-              <Button
-                icon={<MinusOutlined />}
-                onClick={decline}
-              ></Button>
+              <Button icon={<MinusOutlined />} onClick={decline}></Button>
             </div>
           </div>
           <div className="md:flex flex-col space-y-3 space-x-3">
             <span className="md:text-2xl">Tạm tính</span>
             <span className="font-poppins text-red-500">
-              {(productDetail?.data?.price * count) / 1000 + '.000'} đ
+              {(productDetail?.data?.price * count) / 1000 + ".000"} đ
             </span>
           </div>
           <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">

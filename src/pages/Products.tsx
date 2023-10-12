@@ -10,18 +10,23 @@ import { addItemCart } from "../redux/slices/cartSlice";
 import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
 import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
+import { warning } from "../effect/notification";
 const Products = () => {
   const { _page, _limit, _sort, _order, _search, _category } = useAppSelector(
     (state) => state.Pagination
   );
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetProductsQuery({
+  const { data, isLoading, error } = useGetProductsQuery({
     _page,
     _limit,
     _search,
     _category,
   });
-  
+  useEffect(() => {
+    if(error){
+      return warning(error)
+    }
+  }, [error]);
   const params = { _page, _limit, _sort, _order, _search, _category };
   const navigate = useNavigate();
   const queries = queryParams(params);

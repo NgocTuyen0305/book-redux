@@ -11,7 +11,7 @@ import { useState } from "react";
 const SimilarProduct = ({listSilimar}) => {
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
-  console.log('list silimar: ',listSilimar)
+  // console.log('list silimar: ',listSilimar)
   const dispatch = useAppDispatch();
 
   const startIndex = (currentPage - 1) * itemsPerPage;
