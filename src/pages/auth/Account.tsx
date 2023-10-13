@@ -20,7 +20,7 @@ const Account = () => {
   ];
   return (
     <div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} className="md:w-96 mx-auto sm:p-2 md:p-0"/>
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} className="md:w-96 mx-auto sm:p-2 bg-white rounded-md shadow-md"/>
     </div>
   );
 };

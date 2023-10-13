@@ -40,7 +40,7 @@ const Login = () => {
   };
 
   return (
-    <div className="mx-auto space-y-8 ">
+    <div className="mx-auto space-y-8">
       <Form
         name="normal_login"
         className="login-form"
@@ -91,6 +91,7 @@ const Login = () => {
           </Space>
         </Form.Item>
       </Form>
+     
     </div>
   );
 };

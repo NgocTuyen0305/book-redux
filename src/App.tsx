@@ -1,15 +1,14 @@
-import { RouterProvider } from "react-router-dom"
-import { router } from "./router"
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
 function App() {
-
   return (
     <>
       <div className="">
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

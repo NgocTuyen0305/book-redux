@@ -10,7 +10,6 @@ import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
 import React, { useEffect, useState } from "react";
 import { IProduct } from "../interfaces/products";
 import { addItemsCart } from "../redux/slices/orderSlice";
-
 const CartShop = () => {
   const { items } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
@@ -142,7 +141,7 @@ const CartShop = () => {
     onChange: onSelectChange,
   };
   return (
-    <div>
+    <div className="table-container overflow-x-auto max-w-full">
       <Table
         rowSelection={rowSelection}
         dataSource={dataSource}

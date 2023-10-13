@@ -25,7 +25,7 @@ const DropdownCate = () => {
         placement="bottom"
         arrow={{ pointAtCenter: true }}
       >
-        <button>Thể loại</button>
+        <button className="hover:text-[#3AA6B9] duration-500 transition-colors">Thể loại</button>
       </Dropdown>
     </div>
   );
