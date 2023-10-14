@@ -11,6 +11,7 @@ import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
 import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
 import { warning } from "../effect/notification";
+import LottieLoading from "../effect/LottieLoading";
 const Products = () => {
   const { _page, _limit, _sort, _order, _search, _category } = useAppSelector(
     (state) => state.Pagination
@@ -23,8 +24,8 @@ const Products = () => {
     _category,
   });
   useEffect(() => {
-    if(error){
-      return warning(error)
+    if (error) {
+      return warning(error);
     }
   }, [error]);
   const params = { _page, _limit, _sort, _order, _search, _category };
@@ -38,8 +39,7 @@ const Products = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        Loading...
-        <Spin />
+        <LottieLoading />
       </div>
     );
   }

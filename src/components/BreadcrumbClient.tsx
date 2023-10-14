@@ -29,7 +29,7 @@ const BreadcrumbClient = () => {
     });
   });
   return (
-    <div className="md:max-w-6xl mx-auto p-2">
+    <div className="md:max-w-6xl mx-auto p-2 mt-[96px]">
       <Breadcrumb separator="/">
         {breadcrumbItems.map((item, index) => (
           <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>

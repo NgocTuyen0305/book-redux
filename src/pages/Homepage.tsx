@@ -1,4 +1,4 @@
-import { Rate, Spin } from "antd";
+import { Rate } from "antd";
 import Slider from "react-slick";
 import Products from "./Products";
 import ProductTrending from "./ProductTrending";
@@ -7,6 +7,7 @@ import "../App.css";
 import { useGetProductsQuery } from "../redux/api/productApi";
 import { IProduct } from "../interfaces/products";
 import { Link } from "react-router-dom";
+import LottieLoading from "../effect/LottieLoading";
 const Homepage = () => {
   const { data, isLoading } = useGetProductsQuery({
     _order: "desc",
@@ -15,13 +16,10 @@ const Homepage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        Loading...
-        <Spin />
+        <LottieLoading/>
       </div>
     );
   }
-  // console.log("new products: ", data?.products);
-
   const setting = {
     dots: false,
     infinite: true,
