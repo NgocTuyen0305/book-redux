@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
 import ProductDetail from "./pages/ProductDetail";
 import LayoutClient from "./layouts/LayoutClient";
@@ -13,6 +12,7 @@ import CategoriesManager from "./pages/admin/categories/CategoriesManager";
 import UpdateCategory from "./pages/admin/categories/UpdateCategory";
 import Account from "./pages/auth/Account";
 import NotFoundPage from "./pages/NotFoundPage";
+import UpdateUser from "./pages/auth/UpdateUser";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <Homepage />,
       },
-      { path: "shop", element: <Shop /> },
+      { path: "update-user", element: <UpdateUser /> },
       { path: "products/:id/detail", element: <ProductDetail /> },
       { path: "blog", element: <Blog /> },
       { path: "account", element: <Account /> },

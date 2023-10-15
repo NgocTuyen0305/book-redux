@@ -1,4 +1,4 @@
-import { Badge, Button, Rate, Spin, Tag, theme } from "antd";
+import { Badge, Button, Rate,Tag, theme } from "antd";
 import { useState } from "react";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useGetProductByIdQuery } from "../redux/api/productApi";
 import SimilarProduct from "../components/SimilarProduct";
 import { IProduct } from "../interfaces/products";
 import { useAppDispatch } from "../app/hook";
+import LottieLoading from "../effect/LottieLoading";
 const ProductDetail = () => {
   const { useToken } = theme;
   const { token } = useToken();
@@ -31,8 +32,7 @@ const ProductDetail = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        Loading...
-        <Spin />
+        <LottieLoading/>
       </div>
     );
   }

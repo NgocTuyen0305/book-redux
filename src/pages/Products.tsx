@@ -61,7 +61,7 @@ const Products = () => {
                 <img
                   src={product?.images[0].response.uploadedFiles[0].url}
                   alt=""
-                  className="rounded-md shadow-md shadow-gray-400 mx-auto md:w-44"
+                  className="mx-auto md:w-44"
                 />
                 <div className="hidden group-hover:block transition-all">
                   <div className="absolute top-0 left-0 z-10 w-full h-full backdrop-blur-sm flex justify-center items-center gap-x-6">

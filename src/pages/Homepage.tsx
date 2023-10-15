@@ -45,7 +45,7 @@ const Homepage = () => {
                       <img
                         src={product?.images[0].response.uploadedFiles[0].url}
                         alt=""
-                        className=" md:-translate-y-12 shadow-md shadow-gray-600"
+                        className=" md:-translate-y-12 "
                       />
                     </div>
                     <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">

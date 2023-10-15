@@ -6,7 +6,7 @@ import { setCategories } from "../redux/slices/paginationSlice";
 const DropdownCate = () => {
   const { data } = useGetCategoriesQuery();
   const dispatch = useAppDispatch();
-  console.log("categories: ", data);
+  // console.log("categories: ", data);
 
   const items: MenuProps["items"] = data?.result.map((item) => {
     return {

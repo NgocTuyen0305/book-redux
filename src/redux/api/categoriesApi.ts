@@ -15,7 +15,7 @@ const categoriesApi = createApi({
       }
     },
     fetchFn: async (...arg) => {
-      await pause(1000);
+      await pause(3000);
       return await fetch(...arg);
     },
   }),

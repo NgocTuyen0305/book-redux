@@ -6,7 +6,7 @@ const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:5000/api",
     fetchFn: async (...arg) => {
-      await pause(1000);
+      await pause(3000);
       return await fetch(...arg);
     },
   }),
@@ -25,8 +25,15 @@ const authApi = createApi({
         body: signin,
       }),
     }),
+    updateUser: builder.mutation({
+      query: (user) => ({
+        url: `/user/update/${user._id}`,
+        method: 'PUT',
+        body: user
+      })
+    }),
   }),
 });
-export const { useSigninMutation, useSignupMutation } = authApi;
+export const { useSigninMutation, useSignupMutation,useUpdateUserMutation } = authApi;
 export const authReducer = authApi.reducer;
 export default authApi;

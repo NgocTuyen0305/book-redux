@@ -1,24 +1,29 @@
 import {
   HeartOutlined,
+  LogoutOutlined,
   MenuFoldOutlined,
+  QqOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Badge, Button, Drawer, Dropdown, Menu, MenuProps, Modal } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import CartShop from "./CartShop";
-import { useAppSelector } from "../app/hook";
+import { useAppDispatch, useAppSelector } from "../app/hook";
 import SearchComponent from "./SearchComponent";
 import DropdownCate from "./DropdownCate";
 import NavbarMenu from "./NavbarMenu";
+import { logout } from "../redux/slices/authSlice";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fixNavba, setFixNavba] = useState(false);
   const { items: itemsCart } = useAppSelector((state) => state.Cart);
-  console.log("height fixed: ", fixNavba);
+  const { user } = useAppSelector((state) => state.Authentication);
+  const dispatch = useAppDispatch();
+  // console.log("height fixed: ", fixNavba);
 
   const setFixedNavba = () => {
     if (window.scrollY >= 38) {
@@ -32,7 +37,13 @@ const Header = () => {
   const items: MenuProps["items"] = [
     {
       key: 1,
-      label: (
+      label: user ? (
+        <Link to={`/update-user`}>
+          <Button icon={<QqOutlined />} type="text">
+            Tài Khoản
+          </Button>
+        </Link>
+      ) : (
         <Link to={"/account"}>
           <Button type="text" icon={<UserOutlined />}>
             Tài Khoản
@@ -51,6 +62,21 @@ const Header = () => {
       ),
     },
   ];
+
+  if (user) {
+    items.push({
+      key: parseInt(items.length + 1),
+      label: (
+        <Button
+          type="text"
+          icon={<LogoutOutlined />}
+          onClick={() => dispatch(logout())}
+        >
+          Đăng Xuất
+        </Button>
+      ),
+    });
+  }
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -72,7 +98,13 @@ const Header = () => {
   return (
     <div className={"bg-white fixed top-0 left-0 right-0 z-50 shadow-sm"}>
       <div className="md:max-w-6xl mx-auto space-y-6 ">
-        <div className={fixNavba ? "hidden" : "md:relative md:w-full transition-all duration-500"}>
+        <div
+          className={
+            fixNavba
+              ? "hidden"
+              : "md:relative md:w-full transition-all duration-500"
+          }
+        >
           <div className="font-dancingScript font-bold md:text-4xl text-3xl text-center hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out">
             <a href="/" className="">
               Mymy
@@ -86,7 +118,7 @@ const Header = () => {
           <div
             className={
               fixNavba
-                ? "font-dancingScript font-bold md:text-4xl hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out"
+                ? "sm:hidden md:block font-dancingScript font-bold md:text-4xl hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out"
                 : "hidden"
             }
           >
@@ -123,12 +155,18 @@ const Header = () => {
               </Drawer>
             </div>
           </div>
-          <div className={fixNavba ? "transition-all duration-500 ease-in-out" : "md:hidden"}>
+          <div
+            className={
+              fixNavba ? "transition-all duration-500 ease-in-out" : "md:hidden"
+            }
+          >
             <SearchComponent />
           </div>
           <div className="">
             <Dropdown menu={{ items }} trigger={["click"]}>
-              <Button icon={<UserOutlined />} type="text" />
+              <Button icon={<UserOutlined />} type="text">
+                {user ? user?.name : ""}
+              </Button>
             </Dropdown>
             <Badge count={itemsCart.length} size="small">
               <Button
