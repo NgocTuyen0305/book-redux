@@ -73,7 +73,7 @@ const LayoutAdmin = () => {
             {
               key: "4",
               icon: <BiUser />,
-              label: "Orders",
+              label: <Link to={"order"}>Order</Link>,
             },
             {
               key: "5",

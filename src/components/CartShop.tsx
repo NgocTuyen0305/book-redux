@@ -18,22 +18,19 @@ const CartShop = () => {
   const itemSelectlCart = items.filter((item) =>
     selectedRowKeys.includes(item._id)
   );
-  // console.log("item select cart: ", totalPrice);
+  // console.log("item select cart: ", itemSelectlCart);
 
   useEffect(() => {
     if (itemSelectlCart) {
       const totalPriceCart = itemSelectlCart.reduce(
         (accumulator, currentValue) => {
-          return accumulator + (currentValue.price * currentValue.quantity);
+          return accumulator + currentValue.price * currentValue.quantity;
         },
         0
       );
       setTotalPrice(totalPriceCart);
     }
   }, [itemSelectlCart]);
-  if (selectedRowKeys) {
-    dispatch(addItemsCart(itemSelectlCart));
-  }
   const dataSource = items.map(({ _id, name, price, images, quantity }) => {
     return {
       key: _id,
@@ -43,6 +40,7 @@ const CartShop = () => {
       quantity,
     };
   });
+  // console.log("data cart shop: ", dataSource);
   const columns = [
     {
       title: "Sản phẩm",
@@ -159,7 +157,12 @@ const CartShop = () => {
           </span>
         </Space>
         <Space>
-          <Button disabled={itemSelectlCart.length == 0}>Thanh toán</Button>
+          <Button
+            disabled={itemSelectlCart.length == 0}
+            onClick={() => dispatch(addItemsCart(itemSelectlCart))}
+          >
+            <a href={"/order"}>Thanh toán</a>
+          </Button>
         </Space>
       </Space>
     </div>

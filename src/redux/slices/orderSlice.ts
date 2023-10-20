@@ -4,16 +4,17 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     orderItems: [],
-    shippingAddress: {},
-    paymentMethod: "",
+    shippingAddress: {},//Địa chỉ giao hàng
+    paymentMethod: "",//Phương thức thanh toán
+    deliveryMethod: "",//Phương giao hàng
     itemsPrice: 0,
-    shippingPrice: 0,
-    totalPrice: 0,
+    shippingPrice: 0,//Phí giao hàng
+    totalPrice: 0,//Tổng chi phí
     user: "",
-    isPaid: false,
-    paidAt: "",
-    isDelivered: false,
-    deliveredAt: "",
+    isPaid: false,//Đã thanh toán hay chưa
+    paidAt: "",//Thanh toán lúc nào
+    isDelivered: false,//Đã giao hàng hay chưa
+    deliveredAt: "",//Giao hàng lúc nào
   },
   reducers: {
     addItemsCart: (state, action) => {

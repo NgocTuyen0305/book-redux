@@ -12,6 +12,7 @@ import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import { warning } from "../../../effect/notification";
 import CreateCategory from "./CreateCategory";
 import { Link } from "react-router-dom";
+import LottieLoading from "../../../effect/LottieLoading";
 const CategoriesManager = () => {
   const { data, isLoading, error } = useGetCategoriesQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,13 +26,13 @@ const CategoriesManager = () => {
     }
   }, [removeError]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        Loading...
-        <Spin />
+        <LottieLoading />
       </div>
     );
+  }
     
   const dataSource = data?.result?.map(
     ({ name, products, _id }: ICategories) => {

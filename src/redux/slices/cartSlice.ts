@@ -3,6 +3,9 @@ const cartSlice = createSlice({
   name: "Cart",
   initialState: { items: [] },
   reducers: {
+    afterAddItemCart: (state,action)=>{
+      state.items = action.payload
+    },
     addItemCart: (state, action) => {
       const productCart = action.payload;
       const exitProductIndex = state.items.findIndex(
@@ -31,6 +34,6 @@ const cartSlice = createSlice({
     },
   },
 });
-export const { addItemCart, removeItemCart, decrease, increase } =
+export const { addItemCart, removeItemCart, decrease, increase,afterAddItemCart } =
   cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

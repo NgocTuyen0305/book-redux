@@ -1,4 +1,4 @@
-import { Pagination, Rate, Spin, message } from "antd";
+import { Pagination, Rate, message } from "antd";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
@@ -23,6 +23,7 @@ const Products = () => {
     _search,
     _category,
   });
+  // console.log(data?.products)
   useEffect(() => {
     if (error) {
       return warning(error);

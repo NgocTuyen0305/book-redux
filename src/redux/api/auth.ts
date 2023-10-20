@@ -34,6 +34,8 @@ const authApi = createApi({
     }),
   }),
 });
+// console.log('auth api: ',authApi)
+
 export const { useSigninMutation, useSignupMutation,useUpdateUserMutation } = authApi;
 export const authReducer = authApi.reducer;
 export default authApi;

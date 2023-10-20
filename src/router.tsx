@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-import Blog from "./pages/Blog";
 import ProductDetail from "./pages/ProductDetail";
 import LayoutClient from "./layouts/LayoutClient";
 import LayoutAdmin from "./layouts/LayoutAdmin";
@@ -13,6 +12,10 @@ import UpdateCategory from "./pages/admin/categories/UpdateCategory";
 import Account from "./pages/auth/Account";
 import NotFoundPage from "./pages/NotFoundPage";
 import UpdateUser from "./pages/auth/UpdateUser";
+import OrderPage from "./pages/OrderPage";
+import MyOrder from "./pages/Order/MyOrder";
+import OderManagerment from "./pages/admin/order/OderManagerment";
+import UpdateOrder from "./pages/admin/order/UpdateOrder";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +31,9 @@ export const router = createBrowserRouter([
         element: <Homepage />,
       },
       { path: "update-user", element: <UpdateUser /> },
+      { path: "my-order", element: <MyOrder /> },
       { path: "products/:id/detail", element: <ProductDetail /> },
-      { path: "blog", element: <Blog /> },
+      { path: "order", element: <OrderPage /> },
       { path: "account", element: <Account /> },
     ],
   },
@@ -60,6 +64,14 @@ export const router = createBrowserRouter([
           {
             path: "categories/:id/edit",
             element: <UpdateCategory />,
+          },
+          {
+            path: "order",
+            element: <OderManagerment />,
+          },
+          {
+            path: "order/update/:id",
+            element: <UpdateOrder />,
           },
         ],
       },

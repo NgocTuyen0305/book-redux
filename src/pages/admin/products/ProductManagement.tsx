@@ -12,6 +12,7 @@ import { IProduct } from "../../../interfaces/products";
 import { Link } from "react-router-dom";
 import { warning } from "../../../effect/notification";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
+import LottieLoading from "../../../effect/LottieLoading";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -25,13 +26,13 @@ const ProductManagement = () => {
       warning(errorRemove);
     }
   }, [errorRemove]);
-  if (loadingProduct)
+  if (loadingProduct) {
     return (
       <div className="flex justify-center items-center">
-        Loading...
-        <Spin />
+        <LottieLoading />
       </div>
     );
+  }
 
   const dataSource = data?.products?.map(
     ({

@@ -22,22 +22,29 @@ import categoriesApi, { categoriesReducer } from "../redux/api/categoriesApi";
 import { cartReducer } from "../redux/slices/cartSlice";
 import { orderReducer } from "../redux/slices/orderSlice";
 import { paginationReducer } from "../redux/slices/paginationSlice";
+import shoppingApi, { shoppingReducer } from "../redux/api/shoppingApi";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["Authentication","Cart"],
+  whitelist: ["Authentication", "Cart", "Order"],
 };
 const rootReducer = combineReducers({
   [productApi.reducerPath]: productReducer,
   [authApi.reducerPath]: authReducer,
   [categoriesApi.reducerPath]: categoriesReducer,
+  [shoppingApi.reducerPath]: shoppingReducer,
   Authentication: authSliceReducer,
   Cart: cartReducer,
   Order: orderReducer,
-  Pagination: paginationReducer
+  Pagination: paginationReducer,
 });
-const middleware = [productApi.middleware, authApi.middleware,categoriesApi.middleware];
+const middleware = [
+  productApi.middleware,
+  authApi.middleware,
+  categoriesApi.middleware,
+  shoppingApi.middleware,
+];
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({

@@ -1,4 +1,4 @@
-import { Badge, Button, Rate,Tag, theme } from "antd";
+import { Badge, Button, Rate, Tag, message, theme } from "antd";
 import { useState } from "react";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -7,6 +7,8 @@ import SimilarProduct from "../components/SimilarProduct";
 import { IProduct } from "../interfaces/products";
 import { useAppDispatch } from "../app/hook";
 import LottieLoading from "../effect/LottieLoading";
+import { addItemCart } from "../redux/slices/cartSlice";
+import { addItemsCart } from "../redux/slices/orderSlice";
 const ProductDetail = () => {
   const { useToken } = theme;
   const { token } = useToken();
@@ -16,13 +18,13 @@ const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
-
+  // console.log('count product: ',count)
   const listSilimar = productDetail?.listProductSimilar?.filter(
     (item: IProduct) => {
       return item._id !== id;
     }
   );
-  // console.log("product detail: ", productDetail);
+  // console.log("product detail: ", productDetail?.data);
 
   const ListImage = productDetail?.data?.images.map((items) => {
     return items?.response?.uploadedFiles[0].url;
@@ -32,7 +34,7 @@ const ProductDetail = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        <LottieLoading/>
+        <LottieLoading />
       </div>
     );
   }
@@ -56,7 +58,10 @@ const ProductDetail = () => {
       <div className="md:grid md:grid-cols-3 gap-3 bg-white">
         <div className="p-2 space-y-6">
           {/* slider image product detail */}
-          <div className="duration-500 ease-in-out h-64 bg-center bg-cover" style={{backgroundImage: `url(${ListImage[currentImage]})`}} >
+          <div
+            className="duration-500 ease-in-out h-64 bg-center bg-cover"
+            style={{ backgroundImage: `url(${ListImage[currentImage]})` }}
+          >
             {/* <img src={ListImage[currentImage]} alt="" /> */}
           </div>
           <div className="grid grid-cols-3 gap-8">
@@ -119,13 +124,17 @@ const ProductDetail = () => {
             </span>
           </div>
           <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">
+            <Button onClick={() => dispatch(addItemsCart([{...productDetail?.data,quantity:count}]))}>
+              <a href={"/order"}>MUA NGAY</a>
+            </Button>
             <button
               className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}
-            >
-              MUA NGAY
-            </button>
-            <button
-              className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}
+              onClick={() => {
+                dispatch(
+                  addItemCart({ ...productDetail?.data, quantity: count })
+                );
+                message.success("Đã thêm vào giỏ hàng!");
+              }}
             >
               THÊM VÀO GIỎ HÀNG
             </button>

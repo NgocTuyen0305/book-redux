@@ -131,9 +131,9 @@ const Header = () => {
             {/* tính */}
             <div className="hidden md:flex items-center space-x-6 font-poppins">
               <DropdownCate />
-              <span className="hover:text-[#3AA6B9] duration-500 transition-colors">
+              <Link to={'/my-order'} className="hover:text-[#3AA6B9] duration-500 transition-colors">
                 Đơn Hàng
-              </span>
+              </Link>
               <span className="hover:text-[#3AA6B9] duration-500 transition-colors">
                 Bài Viết
               </span>
