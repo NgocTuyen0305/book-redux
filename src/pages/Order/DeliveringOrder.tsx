@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
-import { Empty } from "antd";
+import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
 import Moment from 'moment'
 const DeliveringOrder = () => {
@@ -56,11 +56,9 @@ const DeliveringOrder = () => {
                  <div className="">{item.price / 1000 + ".000"} đ</div>
                  Tổng tiền: {items.totalPrice / 1000 + ".000 đ"}
                </div>
-               <div className="space-x-3">
-                 <button className="md:text-base text-xs py-1 px-3 border rounded-md bg-black/5 shadow-sm hover:text-[#3AA6B9]">
-                   Theo dõi đơn
-                 </button>
-               </div>
+               <div className="flex space-x-3">
+                <Button size="small">Theo dõi đơn</Button>
+              </div>
              </div>
            </div>
          ))}

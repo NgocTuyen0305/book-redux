@@ -16,7 +16,7 @@ const SearchComponent = () => {
     dispatch(setSort(''));
     dispatch(setOrder(''));
     dispatch(setCategories(''));
-    console.log("text search: ", textSearch);
+    // console.log("text search: ", textSearch);
     setTextSearch("");
   };
   return (

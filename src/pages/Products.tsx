@@ -23,7 +23,7 @@ const Products = () => {
     _search,
     _category,
   });
-  // console.log(data?.products)
+  // console.log(isLoading)
   useEffect(() => {
     if (error) {
       return warning(error);
@@ -36,7 +36,6 @@ const Products = () => {
   useEffect(() => {
     navigate(`?${queries}`);
   }, [queries, navigate]);
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
@@ -44,6 +43,7 @@ const Products = () => {
       </div>
     );
   }
+  
 
   return (
     <div className="my-6 p-2 rounded-lg">

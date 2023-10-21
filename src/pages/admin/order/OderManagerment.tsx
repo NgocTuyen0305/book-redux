@@ -1,16 +1,20 @@
-import { Empty, Switch, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Empty, Popconfirm, Table } from "antd";
 import {
   useGetShoppingQuery,
-  useUpdateShoppingMutation,
+  useRemoveShoppingMutation,
 } from "../../../redux/api/shoppingApi";
 import LottieLoading from "../../../effect/LottieLoading";
-import { EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const OderManagerment = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
-
+  const [removeOrder, { isLoading: LoadingRemoveOrder }] =
+    useRemoveShoppingMutation();
   if (error) {
     return <Empty />;
   }
@@ -33,7 +37,8 @@ const OderManagerment = () => {
       isProcessing,
       isDelivering,
       isDelivered,
-      notProcessed
+      notProcessed,
+      deleted,
     }: any) => {
       return {
         key: _id,
@@ -46,7 +51,8 @@ const OderManagerment = () => {
         isProcessing,
         isDelivering,
         isDelivered,
-        notProcessed
+        notProcessed,
+        deleted,
       };
     }
   );
@@ -113,7 +119,11 @@ const OderManagerment = () => {
       dataIndex: "notProcessed",
       key: "notProcessed",
       render: (_) => {
-        return <span className={_ ? 'text-blue-500' : 'text-red-500'}>{_.toString()}</span>;
+        return (
+          <span className={_ ? "text-blue-500" : "text-red-500"}>
+            {_.toString()}
+          </span>
+        );
       },
     },
     {
@@ -121,7 +131,11 @@ const OderManagerment = () => {
       dataIndex: "isProcessing",
       key: "isProcessing",
       render: (_) => {
-        return <span className={_ ? 'text-blue-500' : 'text-red-500'}>{_.toString()}</span>;
+        return (
+          <span className={_ ? "text-blue-500" : "text-red-500"}>
+            {_.toString()}
+          </span>
+        );
       },
     },
     {
@@ -129,7 +143,23 @@ const OderManagerment = () => {
       dataIndex: "isDelivering",
       key: "isDelivering",
       render: (_) => {
-        return <span className={_ ? 'text-blue-500' : 'text-red-500'}>{_.toString()}</span>;
+        return (
+          <span className={_ ? "text-blue-500" : "text-red-500"}>
+            {_.toString()}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Yêu cầu hủy đơn",
+      dataIndex: "deleted",
+      key: "deleted",
+      render: (_) => {
+        return (
+          <span className={_ ? "text-blue-500" : "text-red-500"}>
+            {_.toString()}
+          </span>
+        );
       },
     },
     {
@@ -137,19 +167,42 @@ const OderManagerment = () => {
       dataIndex: "isDelivered",
       key: "isDelivered",
       render: (_) => {
-        return <span className={_ ? 'text-blue-500' : 'text-red-500'}>{_.toString()}</span>;
+        return (
+          <span className={_ ? "text-blue-500" : "text-red-500"}>
+            {_.toString()}
+          </span>
+        );
       },
     },
     {
-      title: "Trạng thái",
-      dataIndex: "action",
+      title: "Hành động",
       key: "action",
-      render: (_, record) => {
+      fixed: "right",
+      width: 150,
+      render: ({ key: id, deleted }) => {
+        // console.log("id: ", id);
+        // console.log("deleted: ", deleted);
         return (
           <>
-            <Link to={`update/${record?.key}`}>
-              <EditOutlined style={{ color: "blue", fontSize: 20 }} />
-            </Link>
+            {deleted ? (
+              <Popconfirm
+                placement="topLeft"
+                title={"Bạn có muốn xóa?"}
+                onConfirm={() => removeOrder(id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                {LoadingRemoveOrder ? (
+                  <LoadingOutlined />
+                ) : (
+                  <Button icon={<DeleteOutlined />} danger />
+                )}
+              </Popconfirm>
+            ) : (
+              <Link to={`update/${id}`}>
+                <EditOutlined style={{ color: "blue", fontSize: 20 }} />
+              </Link>
+            )}
           </>
         );
       },

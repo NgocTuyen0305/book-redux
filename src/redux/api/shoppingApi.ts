@@ -31,6 +31,12 @@ const shoppingApi = createApi({
         body: shopping,
       }),
     }),
+    removeShopping: builder.mutation({
+      query: (_id) => ({
+        url: `/remove-order/${_id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 // console.log('shoping api: ',shoppingApi)
@@ -39,7 +45,8 @@ export const {
   useCreateShoppingMutation,
   useGetShoppingQuery,
   useUpdateShoppingMutation,
-  useGetByIdShoppingQuery
+  useGetByIdShoppingQuery,
+  useRemoveShoppingMutation
 } = shoppingApi;
 export const shoppingReducer = shoppingApi.reducer;
 export default shoppingApi;

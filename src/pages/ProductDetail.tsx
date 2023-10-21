@@ -124,20 +124,23 @@ const ProductDetail = () => {
             </span>
           </div>
           <div className="font-poppins md:flex flex-col gap-3 items-center space-x-3">
-            <Button onClick={() => dispatch(addItemsCart([{...productDetail?.data,quantity:count}]))}>
+            <Button
+              onClick={() =>
+                dispatch(
+                  addItemsCart([{ ...productDetail?.data, quantity: count }])
+                )
+              }
+            >
               <a href={"/order"}>MUA NGAY</a>
             </Button>
-            <button
-              className={`py-2 px-4 hover:text-white hover:bg-[${bgColormain}] border border-[${bgColormain}]`}
+            <Button
               onClick={() => {
                 dispatch(
                   addItemCart({ ...productDetail?.data, quantity: count })
                 );
                 message.success("Đã thêm vào giỏ hàng!");
               }}
-            >
-              THÊM VÀO GIỎ HÀNG
-            </button>
+            >THÊM VÀO GIỎ HÀNG</Button>
           </div>
         </div>
       </div>
