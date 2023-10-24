@@ -7,12 +7,10 @@ import { setProcessing } from "../../redux/slices/badgeOrderSlice";
 
 const ProcessingOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
-  const [checkProcessing, setCheckProcessing] = useState();
   const [ProductProcessing, setProducProcessing] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductProcessing ", ProductProcessing);
-  // console.log("checkProcessing ", checkProcessing);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
@@ -29,19 +27,15 @@ const ProcessingOrder = () => {
       const checkUserOrder = await data?.filter(
         (item) => item.userId === user?._id
       );
-      const mapData = await checkUserOrder?.map((items) => {
-        return items.isProcessing;
-      });
-      const [checkDelivered] = mapData;
-      setCheckProcessing(checkDelivered);
-      if (checkDelivered) {
-        setProducProcessing(checkUserOrder);
-      }
+      const dataProcessing = await checkUserOrder?.filter(
+        (items) => items.isProcessing === true
+      );
+      setProducProcessing(dataProcessing)
     })();
-  }, [data, user, setCheckProcessing]);
+  }, [data, user]);
 
    
-  if (error || ProductProcessing === undefined) {
+  if (error || ProductProcessing?.length === 0) {
     return <Empty />;
   }
   if (isLoading) {

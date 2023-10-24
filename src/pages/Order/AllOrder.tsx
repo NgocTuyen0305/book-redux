@@ -13,12 +13,10 @@ const AllOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   const [updateShopping, { isLoading: UpdateOrderLoading }] =
     useUpdateShoppingMutation();
-  const [checkNotProcessed, setCheckNotProcessed] = useState();
   const [ProductnotProcessed, setProductnotProcessed] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductnotProcessed ", ProductnotProcessed);
-  // console.log("checkNotProcessed ", checkNotProcessed);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
@@ -30,22 +28,18 @@ const AllOrder = () => {
       dispatch(setAllOrder(length));
     })();
   }, [ProductnotProcessed, dispatch]);
+
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(
         (item) => item.userId === user?._id
       );
-      const mapData = await checkUserOrder?.map((items) => {
-        return items.notProcessed;
-      });
-      const [checknotprocessing] = mapData;
-      setCheckNotProcessed(checknotprocessing);
-      if (!checknotprocessing) {
-        setProductnotProcessed(checkUserOrder);
-      }
+      const dataAllOrder = await checkUserOrder?.filter(
+        (items) => items.notProcessed === false
+      );
+      setProductnotProcessed(dataAllOrder)
     })();
-  }, [data, user, checkNotProcessed]);
-
+  }, [data, user]);
 
   if (error || ProductnotProcessed === undefined) {
     return <Empty />;

@@ -6,12 +6,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setDelivering } from "../../redux/slices/badgeOrderSlice";
 const DeliveringOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
-  const [checkDelivering, setCheckDelivering] = useState();
   const [ProductDelivering, setProducDelivering] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductDelivering ", ProductDelivering);
-  // console.log("checkDelivering", checkDelivering);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
@@ -29,18 +27,14 @@ const DeliveringOrder = () => {
       const checkUserOrder = await data?.filter(
         (item) => item.userId === user?._id
       );
-      const mapData = await checkUserOrder?.map((items) => {
-        return items.isDelivering;
-      });
-      const [checkDelivering] = mapData;
-      setCheckDelivering(checkDelivering);
-      if (checkDelivering) {
-        setProducDelivering(checkUserOrder);
-      }
+      const dataDelivering = await checkUserOrder?.filter(
+        (items) => items.isDelivering === true
+      );
+      setProducDelivering(dataDelivering)
     })();
-  }, [data, user, setCheckDelivering]);
+  }, [data, user]);
 
-  if (error || ProductDelivering === undefined) {
+  if (error || ProductDelivering?.length === 0) {
     return <Empty />;
   }
   if (isLoading) {

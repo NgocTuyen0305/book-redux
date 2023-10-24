@@ -11,12 +11,10 @@ const DeliveredOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   // console.log("processing data: ", data);
 
-  const [checkDelivered, setCheckDelivered] = useState();
   const [ProductDelivered, setProducDelivered] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
-  // console.log("ProductDelivered ", ProductDelivered);
-  // console.log("checkDelivered ", checkDelivered);
+  console.log("ProductDelivered ", ProductDelivered);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
@@ -33,18 +31,14 @@ const DeliveredOrder = () => {
       const checkUserOrder = await data?.filter(
         (item) => item.userId === user?._id
       );
-      const mapData = await checkUserOrder?.map((items) => {
-        return items.isDelivered;
-      });
-      const [checkDelivered] = mapData;
-      setCheckDelivered(checkDelivered);
-      if (checkDelivered) {
-        setProducDelivered(checkUserOrder);
-      }
+      const dataDelivered = await checkUserOrder?.filter(
+        (items) => items.isDelivered === true
+      );
+      setProducDelivered(dataDelivered)
     })();
-  }, [data, user, checkDelivered]);
+  }, [data, user]);
 
-  if (error || ProductDelivered === undefined) {
+  if (error || ProductDelivered?.length === 0) {
     return <Empty />;
   }
   if (isLoading) {

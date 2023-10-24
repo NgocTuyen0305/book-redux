@@ -12,12 +12,13 @@ import { useAppDispatch, useAppSelector } from "../app/hook";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateShoppingMutation } from "../redux/api/shoppingApi";
 import { afterAddItemCart } from "../redux/slices/cartSlice";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const OrderPage = () => {
   const { orderItems } = useAppSelector((state) => state.Order);
   const { user } = useAppSelector((state) => state.Authentication);
   const [value, setValue] = useState("");
-  const [addOrder] = useCreateShoppingMutation();
+  const [addOrder,{isLoading}] = useCreateShoppingMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const productOrder = orderItems.map(
@@ -162,7 +163,7 @@ const OrderPage = () => {
                       </span>
                       <div className="">
                         <Button danger disabled={!user} htmlType="submit">
-                          Đặt Hàng
+                          {isLoading ? <LoadingOutlined /> :'Đặt Hàng'}
                         </Button>
                       </div>
                     </div>
