@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
 import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
-import { useAppSelector } from "../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { setProcessing } from "../../redux/slices/badgeOrderSlice";
 
 const ProcessingOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -12,6 +13,17 @@ const ProcessingOrder = () => {
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductProcessing ", ProductProcessing);
   // console.log("checkProcessing ", checkProcessing);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    (async () => {
+      const lengthProduct = await ProductProcessing?.map(
+        (item) => item.productOrder.length
+      );
+      // console.log('lengthProductDelivered',lengthProductDelivered)
+      const [length] = lengthProduct;
+      dispatch(setProcessing(length));
+    })();
+  }, [ProductProcessing, dispatch]);
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(

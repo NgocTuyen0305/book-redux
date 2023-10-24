@@ -6,7 +6,8 @@ import {
 import LottieLoading from "../../effect/LottieLoading";
 import { Button, Empty, notification } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useAppSelector } from "../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { setAllOrder } from "../../redux/slices/badgeOrderSlice";
 
 const AllOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -18,6 +19,17 @@ const AllOrder = () => {
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductnotProcessed ", ProductnotProcessed);
   // console.log("checkNotProcessed ", checkNotProcessed);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    (async () => {
+      const lengthProductProcessed = await ProductnotProcessed?.map(
+        (item) => item.productOrder.length
+      );
+      // console.log('lengthProductDelivered',lengthProductDelivered)
+      const [length] = lengthProductProcessed;
+      dispatch(setAllOrder(length));
+    })();
+  }, [ProductnotProcessed, dispatch]);
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(

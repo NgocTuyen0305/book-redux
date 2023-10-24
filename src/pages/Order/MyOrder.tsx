@@ -1,4 +1,4 @@
-import { Empty, Tabs, TabsProps } from "antd";
+import { Badge, Empty, Tabs, TabsProps } from "antd";
 import React from "react";
 import AllOrder from "./AllOrder";
 import ProcessingOrder from "./ProcessingOrder";
@@ -8,6 +8,9 @@ import { useAppSelector } from "../../app/hook";
 
 const MyOrder = () => {
   const { user } = useAppSelector((state) => state.Authentication);
+  const { allOrder, delivering, delivered, processing } = useAppSelector(
+    (state) => state.BadgeSlice
+  );
   // console.log("user: ", user);
   // const onChange = (key: string) => {
   //   console.log(key);
@@ -16,7 +19,7 @@ const MyOrder = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Tất cả",
+      label: <Badge size="small" count={allOrder}>Tất cả</Badge>,
       children: <AllOrder />,
     },
     {
@@ -26,17 +29,29 @@ const MyOrder = () => {
     },
     {
       key: "3",
-      label: "Đang xử lý",
+      label: (
+        <Badge size="small" count={processing}>
+          Đang xử lý
+        </Badge>
+      ),
       children: <ProcessingOrder />,
     },
     {
       key: "4",
-      label: "Đang vẩn chuyển",
+      label: (
+        <Badge size="small" count={delivering}>
+          Đang vẩn chuyển
+        </Badge>
+      ),
       children: <DeliveringOrder />,
     },
     {
       key: "5",
-      label: "Đã giao",
+      label: (
+        <Badge size="small" count={delivered}>
+          Đã giao
+        </Badge>
+      ),
       children: <DeliveredOrder />,
     },
     {

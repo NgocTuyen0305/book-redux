@@ -5,17 +5,29 @@ import LottieLoading from "../../effect/LottieLoading";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setIdOrder } from "../../redux/slices/feedbackSlice";
+import { setDelivered } from "../../redux/slices/badgeOrderSlice";
 
 const DeliveredOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   // console.log("processing data: ", data);
-  const dispatch = useAppDispatch();
+
   const [checkDelivered, setCheckDelivered] = useState();
   const [ProductDelivered, setProducDelivered] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
   // console.log("ProductDelivered ", ProductDelivered);
   // console.log("checkDelivered ", checkDelivered);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    (async () => {
+      const lengthProductDelivered = await ProductDelivered?.map(
+        (item) => item.productOrder.length
+      );
+      // console.log('lengthProductDelivered',lengthProductDelivered)
+      const [length] = lengthProductDelivered;
+      dispatch(setDelivered(length));
+    })();
+  }, [ProductDelivered, dispatch]);
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(
@@ -32,7 +44,6 @@ const DeliveredOrder = () => {
     })();
   }, [data, user, checkDelivered]);
 
-   
   if (error || ProductDelivered === undefined) {
     return <Empty />;
   }
