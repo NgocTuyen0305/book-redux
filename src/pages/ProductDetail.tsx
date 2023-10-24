@@ -1,5 +1,5 @@
 import { Badge, Button, Rate, Tag, message, theme } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/api/productApi";
@@ -9,6 +9,9 @@ import { useAppDispatch } from "../app/hook";
 import LottieLoading from "../effect/LottieLoading";
 import { addItemCart } from "../redux/slices/cartSlice";
 import { addItemsCart } from "../redux/slices/orderSlice";
+import FeedBackProducts from "../components/FeedBackProducts";
+import { useGetShoppingQuery } from "../redux/api/shoppingApi";
+import { useGetUserQuery } from "../redux/api/auth";
 const ProductDetail = () => {
   const { useToken } = theme;
   const { token } = useToken();
@@ -18,7 +21,23 @@ const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
-  // console.log('count product: ',count)
+  const { data, isLoading: OrderLoading, error } = useGetShoppingQuery();
+  const [userId, setUserId] = useState();
+  const { data: user } = useGetUserQuery(userId);
+  const idProductToOrder = user?.user?.products.flat();
+  const checkProduct = idProductToOrder?.includes(id);
+  // console.log("checkProduct: ",checkProduct)
+  useEffect(() => {
+    (async () => {
+     
+      const idUser = await data?.map((item) => item.userId);
+      const [userId] = idUser
+      setUserId(userId);
+    })();
+  }, [data]);
+
+  // console.log('boughtVlalue: ',bought)
+
   const listSilimar = productDetail?.listProductSimilar?.filter(
     (item: IProduct) => {
       return item._id !== id;
@@ -54,7 +73,6 @@ const ProductDetail = () => {
   };
   return (
     <div className="p-2 md:max-w-6xl md:mx-auto ">
-      {" "}
       <div className="md:grid md:grid-cols-3 gap-3 bg-white">
         <div className="p-2 space-y-6">
           {/* slider image product detail */}
@@ -140,10 +158,13 @@ const ProductDetail = () => {
                 );
                 message.success("Đã thêm vào giỏ hàng!");
               }}
-            >THÊM VÀO GIỎ HÀNG</Button>
+            >
+              THÊM VÀO GIỎ HÀNG
+            </Button>
           </div>
         </div>
       </div>
+      <FeedBackProducts checkProduct={checkProduct} />
       <SimilarProduct listSilimar={listSilimar} />
     </div>
   );

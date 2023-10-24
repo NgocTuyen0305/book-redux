@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
 import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
+import { useAppSelector } from "../../app/hook";
 
 const ProcessingOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
-  const mapData = data?.map((items) => {
-    return items;
-  });
-  const currenData = mapData?.filter((item) => {
-    return item?.isProcessing;
-  });
-  console.log(currenData);
+  const [checkProcessing, setCheckProcessing] = useState();
+  const [ProductProcessing, setProducProcessing] = useState();
+  // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
+  const { user } = useAppSelector((state) => state.Authentication);
+  // console.log("ProductProcessing ", ProductProcessing);
+  // console.log("checkProcessing ", checkProcessing);
+  useEffect(() => {
+    (async () => {
+      const checkUserOrder = await data?.filter(
+        (item) => item.userId === user?._id
+      );
+      const mapData = await checkUserOrder?.map((items) => {
+        return items.isProcessing;
+      });
+      const [checkDelivered] = mapData;
+      setCheckProcessing(checkDelivered);
+      if (checkDelivered) {
+        setProducProcessing(checkUserOrder);
+      }
+    })();
+  }, [data, user, setCheckProcessing]);
 
-  if (error || currenData?.length === 0) {
+   
+  if (error || ProductProcessing === undefined) {
     return <Empty />;
   }
   if (isLoading) {
@@ -25,7 +41,7 @@ const ProcessingOrder = () => {
   }
   return (
     <div>
-      {currenData?.map((items) => (
+      {ProductProcessing?.map((items) => (
         <div key={items?._id}>
           <h2 className="text-blue-500">Đang xử lí đơn hàng</h2>
           <div className="">

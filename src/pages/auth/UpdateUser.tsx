@@ -14,6 +14,7 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     form.setFieldsValue({
       name: user?.name,
@@ -22,6 +23,7 @@ const UpdateUser = () => {
       address: user?.address,
     });
   }, [user]);
+  
   const onFinish = (values) => {
     updateUser({ ...values, _id: user?._id })
       .unwrap()

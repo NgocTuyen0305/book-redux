@@ -32,10 +32,15 @@ const authApi = createApi({
         body: user
       })
     }),
+    getUser: builder.query({
+      query: (id) => ({
+        url: `/user/profile/${id}`,
+      })
+    }),
   }),
 });
 // console.log('auth api: ',authApi)
 
-export const { useSigninMutation, useSignupMutation,useUpdateUserMutation } = authApi;
+export const { useSigninMutation, useSignupMutation,useUpdateUserMutation,useGetUserQuery } = authApi;
 export const authReducer = authApi.reducer;
 export default authApi;

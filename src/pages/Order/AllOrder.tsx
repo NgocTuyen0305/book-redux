@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   useGetShoppingQuery,
   useUpdateShoppingMutation,
@@ -6,20 +6,36 @@ import {
 import LottieLoading from "../../effect/LottieLoading";
 import { Button, Empty, notification } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../app/hook";
 
 const AllOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   const [updateShopping, { isLoading: UpdateOrderLoading }] =
     useUpdateShoppingMutation();
-  const mapData = data?.map((items) => {
-    return items;
-  });
-  const currenData = mapData?.filter((item) => {
-    return !item?.notProcessed;
-  });
-  console.log(currenData);
+  const [checkNotProcessed, setCheckNotProcessed] = useState();
+  const [ProductnotProcessed, setProductnotProcessed] = useState();
+  // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
+  const { user } = useAppSelector((state) => state.Authentication);
+  // console.log("ProductnotProcessed ", ProductnotProcessed);
+  // console.log("checkNotProcessed ", checkNotProcessed);
+  useEffect(() => {
+    (async () => {
+      const checkUserOrder = await data?.filter(
+        (item) => item.userId === user?._id
+      );
+      const mapData = await checkUserOrder?.map((items) => {
+        return items.notProcessed;
+      });
+      const [checknotprocessing] = mapData;
+      setCheckNotProcessed(checknotprocessing);
+      if (!checknotprocessing) {
+        setProductnotProcessed(checkUserOrder);
+      }
+    })();
+  }, [data, user, checkNotProcessed]);
 
-  if (error || currenData?.length === 0) {
+
+  if (error || ProductnotProcessed === undefined) {
     return <Empty />;
   }
   if (isLoading) {
@@ -31,7 +47,7 @@ const AllOrder = () => {
   }
   return (
     <div className="space-y-6">
-      {currenData?.map((itemOrder) => (
+      {ProductnotProcessed?.map((itemOrder) => (
         <div className="" key={itemOrder._id}>
           <div className="">Đơn Hàng: #{itemOrder._id}</div>
           {itemOrder?.productOrder?.map((item) => (

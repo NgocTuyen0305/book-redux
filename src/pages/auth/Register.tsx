@@ -1,12 +1,10 @@
-import { Button, Form, Input, Space, notification } from "antd";
+import { Button, Form, Input, Space, message, notification } from "antd";
 import { useSignupMutation } from "../../redux/api/auth";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
 const Register = () => {
-  const navigate = useNavigate();
   const [signup, { isLoading, error }] = useSignupMutation();
   useEffect(() => {
     if (error) {
@@ -19,7 +17,7 @@ const Register = () => {
       .then(() => {
         notification.success({ message: "Đăng kí thành công!" });
       })
-      .then(() => navigate("/signin"));
+
   };
 
   return (
@@ -78,12 +76,11 @@ const Register = () => {
         <Form.Item>
           <Space style={{ display: "flex", justifyContent: "space-between" }}>
             <Button htmlType="submit">
-              {" "}
               {isLoading ? (
                 <AiOutlineLoading3Quarters className="animate-spin" />
               ) : (
                 "Register"
-              )}{" "}
+              )}
             </Button>
           </Space>
         </Form.Item>
