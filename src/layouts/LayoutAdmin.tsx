@@ -13,6 +13,8 @@ import {
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  PictureOutlined,
+  ShoppingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../app/hook";
@@ -53,7 +55,7 @@ const LayoutAdmin = () => {
         <Menu
           style={{}}
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          // defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
@@ -72,11 +74,21 @@ const LayoutAdmin = () => {
             },
             {
               key: "4",
-              icon: <BiUser />,
+              icon: <ShoppingOutlined />,
               label: <Link to={"order"}>Order</Link>,
             },
             {
               key: "5",
+              icon: < BiUser/>,
+              label: <Link to={"profile"}>User</Link>,
+            },
+            {
+              key: "6",
+              icon: <PictureOutlined />,
+              label: <Link to={"slider"}>Slider</Link>,
+            },
+            {
+              key: "7",
               label: (
                 <Button
                   icon={<LogoutOutlined />}

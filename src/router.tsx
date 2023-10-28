@@ -16,6 +16,8 @@ import OrderPage from "./pages/OrderPage";
 import MyOrder from "./pages/Order/MyOrder";
 import OderManagerment from "./pages/admin/order/OderManagerment";
 import UpdateOrder from "./pages/admin/order/UpdateOrder";
+import ProfileManager from "./pages/admin/profile/ProfileManager";
+import UploadSlider from "./pages/admin/slider/UploadSlider";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ export const router = createBrowserRouter([
           {
             path: "order/update/:id",
             element: <UpdateOrder />,
+          },
+          {
+            path: "profile",
+            element: <ProfileManager />,
+          },
+          {
+            path: "slider",
+            element: <UploadSlider />,
           },
         ],
       },

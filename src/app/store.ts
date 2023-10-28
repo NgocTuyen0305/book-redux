@@ -26,6 +26,7 @@ import shoppingApi, { shoppingReducer } from "../redux/api/shoppingApi";
 import feedbackApi, { feedbackReducer } from "../redux/api/feedbackApi";
 import { feedbackSliceReducer } from "../redux/slices/feedbackSlice";
 import { badgeReducer } from "../redux/slices/badgeOrderSlice";
+import sliderApi, { sliderReducer } from "../redux/api/sliderApi";
 
 const persistConfig = {
   key: "root",
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   [categoriesApi.reducerPath]: categoriesReducer,
   [shoppingApi.reducerPath]: shoppingReducer,
   [feedbackApi.reducerPath]: feedbackReducer,
+  [sliderApi.reducerPath]: sliderReducer,
   Authentication: authSliceReducer,
   Cart: cartReducer,
   Order: orderReducer,
@@ -51,6 +53,7 @@ const middleware = [
   categoriesApi.middleware,
   shoppingApi.middleware,
   feedbackApi.middleware,
+  sliderApi.middleware,
 ];
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

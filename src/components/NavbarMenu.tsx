@@ -1,70 +1,36 @@
 import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import { GroupOutlined, ShopOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-type MenuItem = Required<MenuProps>["items"][number];
+import SubMenu from "antd/es/menu/SubMenu";
+import { useGetCategoriesQuery } from "../redux/api/categoriesApi";
+import { useAppDispatch } from "../app/hook";
+import { setCategories } from "../redux/slices/paginationSlice";
+import { Link } from "react-router-dom";
 const NavbarMenu = () => {
-  const [openKeys, setOpenKeys] = useState(["sub1"]);
-  const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
+  const { data } = useGetCategoriesQuery();
+  const dispatch = useAppDispatch();
 
-  const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  };
-
-  function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    children?: MenuItem[],
-    type?: "group"
-  ): MenuItem {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    } as MenuItem;
-  }
-  const items: MenuItem[] = [
-    getItem("Navigation One", "sub1", <MailOutlined />, [
-      getItem("Option 1", "1"),
-      getItem("Option 2", "2"),
-      getItem("Option 3", "3"),
-      getItem("Option 4", "4"),
-    ]),
-    getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-      getItem("Option 5", "5"),
-      getItem("Option 6", "6"),
-      getItem("Submenu", "sub3", null, [
-        getItem("Option 7", "7"),
-        getItem("Option 8", "8"),
-      ]),
-    ]),
-    getItem("Navigation Three", "sub4", <SettingOutlined />, [
-      getItem("Option 9", "9"),
-      getItem("Option 10", "10"),
-      getItem("Option 11", "11"),
-      getItem("Option 12", "12"),
-    ]),
-  ];
   return (
     <div>
-      <Menu
-        mode="inline"
-        openKeys={openKeys}
-        onOpenChange={onOpenChange}
-        items={items}
-      />
+      <Menu mode="inline">
+        <SubMenu key="sub1" icon={<GroupOutlined />} title="Thể loại">
+          {data?.result.map((items) => {
+            return (
+              <Menu.Item
+                key={items._id}
+                onClick={() => {
+                  dispatch(setCategories(items._id));
+                }}
+              >
+                {items.name}
+              </Menu.Item>
+            );
+          })}
+        </SubMenu>
+        <Menu.Item icon={<ShopOutlined />}>
+          <Link to={"/my-order"}>Đơn hàng </Link>
+        </Menu.Item>
+      </Menu>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const DeliveredOrder = () => {
   const [ProductDelivered, setProducDelivered] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
-  console.log("ProductDelivered ", ProductDelivered);
+  // console.log("ProductDelivered ", ProductDelivered);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {

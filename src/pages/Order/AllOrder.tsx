@@ -41,7 +41,7 @@ const AllOrder = () => {
     })();
   }, [data, user]);
 
-  if (error || ProductnotProcessed === undefined) {
+  if (error || ProductnotProcessed?.length === 0) {
     return <Empty />;
   }
   if (isLoading) {

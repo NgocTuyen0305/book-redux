@@ -1,4 +1,4 @@
-import { Rate } from "antd";
+import { Button, Rate } from "antd";
 import Slider from "react-slick";
 import Products from "./Products";
 import ProductTrending from "./ProductTrending";
@@ -16,7 +16,7 @@ const Homepage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
-        <LottieLoading/>
+        <LottieLoading />
       </div>
     );
   }
@@ -41,13 +41,15 @@ const Homepage = () => {
               <div className="" key={product._id}>
                 <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
                   <div className="md:grid grid-cols-2 gap-3">
-                    <div className="">
-                      <img
-                        src={product?.images[0].response.uploadedFiles[0].url}
-                        alt=""
-                        className=" md:-translate-y-12 "
-                      />
-                    </div>
+                    <Link to={`products/${product._id}/detail`}>
+                      <div className="">
+                        <img
+                          src={product?.images[0].response.uploadedFiles[0].url}
+                          alt=""
+                          className=" md:-translate-y-12 "
+                        />
+                      </div>
+                    </Link>
                     <div className="flex flex-col md:gap-y-3 sm:gap-y-1 justify-center ">
                       <span className="line-clamp-1 text-lg sm:text-sm md:text-xl">
                         {product.name}
@@ -55,14 +57,12 @@ const Homepage = () => {
                       <span className="text-gray-400 sm:text-xs sm:line-clamp-1">
                         {product.author}
                       </span>
-                      <span className="sm:hidden md:block">
-                        <Rate allowHalf value={product.rate}/>
+                      <div className="hidden md:flex flex-col space-y-2">
+                      <span className="">
+                        <Rate allowHalf value={product.rate} className="md:text-sm"/>
                       </span>
-                      <div className="sm:hidden md:block mx-auto">
-                        <Link to={`products/${product._id}/detail`}>
-                          <button className="px-6 py-1 shadow-md rounded-md hover:bg-[#3AA6B9] hover:text-white">
-                            Views
-                          </button>
+                      <Link to={`products/${product._id}/detail`}>
+                          <Button>View</Button>
                         </Link>
                       </div>
                     </div>

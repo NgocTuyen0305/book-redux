@@ -1,52 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
-import '../App.css'
-const styleSlide: React.CSSProperties = {
-  backgroundImage: `url('./images/background-slide.jpg')`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover'
-}
+import { useGetAllSliderQuery } from "../redux/api/sliderApi";
+import LottieLoading from "../effect/LottieLoading";
+
 const SliderPage = () => {
-  return (
-    <div className="">
-      <div className="shadow-xl md:h-72 sm:h-[160px]">
-        <Carousel autoplay dots={false} style={styleSlide}>
-          <div>
-            <div className="md:h-72  bg-no-repeat bg-cover grid grid-cols-2 items-center justify-around p-2">
-              <div className="flex flex-col md:gap-y-6 items-center">
-                <h3 className="font-poppins md:text-xl font-bold li sm:text-xs">ĐỪNG LỰA CHỌN AN NHÀN KHI CÒN TRẺ</h3>
-                <p className="font-dancingScript md:text-2xl font-bold sm:text-xs">"Hành trình vạn dặm khởi đầu từ từng bước chân nhỏ."</p>
-                <span className="font-dancingScript md:text-xl font-bold sm:text-xs">Cảnh Thiên.</span>
-              </div>
-              <div className="">
-                <img
-                  src="./images/book1.webp"
-                  alt=""
-                  className="md:w-36 sm:w-24 object-cover sm:mx-auto shadow-md shadow-gray-700 skew-y-3"
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="md:h-72  bg-no-repeat bg-cover grid grid-cols-2 items-center justify-around p-2">
-              <div className="flex flex-col md:gap-y-6 items-center">
-                <h3 className="font-poppins md:text-xl font-bold li sm:text-xs">ĐỪNG LỰA CHỌN AN NHÀN KHI CÒN TRẺ</h3>
-                <p className="font-dancingScript md:text-2xl font-bold sm:text-xs">"Hành trình vạn dặm khởi đầu từ từng bước chân nhỏ."</p>
-                <span className="font-dancingScript md:text-xl font-bold sm:text-xs">Cảnh Thiên.</span>
-              </div>
-              <div className="">
-                <img
-                  src="./images/book1.webp"
-                  alt=""
-                  className="md:w-36 sm:w-24 object-cover sm:mx-auto shadow-md shadow-gray-700 skew-y-3"
-                />
-              </div>
-            </div>
-          </div>
-         
-          
-        </Carousel>
+  const { data, isLoading, error } = useGetAllSliderQuery();
+  const [imageSlider, setImageSlider] = useState("");
+  const [bannerSlider, setBannerSlider] = useState("");
+  // console.log('data: ',data)
+  // console.log("image: ", imageSlider);
+  console.log("bannerSlider: ", bannerSlider);
+  useEffect(() => {
+    (async()=>{
+      const images = await data?.slider[0].images[0].fileList.map(
+        (items) => items.response
+      );
+      const image = images?.map((items) => items.uploadedFiles[0].url);
+      const banners = await data?.slider[0].banner[0].fileList.map(
+        (items) => items.response
+      );
+      const banner = banners?.map((items) => items.uploadedFiles[0].url);
+      // console.log('images :',image)
+      setBannerSlider(banner)
+      setImageSlider(image)
+    })()
+  }, [data]);
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LottieLoading />
       </div>
+    );
+  }
+  // console.log("slider: ", data);
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="md:flex gap-x-3 rounded-md">
+        <Carousel autoplay dots={false} className="md:w-[840px]">
+          {imageSlider?.map((items,i)=> {
+            return(
+            <div className="rounded-md" key={i}>
+              <img src={items} alt="" className="object-cover overflow-hidden rounded-md"/>
+            </div>
+          )})}
+        </Carousel>
+        <div className="md:flex flex-col justify-between hidden">
+          {bannerSlider?.map((items,i)=> {
+            return (
+              <div className="" key={i}>
+                <img src={items} alt="" className="rounded-md"/>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
     </div>
   );
 };

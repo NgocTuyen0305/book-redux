@@ -9,25 +9,24 @@ import { useAppSelector } from "../app/hook";
 import { LoadingOutlined } from "@ant-design/icons";
 import LottieLoading from "../effect/LottieLoading";
 
-const FeedBackProducts = ({  checkProduct }) => {
+const FeedBackProducts = ({ checkProduct }) => {
   const { id } = useParams();
   const { user } = useAppSelector((state) => state.Authentication);
   const { data, isLoading, error } = useGetFeedbackQuery(id);
   const [createFeedback, { isLoading: FeedbackLoading, error: ErrorFeedback }] =
     useCreateFeedbackMutation();
+  const [feedbackData, setFeedbackData] = useState([]);
+  const [isCheck, setIsCheck] = useState();
   const { idOrder } = useAppSelector((state) => state.FeedbackSlice);
-  const [checkFeedback, setCheckFeedback] = useState();
-  // console.log("check feedbacked: ", checkFeedback);
-  // console.log("checkProduct: ", checkProduct);
-  // console.log("checkbought: ", bought);
-  // console.log("idOrder: ", idOrder);
+  console.log('data feedback: ',feedbackData)
+  console.log('data: ',data)
   useEffect(() => {
-    (async () => {
-      const isFeedback = await data?.feedbacks?.map((item) => item.feedbacked);
-      const [feedback] = isFeedback;
-      setCheckFeedback(feedback);
-    })();
-  }, [data]);
+    setIsCheck(checkProduct);
+    if (user === null) {
+      setIsCheck(false);
+    }
+  }, [user, checkProduct]);
+
   useEffect(() => {
     if (ErrorFeedback) {
       return notification.error({
@@ -43,7 +42,10 @@ const FeedBackProducts = ({  checkProduct }) => {
       orderId: idOrder,
     })
       .unwrap()
-      .then(() => {
+      .then((newFeedback) => {
+        setFeedbackData([newFeedback?.feedback,...data?.feedbacks]);
+        document.querySelector("#formCreate")?.reset();
+        // console.log(newFeedback) 
         notification.success({
           message: "Comment is successly!",
         });
@@ -98,9 +100,9 @@ const FeedBackProducts = ({  checkProduct }) => {
           </div>
         </div>
         {/* Create feedback */}
-        {checkProduct ? (
+        {isCheck ? (
           <div className="">
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} id="formCreate">
               <Form.Item
                 label="Đánh giá"
                 name="rating"
@@ -134,7 +136,7 @@ const FeedBackProducts = ({  checkProduct }) => {
             <LottieLoading />
           </div>
         ) : (
-          data?.feedbacks?.map((item) => (
+          (feedbackData.length === 0 ? data?.feedbacks : feedbackData).map((item) => (
             <div className="flex items-center gap-x-6" key={item._id}>
               <div className="flex flex-col items-center">
                 <span>{item.userId.name}</span>

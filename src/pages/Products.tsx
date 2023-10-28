@@ -12,6 +12,8 @@ import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
 import { warning } from "../effect/notification";
 import LottieLoading from "../effect/LottieLoading";
+import { motion } from "framer-motion"
+
 const Products = () => {
   const { _page, _limit, _sort, _order, _search, _category } = useAppSelector(
     (state) => state.Pagination
@@ -52,11 +54,14 @@ const Products = () => {
       </h3>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        {data?.products?.map((product: IProduct) => {
+        {data?.products?.map((product: IProduct,i) => {
           return (
-            <div
+            <motion.div
               className="border p-1 group hover:shadow-md bg-white"
               key={product._id}
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              transition={{duration: 1,delay:i * 0.5 }}
             >
               <div className="relative">
                 <img
@@ -120,7 +125,7 @@ const Products = () => {
                   <span>Basket</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

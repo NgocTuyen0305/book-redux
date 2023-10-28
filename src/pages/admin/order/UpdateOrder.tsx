@@ -7,6 +7,7 @@ import {
 import { LoadingOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import LottieLoading from "../../../effect/LottieLoading";
+import { warning } from "../../../effect/notification";
 
 const UpdateOrder = () => {
   const { id } = useParams();
@@ -15,6 +16,13 @@ const UpdateOrder = () => {
   const [updateShopping, { isLoading: LoadingUpdate, error: ErrUpdate }] =
     useUpdateShoppingMutation();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (ErrUpdate) {
+      notification.error({
+        message: "Cập nhật đơn hàng thất bại",
+      });
+    }
+  }, [ErrUpdate]);
   useEffect(() => {
     form.setFieldsValue({
       isProcessing: data?.isProcessing,

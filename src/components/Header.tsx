@@ -6,7 +6,7 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Drawer, Dropdown, Menu, MenuProps, Modal } from "antd";
+import { Badge, Button, Drawer, Dropdown,  MenuProps, Modal } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CartShop from "./CartShop";
@@ -151,7 +151,7 @@ const Header = () => {
                 open={open}
                 width={240}
               >
-                <NavbarMenu />
+                <NavbarMenu/>
               </Drawer>
             </div>
           </div>

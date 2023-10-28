@@ -28,19 +28,30 @@ const authApi = createApi({
     updateUser: builder.mutation({
       query: (user) => ({
         url: `/user/update/${user._id}`,
-        method: 'PUT',
-        body: user
-      })
+        method: "PUT",
+        body: user,
+      }),
+    }),
+    getAllUser: builder.query({
+      query: () => ({
+        url: `/user/profile`,
+      }),
     }),
     getUser: builder.query({
       query: (id) => ({
         url: `/user/profile/${id}`,
-      })
+      }),
     }),
   }),
 });
 // console.log('auth api: ',authApi)
 
-export const { useSigninMutation, useSignupMutation,useUpdateUserMutation,useGetUserQuery } = authApi;
+export const {
+  useSigninMutation,
+  useSignupMutation,
+  useUpdateUserMutation,
+  useGetUserQuery,
+  useGetAllUserQuery
+} = authApi;
 export const authReducer = authApi.reducer;
 export default authApi;

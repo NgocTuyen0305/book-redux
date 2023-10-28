@@ -11,6 +11,9 @@ const feedbackApi = createApi({
     },
   }),
   endpoints: (builder)=>({
+    getAllFeedback: builder.query({
+      query: () => `/get-all-feedbacks`
+    }),
     getFeedback: builder.query({
       query: (id) => `/get-feedback/${id}`
     }),
@@ -23,6 +26,6 @@ const feedbackApi = createApi({
     }),
   })
 })
-export const {useGetFeedbackQuery,useCreateFeedbackMutation} = feedbackApi;
+export const {useGetFeedbackQuery,useCreateFeedbackMutation,useGetAllFeedbackQuery} = feedbackApi;
 export const feedbackReducer = feedbackApi.reducer;
 export default feedbackApi

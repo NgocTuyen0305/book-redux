@@ -1,4 +1,4 @@
-import { Button, Dropdown, MenuProps, Spin } from "antd";
+import { Button, Dropdown, MenuProps, Space, Spin } from "antd";
 import { useGetCategoriesQuery } from "../redux/api/categoriesApi";
 import { useAppDispatch } from "../app/hook";
 import { setCategories } from "../redux/slices/paginationSlice";
@@ -12,9 +12,9 @@ const DropdownCate = () => {
     return {
       key: item._id,
       label: (
-        <Button onClick={() => dispatch(setCategories(item._id))}>
+        <Space onClick={() => dispatch(setCategories(item._id))}>
           {item.name}
-        </Button>
+        </Space>
       ),
     };
   });

@@ -24,31 +24,27 @@ const ProductDetail = () => {
   const { data, isLoading: OrderLoading, error } = useGetShoppingQuery();
   const [userId, setUserId] = useState();
   const { data: user } = useGetUserQuery(userId);
+  // kiểm tra người dùng mua sản phẩm này chưa
   const idProductToOrder = user?.user?.products.flat();
   const checkProduct = idProductToOrder?.includes(id);
   // console.log("checkProduct: ",checkProduct)
   useEffect(() => {
-    (async () => {
-     
+    (async () => {   
       const idUser = await data?.map((item) => item.userId);
       const [userId] = idUser
       setUserId(userId);
     })();
   }, [data]);
 
-  // console.log('boughtVlalue: ',bought)
-
   const listSilimar = productDetail?.listProductSimilar?.filter(
     (item: IProduct) => {
       return item._id !== id;
     }
   );
-  // console.log("product detail: ", productDetail?.data);
 
   const ListImage = productDetail?.data?.images.map((items) => {
     return items?.response?.uploadedFiles[0].url;
   });
-  // console.log("list image: ", ListImage);
 
   if (isLoading) {
     return (
