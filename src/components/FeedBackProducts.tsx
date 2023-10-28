@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useAppSelector } from "../app/hook";
 import { LoadingOutlined } from "@ant-design/icons";
 import LottieLoading from "../effect/LottieLoading";
+import { motion } from "framer-motion";
 
 const FeedBackProducts = ({ checkProduct }) => {
   const { id } = useParams();
@@ -18,8 +19,8 @@ const FeedBackProducts = ({ checkProduct }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isCheck, setIsCheck] = useState();
   const { idOrder } = useAppSelector((state) => state.FeedbackSlice);
-  console.log('data feedback: ',feedbackData)
-  console.log('data: ',data)
+  // console.log("data feedback: ", feedbackData);
+  // console.log("data: ", data);
   useEffect(() => {
     setIsCheck(checkProduct);
     if (user === null) {
@@ -34,6 +35,7 @@ const FeedBackProducts = ({ checkProduct }) => {
       });
     }
   }, [ErrorFeedback]);
+
   const onFinish = (value) => {
     createFeedback({
       ...value,
@@ -43,9 +45,9 @@ const FeedBackProducts = ({ checkProduct }) => {
     })
       .unwrap()
       .then((newFeedback) => {
-        setFeedbackData([newFeedback?.feedback,...data?.feedbacks]);
+        setFeedbackData([newFeedback?.feedback, ...data?.feedbacks]);
         document.querySelector("#formCreate")?.reset();
-        // console.log(newFeedback) 
+        // console.log(newFeedback)
         notification.success({
           message: "Comment is successly!",
         });
@@ -65,7 +67,7 @@ const FeedBackProducts = ({ checkProduct }) => {
             <span>
               <Rate value={5} className="text-sm" />
             </span>
-            <span className="text-gray-400">(1 đánh giá)</span>
+            <span className="text-gray-400">({data?.feedbacks.length} đánh giá)</span>
           </div>
           <div className="">
             <div className="flex items-center gap-x-4">
@@ -136,20 +138,30 @@ const FeedBackProducts = ({ checkProduct }) => {
             <LottieLoading />
           </div>
         ) : (
-          (feedbackData.length === 0 ? data?.feedbacks : feedbackData).map((item) => (
-            <div className="flex items-center gap-x-6" key={item._id}>
-              <div className="flex flex-col items-center">
-                <span>{item.userId.name}</span>
-                <span className="text-gray-400 text-xs">{item.createdAt}</span>
-              </div>
-              <div className="">
-                <span>
-                  <Rate value={item.rating} className="md:text-sm" />
-                </span>
-                <p>{item?.comment}</p>
-              </div>
-            </div>
-          ))
+          (feedbackData.length === 0 ? data?.feedbacks : feedbackData).map(
+            (item,i) => (
+              <motion.div
+                className="flex items-center gap-x-6"
+                key={item._id}
+                initial={{opacity: 0,y:-20 }}
+                animate={{ opacity: 1,y:0 }}
+                transition={{ duration: 0.3 , delay:i * .1 }}
+              >
+                <div className="flex flex-col items-center">
+                  <span>{item.userId.name}</span>
+                  <span className="text-gray-400 text-xs">
+                    {item.createdAt}
+                  </span>
+                </div>
+                <div className="">
+                  <span>
+                    <Rate value={item.rating} className="md:text-sm" />
+                  </span>
+                  <p>{item?.comment}</p>
+                </div>
+              </motion.div>
+            )
+          )
         )}
       </div>
     </div>

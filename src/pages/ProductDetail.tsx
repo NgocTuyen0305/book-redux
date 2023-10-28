@@ -12,6 +12,8 @@ import { addItemsCart } from "../redux/slices/orderSlice";
 import FeedBackProducts from "../components/FeedBackProducts";
 import { useGetShoppingQuery } from "../redux/api/shoppingApi";
 import { useGetUserQuery } from "../redux/api/auth";
+import { motion } from "framer-motion";
+
 const ProductDetail = () => {
   const { useToken } = theme;
   const { token } = useToken();
@@ -29,9 +31,9 @@ const ProductDetail = () => {
   const checkProduct = idProductToOrder?.includes(id);
   // console.log("checkProduct: ",checkProduct)
   useEffect(() => {
-    (async () => {   
+    (async () => {
       const idUser = await data?.map((item) => item.userId);
-      const [userId] = idUser
+      const [userId] = idUser;
       setUserId(userId);
     })();
   }, [data]);
@@ -72,18 +74,27 @@ const ProductDetail = () => {
       <div className="md:grid md:grid-cols-3 gap-3 bg-white">
         <div className="p-2 space-y-6">
           {/* slider image product detail */}
-          <div
+          <motion.div
             className="duration-500 ease-in-out h-64 bg-center bg-cover"
             style={{ backgroundImage: `url(${ListImage[currentImage]})` }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             {/* <img src={ListImage[currentImage]} alt="" /> */}
-          </div>
+          </motion.div>
           <div className="grid grid-cols-3 gap-8">
             {ListImage.map((image, index: number | string) => {
               return (
-                <button onClick={() => gotoImage(index)} key={index}>
+                <motion.button
+                  onClick={() => gotoImage(index)}
+                  key={index}
+                  initial={{ opacity: 0, x: -20, y: -20 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.5, delay:index * 0.1 }}
+                >
                   <img src={image} alt="" />
-                </button>
+                </motion.button>
               );
             })}
           </div>
