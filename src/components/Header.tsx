@@ -6,7 +6,7 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Drawer, Dropdown,  MenuProps, Modal } from "antd";
+import { Badge, Button, Drawer, Dropdown, MenuProps, Modal } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CartShop from "./CartShop";
@@ -15,6 +15,7 @@ import SearchComponent from "./SearchComponent";
 import DropdownCate from "./DropdownCate";
 import NavbarMenu from "./NavbarMenu";
 import { logout } from "../redux/slices/authSlice";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -115,28 +116,36 @@ const Header = () => {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <div
-            className={
-              fixNavba
-                ? "sm:hidden md:block font-dancingScript font-bold md:text-4xl hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out"
-                : "hidden"
-            }
+          <motion.div
+            className={`font-dancingScript font-bold md:text-4xl hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out ${
+              !fixNavba ? "sm:hidden" : ""
+            }`}
+            initial={{ opacity: 0, x: 20, y: -20 }}
+            animate={{
+              opacity: fixNavba ? 1 : 0,
+              x: fixNavba ? 0 : 20,
+              y: fixNavba ? 0 : -20,
+            }}
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
             <a href="/" className="">
               Mymy
             </a>
-          </div>
+          </motion.div>
 
           <div className="">
             {/* tính */}
-            <div className="hidden md:flex items-center space-x-6 font-poppins">
+            <div
+              className={`hidden md:flex items-center space-x-6 font-poppins`}
+              
+            >
               <DropdownCate />
-              <Link to={'/my-order'} className="hover:text-[#3AA6B9] duration-500 transition-colors">
+              <Link
+                to={"/my-order"}
+                className="hover:text-[#3AA6B9] duration-500 transition-colors"
+              >
                 Đơn Hàng
               </Link>
-              <span className="hover:text-[#3AA6B9] duration-500 transition-colors">
-                Bài Viết
-              </span>
             </div>
             {/* không tính */}
             <div className="md:hidden">
@@ -151,17 +160,24 @@ const Header = () => {
                 open={open}
                 width={240}
               >
-                <NavbarMenu/>
+                <NavbarMenu />
               </Drawer>
             </div>
           </div>
-          <div
+          <motion.div
             className={
-              fixNavba ? "transition-all duration-500 ease-in-out" : "md:hidden"
+              fixNavba ? "transition-all duration-500 ease-in-out" : "hidden"
             }
+            initial={{ opacity: 0, x: 20, y: -20 }}
+            animate={{
+              opacity: fixNavba ? 1 : 0,
+              x: fixNavba ? 0 : 20,
+              y: fixNavba ? 0 : -20,
+            }}
+            transition={{ duration: 0.1 }}
           >
             <SearchComponent />
-          </div>
+          </motion.div>
           <div className="">
             <Dropdown menu={{ items }} trigger={["click"]}>
               <Button icon={<UserOutlined />} type="text">

@@ -5,7 +5,7 @@ import { getToken, parseJwt } from "../../config/getToken";
 const shoppingApi = createApi({
   reducerPath: "shopping",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:5000/api",
+    baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers) => {
       const token = getToken();
       if (!token) {
@@ -25,7 +25,7 @@ const shoppingApi = createApi({
       }
     },
     fetchFn: async (...arg) => {
-      await pause(3000);
+      await pause(1500);
       return await fetch(...arg);
     },
   }),

@@ -58,10 +58,14 @@ const Homepage = () => {
                         {product.author}
                       </span>
                       <div className="hidden md:flex flex-col space-y-2">
-                      <span className="">
-                        <Rate allowHalf value={product.rate} className="md:text-sm"/>
-                      </span>
-                      <Link to={`products/${product._id}/detail`}>
+                        <span className="">
+                          <Rate
+                            allowHalf
+                            value={product.rate}
+                            className="md:text-sm"
+                          />
+                        </span>
+                        <Link to={`products/${product._id}/detail`}>
                           <Button>View</Button>
                         </Link>
                       </div>

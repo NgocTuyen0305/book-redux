@@ -4,9 +4,9 @@ import { pause } from "../../utils/pause";
 const authApi = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:5000/api",
+    baseUrl: import.meta.env.VITE_API_URL,
     fetchFn: async (...arg) => {
-      await pause(3000);
+      await pause(1500);
       return await fetch(...arg);
     },
   }),
