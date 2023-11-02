@@ -59,7 +59,7 @@ const OrderPage = () => {
       <Form layout="vertical" onFinish={onFinishOrder}>
         {/* sản phẩm */}
         <Form.Item className="bg-white rounded-md shadow-sm p-2">
-          <div className="md:grid md:grid-cols-2">
+          <div className="md:grid md:grid-cols-2 md:gap-x-8">
             <div className="">
               <h3 className="ml-3 mt-3 text-xl font-poppins">Đơn Hàng</h3>
               {orderItems.map((item) => (
@@ -136,7 +136,7 @@ const OrderPage = () => {
                 </Radio.Group>
               </Form.Item>
               <Form.Item>
-                <div className="md:grid md:grid-cols-2 gap-x-3 space-y-6 md:space-y-0">
+                <div className="md:flex justify-between space-y-6 md:space-y-0">
                   {user ? (
                     <div className="">
                       <div className="flex justify-between">

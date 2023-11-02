@@ -37,18 +37,18 @@ const SimilarProduct = ({ listSilimar }) => {
                 <img
                   src={product?.images[0].response.uploadedFiles[0].url}
                   alt=""
-                  className="rounded-md shadow-md shadow-gray-400 mx-auto md:w-44"
+                  className=" mx-auto md:w-44"
                 />
                 <div className="hidden group-hover:block transition-all">
                   <div className="absolute top-0 left-0 z-10 w-full h-full backdrop-blur-sm flex justify-center items-center gap-x-6">
                     <button
-                      className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                      className={`bg-white text-xl p-1 hover:bg-custom-main hover:text-white rounded-sm`}
                     >
                       <AiOutlineHeart />
                     </button>
                     <Link to={`/products/${product._id}/detail`}>
                       <button
-                        className={`bg-white text-xl p-1 hover:bg-[#3AA6B9] hover:text-white rounded-sm`}
+                        className={`bg-white text-xl p-1 hover:bg-custom-main hover:text-white rounded-sm`}
                       >
                         <AiOutlineEye />
                       </button>
@@ -58,7 +58,7 @@ const SimilarProduct = ({ listSilimar }) => {
               </div>
               <div className="my-2 space-y-2">
                 <span
-                  className={`text-base line-clamp-1 font-poppins px-2 group-hover:text-[#3AA6B9] text-center`}
+                  className={`text-base line-clamp-1 font-poppins px-2 group-hover:text-custom-main text-center`}
                 >
                   {product.name}
                 </span>
@@ -85,7 +85,7 @@ const SimilarProduct = ({ listSilimar }) => {
               </div>
               <div className="mt-3">
                 <button
-                  className={`flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md border hover:bg-[#3AA6B9] hover:text-white text-[#3AA6B9]`}
+                  className={`flex items-center gap-x-3 mx-auto px-3 py-1 rounded-md border hover:bg-custom-main hover:text-white text-custom-main`}
                   onClick={() => {
                     dispatch(addItemCart({ ...product, quantity: 1 }));
                     message.success("Đã thêm vào giỏ hàng!");

@@ -9,6 +9,9 @@ export default {
       screens: {
         'sm': '280px'
       },
+      colors:{
+        'custom-main': '#CE5A67'
+      },
       animation:{
         'spin-slow': 'spin 5s linear infinite'
       },

@@ -106,7 +106,7 @@ const Header = () => {
               : "md:relative md:w-full transition-all duration-500"
           }
         >
-          <div className="font-dancingScript font-bold md:text-4xl text-3xl text-center hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out">
+          <div className="font-dancingScript font-bold md:text-4xl text-3xl text-center hover:text-custom-main duration-500 transition-colors ease-in-out">
             <a href="/" className="">
               Mymy
             </a>
@@ -117,7 +117,7 @@ const Header = () => {
         </div>
         <div className="flex justify-between items-center">
           <motion.div
-            className={`font-dancingScript font-bold md:text-4xl hover:text-[#3AA6B9] duration-500 transition-colors ease-in-out ${
+            className={`font-dancingScript font-bold md:text-4xl hover:text-custom-main duration-500 transition-colors ease-in-out ${
               !fixNavba ? "sm:hidden" : ""
             }`}
             initial={{ opacity: 0, x: 20, y: -20 }}
@@ -142,7 +142,7 @@ const Header = () => {
               <DropdownCate />
               <Link
                 to={"/my-order"}
-                className="hover:text-[#3AA6B9] duration-500 transition-colors"
+                className="hover:text-custom-main duration-500 transition-colors"
               >
                 Đơn Hàng
               </Link>
