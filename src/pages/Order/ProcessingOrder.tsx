@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
-import { Button, Empty } from "antd";
+import { Alert, Button, Empty, notification } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setProcessing } from "../../redux/slices/badgeOrderSlice";
+import {
+  setIdOrderTimeline,
+  setisModalTimeline,
+} from "../../redux/slices/timelineSlice";
+import ModalTimeline from "../../components/ModalTimeline";
 
 const ProcessingOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -30,11 +35,10 @@ const ProcessingOrder = () => {
       const dataProcessing = await checkUserOrder?.filter(
         (items) => items.isProcessing === true
       );
-      setProducProcessing(dataProcessing)
+      setProducProcessing(dataProcessing);
     })();
   }, [data, user]);
 
-   
   if (error || ProductProcessing?.length === 0) {
     return <Empty />;
   }
@@ -53,7 +57,7 @@ const ProcessingOrder = () => {
           <div className="">
             {items?.productOrder?.map((item) => (
               <div
-                className="p-2 border-b flex md:justify-between"
+                className="p-2 border-b md:flex md:justify-between"
                 key={item._id}
               >
                 <div className="flex justify-between ">
@@ -79,8 +83,26 @@ const ProcessingOrder = () => {
                     Tổng tiền: {items.totalPrice / 1000 + ".000 đ"}
                   </div>
                   <div className="flex space-x-3">
-                    <Button size="small">Theo dõi đơn</Button>
-                    <Button size="small">Hủy đơn</Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        dispatch(setisModalTimeline(true));
+                        dispatch(setIdOrderTimeline(items?._id));
+                      }}
+                    >
+                      Theo dõi đơn
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        return notification.warning({
+                          message: "Định bom hàng à?",
+                          description: 'Nằm mơ đi em!'
+                        });
+                      }}
+                    >
+                      Hủy đơn
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -88,6 +110,7 @@ const ProcessingOrder = () => {
           </div>
         </div>
       ))}
+      <ModalTimeline />
     </div>
   );
 };

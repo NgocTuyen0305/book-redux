@@ -57,7 +57,7 @@ const MyOrder = () => {
     {
       key: "6",
       label: "Đã hủy",
-      children: "Content of Tab Pane 3",
+      children: <Empty />,
     },
   ];
   return (

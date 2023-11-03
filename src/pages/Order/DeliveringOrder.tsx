@@ -4,6 +4,8 @@ import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setDelivering } from "../../redux/slices/badgeOrderSlice";
+import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
+import ModalTimeline from "../../components/ModalTimeline";
 const DeliveringOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   const [ProductDelivering, setProducDelivering] = useState();
@@ -30,7 +32,7 @@ const DeliveringOrder = () => {
       const dataDelivering = await checkUserOrder?.filter(
         (items) => items.isDelivering === true
       );
-      setProducDelivering(dataDelivering)
+      setProducDelivering(dataDelivering);
     })();
   }, [data, user]);
 
@@ -51,7 +53,7 @@ const DeliveringOrder = () => {
           <div className="">
             {items?.productOrder?.map((item) => (
               <div
-                className="p-2 border-b flex md:justify-between"
+                className="p-2 border-b md:flex md:justify-between"
                 key={item?._id}
               >
                 <div className="flex justify-between ">
@@ -77,7 +79,15 @@ const DeliveringOrder = () => {
                     Tổng tiền: {items.totalPrice / 1000 + ".000 đ"}
                   </div>
                   <div className="flex space-x-3">
-                    <Button size="small">Theo dõi đơn</Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        dispatch(setisModalTimeline(true));
+                        dispatch(setIdOrderTimeline(items?._id));
+                      }}
+                    >
+                      Theo dõi đơn
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -85,6 +95,7 @@ const DeliveringOrder = () => {
           </div>
         </div>
       ))}
+      <ModalTimeline/>
     </div>
   );
 };

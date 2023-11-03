@@ -180,8 +180,8 @@ const OderManagerment = () => {
       fixed: "right",
       width: 150,
       render: ({ key: id, deleted }) => {
-        // console.log("id: ", id);
-        // console.log("deleted: ", deleted);
+        console.log("id: ", id);
+        console.log("deleted: ", deleted);
         return (
           <>
             {deleted ? (

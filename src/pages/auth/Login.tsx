@@ -27,7 +27,7 @@ const Login = () => {
   }, [error]);
   const onFinish = async (values: any) => {
     const data = await signin(values).unwrap();
-    console.log("data: ", data);
+    // console.log("data: ", data);
     const { accessToken, user, message } = data;
     if (data) {
       notification.success({ message: message });

@@ -8,6 +8,8 @@ import { Button, Empty, notification } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setAllOrder } from "../../redux/slices/badgeOrderSlice";
+import ModalTimeline from "../../components/ModalTimeline";
+import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
 
 const AllOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -16,7 +18,7 @@ const AllOrder = () => {
   const [ProductnotProcessed, setProductnotProcessed] = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
   const { user } = useAppSelector((state) => state.Authentication);
-  // console.log("ProductnotProcessed ", ProductnotProcessed);
+  // console.log("idItemOrder ", idItemOrder);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
@@ -37,7 +39,7 @@ const AllOrder = () => {
       const dataAllOrder = await checkUserOrder?.filter(
         (items) => items.notProcessed === false
       );
-      setProductnotProcessed(dataAllOrder)
+      setProductnotProcessed(dataAllOrder);
     })();
   }, [data, user]);
 
@@ -51,6 +53,7 @@ const AllOrder = () => {
       </div>
     );
   }
+
   return (
     <div className="space-y-6">
       {ProductnotProcessed?.map((itemOrder) => (
@@ -58,7 +61,7 @@ const AllOrder = () => {
           <div className="">Đơn Hàng: #{itemOrder._id}</div>
           {itemOrder?.productOrder?.map((item) => (
             <div
-              className="p-2 border-b flex md:justify-between"
+              className="p-2 border-b md:flex md:justify-between"
               key={item._id}
             >
               <div className="flex justify-between ">
@@ -84,7 +87,15 @@ const AllOrder = () => {
                   Tổng tiền: {itemOrder.totalPrice / 1000 + ".000 đ"}
                 </div>
                 <div className="flex space-x-3">
-                  <Button size="small">Theo dõi đơn</Button>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      dispatch(setisModalTimeline(true))
+                      dispatch(setIdOrderTimeline(itemOrder?._id))
+                    }}
+                  >
+                    Theo dõi đơn
+                  </Button>
                   <Button
                     size="small"
                     onClick={() =>
@@ -106,6 +117,7 @@ const AllOrder = () => {
           ))}
         </div>
       ))}
+      <ModalTimeline/>
     </div>
   );
 };

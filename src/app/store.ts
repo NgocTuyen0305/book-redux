@@ -27,6 +27,7 @@ import feedbackApi, { feedbackReducer } from "../redux/api/feedbackApi";
 import { feedbackSliceReducer } from "../redux/slices/feedbackSlice";
 import { badgeReducer } from "../redux/slices/badgeOrderSlice";
 import sliderApi, { sliderReducer } from "../redux/api/sliderApi";
+import { timelineReducer } from "../redux/slices/timelineSlice";
 
 const persistConfig = {
   key: "root",
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   Pagination: paginationReducer,
   FeedbackSlice: feedbackSliceReducer,
   BadgeSlice: badgeReducer,
+  Timeline: timelineReducer,
 });
 const middleware = [
   productApi.middleware,

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setIdOrder } from "../../redux/slices/feedbackSlice";
 import { setDelivered } from "../../redux/slices/badgeOrderSlice";
+import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
+import ModalTimeline from "../../components/ModalTimeline";
 
 const DeliveredOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -55,7 +57,7 @@ const DeliveredOrder = () => {
           <div className="">
             {items?.productOrder?.map((item) => (
               <div
-                className="p-2 border-b flex md:justify-between"
+                className="p-2 border-b md:flex md:justify-between"
                 key={item._id}
               >
                 <div className="flex justify-between ">
@@ -81,7 +83,10 @@ const DeliveredOrder = () => {
                     Tổng tiền: {items.totalPrice / 1000 + ".000 đ"}
                   </div>
                   <div className="flex space-x-3">
-                    <Button size="small">Chi tiết đơn</Button>
+                    <Button size="small" onClick={() => {
+                      dispatch(setisModalTimeline(true))
+                      dispatch(setIdOrderTimeline(items?._id))
+                    }}>Chi tiết đơn</Button>
                     <Link
                       to={`/products/${item._id}/detail`}
                       onClick={() => dispatch(setIdOrder(items._id))}
@@ -95,6 +100,7 @@ const DeliveredOrder = () => {
           </div>
         </div>
       ))}
+      <ModalTimeline/>
     </div>
   );
 };
