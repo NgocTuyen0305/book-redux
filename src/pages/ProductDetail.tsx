@@ -20,7 +20,10 @@ const ProductDetail = () => {
   const { bgColormain } = token;
   const [count, setCount] = useState(1);
   const [currentImage, setCurrentImage] = useState<number | string>(0);
-  const { id } = useParams();
+  const { slug } = useParams();
+  const slugParams = slug?.split(".html") ?? [];
+  const temp = slugParams[0]?.split("-") as string[];
+  const id = temp[temp.length - 1];
   const dispatch = useAppDispatch();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
   const { data, isLoading: OrderLoading, error } = useGetShoppingQuery();
@@ -44,7 +47,7 @@ const ProductDetail = () => {
     }
   );
 
-  const ListImage = productDetail?.data?.images.map((items) => {
+  const ListImage = productDetail?.data?.images?.map((items) => {
     return items?.response?.uploadedFiles[0].url;
   });
 
@@ -84,14 +87,14 @@ const ProductDetail = () => {
             {/* <img src={ListImage[currentImage]} alt="" /> */}
           </motion.div>
           <div className="grid grid-cols-3 gap-8">
-            {ListImage.map((image, index: number | string) => {
+            {ListImage?.map((image, index: number | string) => {
               return (
                 <motion.button
                   onClick={() => gotoImage(index)}
                   key={index}
                   initial={{ opacity: 0, x: -20, y: -20 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ duration: 0.5, delay:index * 0.1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <img src={image} alt="" />
                 </motion.button>

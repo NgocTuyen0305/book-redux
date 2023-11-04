@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Popconfirm, Space, Spin, Table, Tag } from "antd";
+import { Button, Modal, Popconfirm, Space, Table, Tag } from "antd";
 import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
 import { AiFillEdit } from "@react-icons/all-files/ai/AiFillEdit";
 import CreateProduct from "./CreateProduct";
@@ -96,10 +96,10 @@ const ProductManagement = () => {
       title: "Image",
       key: "image",
       dataIndex: "image",
-      render: (_, recod) => {
+      render: (_:any, recod:any) => {
         return (
           <Space>
-            {recod.images.map((item) => {
+            {recod.images.map((item:any) => {
               return item?.response?.uploadedFiles?.map((itemImage) => {
                 return <img src={itemImage.url} alt="" />;
               });

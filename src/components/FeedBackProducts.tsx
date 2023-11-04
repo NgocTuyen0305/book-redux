@@ -11,7 +11,10 @@ import LottieLoading from "../effect/LottieLoading";
 import { motion } from "framer-motion";
 
 const FeedBackProducts = ({ checkProduct }) => {
-  const { id } = useParams();
+  const { slug } = useParams();
+  const slugParams = slug?.split(".html") ?? [];
+  const temp = slugParams[0]?.split("-") as string[];
+  const id = temp[temp.length - 1];
   const { user } = useAppSelector((state) => state.Authentication);
   const { data, isLoading, error } = useGetFeedbackQuery(id);
   const [createFeedback, { isLoading: FeedbackLoading, error: ErrorFeedback }] =
@@ -40,7 +43,7 @@ const FeedBackProducts = ({ checkProduct }) => {
     createFeedback({
       ...value,
       productId: id,
-      userId: user._id,
+      userId: user?._id,
       orderId: idOrder,
     })
       .unwrap()
@@ -138,7 +141,7 @@ const FeedBackProducts = ({ checkProduct }) => {
             <LottieLoading />
           </div>
         ) : (
-          (feedbackData.length === 0 ? data?.feedbacks : feedbackData).map(
+          (feedbackData.length === 0 ? data?.feedbacks : feedbackData)?.map(
             (item,i) => (
               <motion.div
                 className="flex items-center gap-x-6"

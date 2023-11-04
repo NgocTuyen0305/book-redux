@@ -8,6 +8,7 @@ import { IProduct } from "../interfaces/products";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion"
+import { convertSlug } from "../utils/convertSlug";
 
 const SimilarProduct = ({ listSilimar }) => {
   const itemsPerPage = 8;
@@ -46,7 +47,7 @@ const SimilarProduct = ({ listSilimar }) => {
                     >
                       <AiOutlineHeart />
                     </button>
-                    <Link to={`/products/${product._id}/detail`}>
+                    <Link to={`/books/${convertSlug(product.name)}-${product._id}.html/detail`}>
                       <button
                         className={`bg-white text-xl p-1 hover:bg-custom-main hover:text-white rounded-sm`}
                       >

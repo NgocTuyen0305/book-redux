@@ -8,6 +8,7 @@ import { setIdOrder } from "../../redux/slices/feedbackSlice";
 import { setDelivered } from "../../redux/slices/badgeOrderSlice";
 import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
 import ModalTimeline from "../../components/ModalTimeline";
+import { convertSlug } from "../../utils/convertSlug";
 
 const DeliveredOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -88,7 +89,7 @@ const DeliveredOrder = () => {
                       dispatch(setIdOrderTimeline(items?._id))
                     }}>Chi tiết đơn</Button>
                     <Link
-                      to={`/products/${item._id}/detail`}
+                      to={`/books/${convertSlug(item.name)}-${item._id}.html/detail`}
                       onClick={() => dispatch(setIdOrder(items._id))}
                     >
                       <Button size="small">Đánh giá sản phẩm</Button>

@@ -8,6 +8,7 @@ import { useGetProductsQuery } from "../redux/api/productApi";
 import { IProduct } from "../interfaces/products";
 import { Link } from "react-router-dom";
 import LottieLoading from "../effect/LottieLoading";
+import { convertSlug } from "../utils/convertSlug";
 const Homepage = () => {
   const { data, isLoading } = useGetProductsQuery({
     _order: "desc",
@@ -41,7 +42,11 @@ const Homepage = () => {
               <div className="" key={product._id}>
                 <div className="md:border md:rounded-md md:shadow-md bg-white mt-12 p-2">
                   <div className="md:grid grid-cols-2 gap-3">
-                    <Link to={`products/${product._id}/detail`}>
+                    <Link
+                      to={`books/${convertSlug(product.name)}-${
+                        product._id
+                      }.html/detail`}
+                    >
                       <div className="">
                         <img
                           src={product?.images[0].response.uploadedFiles[0].url}
@@ -65,7 +70,11 @@ const Homepage = () => {
                             className="md:text-sm"
                           />
                         </span>
-                        <Link to={`products/${product._id}/detail`}>
+                        <Link
+                          to={`books/${convertSlug(product.name)}-${
+                            product._id
+                          }.html/detail`}
+                        >
                           <Button>View</Button>
                         </Link>
                       </div>

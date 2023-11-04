@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { warning } from "../effect/notification";
 import LottieLoading from "../effect/LottieLoading";
 import { motion } from "framer-motion"
+import { convertSlug } from "../utils/convertSlug";
 
 const Products = () => {
   const { _page, _limit, _sort, _order, _search, _category } = useAppSelector(
@@ -54,7 +55,7 @@ const Products = () => {
       </h3>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        {data?.products?.map((product: IProduct,i) => {
+        {data?.products?.map((product: IProduct,i:any) => {
           return (
             <motion.div
               className="border p-1 group hover:shadow-md bg-white"
@@ -76,7 +77,7 @@ const Products = () => {
                     >
                       <AiOutlineHeart />
                     </button>
-                    <Link to={`products/${product._id}/detail`}>
+                    <Link to={`books/${convertSlug(product.name)}-${product._id}.html/detail`}>
                       <button
                         className={`bg-white text-xl p-1 hover:bg-custom-main hover:text-white rounded-sm`}
                       >
