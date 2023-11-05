@@ -1,4 +1,4 @@
-import { Button, Empty, Rate } from "antd";
+import { Empty, Rate } from "antd";
 import { useEffect, useState } from "react";
 import "../App.css";
 import { useGetProductsQuery } from "../redux/api/productApi";
@@ -48,7 +48,7 @@ const ProductTrending = () => {
         {/* item product */}
         {products?.map((items: IProduct, i) => (
           <motion.div
-            className="grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border bg-white"
+            className="flex md:grid grid-cols-2 gap-x-3 p-2 hover:shadow-md items-center border bg-white"
             initial={{ opacity: 0, x: 20, y: -20 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 1, delay: i * 0.3 }}
@@ -57,8 +57,9 @@ const ProductTrending = () => {
               to={`books/${convertSlug(items.name)}-${
                 items._id
               }.html/detail`}
+              className="md:w-auto w-2/5"
             >
-              <div className="mx-auto">
+              <div className="">
                 <img
                   src={items?.images[0].response.uploadedFiles[0].url}
                   alt=""
@@ -67,26 +68,27 @@ const ProductTrending = () => {
               </div>
             </Link>
             <div className="flex flex-col gap-y-3">
-              <label htmlFor="" className="line-clamp-1 font-inclusiveSans">
+              <label htmlFor="" className="line-clamp-1 font-inclusiveSans text-xs md:text-base">
                 {items.name}
               </label>
-              <div className="space-x-3 flex flex-col md:block">
-                <span className="font-poppins">
+              <div className="md:space-x-3 flex gap-x-2">
+                <span className="font-poppins text-xs md:text-base" >
                   {items.price / 1000 + ".000"} đ
                 </span>
-                <span className="line-through text-gray-400">1.000 đ</span>
+                <span className="line-through text-gray-400 text-xs md:text-base">1.000 đ</span>
               </div>
               <Rate allowHalf defaultValue={items.rate} className="text-xs" />
               <div className="">
-              <Button
+              <button
               onClick={() =>
                 dispatch(
                   addItemsCart([{ ...items, quantity: 1 }])
                 )
               }
+              className="shadow-md rounded-sm md:text-base text-xs p-1 hover:bg-custom-main hover:text-white"
             >
-              <a href={"/order"}>MUA NGAY</a>
-            </Button>
+              <a href={"/order"}>Buy Now</a>
+            </button>
               </div>
             </div>
           </motion.div>

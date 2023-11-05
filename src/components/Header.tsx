@@ -118,7 +118,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <motion.div
             className={`font-dancingScript font-bold md:text-4xl hover:text-custom-main duration-500 transition-colors ease-in-out ${
-              !fixNavba ? "sm:hidden" : ""
+              !fixNavba ? "hidden" : "md:block hidden"
             }`}
             initial={{ opacity: 0, x: 20, y: -20 }}
             animate={{
