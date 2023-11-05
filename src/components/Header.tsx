@@ -16,15 +16,16 @@ import DropdownCate from "./DropdownCate";
 import NavbarMenu from "./NavbarMenu";
 import { logout } from "../redux/slices/authSlice";
 import { motion } from "framer-motion";
+import { setIsOpenToggleDrawer } from "../redux/slices/toggleDrawerSlice";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fixNavba, setFixNavba] = useState(false);
   const { items: itemsCart } = useAppSelector((state) => state.Cart);
   const { user }:any = useAppSelector((state) => state.Authentication);
+  const {open:openToggle} = useAppSelector((state)=> state.ToggleDrawer)
   const dispatch = useAppDispatch();
-  // console.log("height fixed: ", fixNavba);
+  // console.log("openToggle: ", openToggle);
 
   const setFixedNavba = () => {
     if (window.scrollY >= 38) {
@@ -90,11 +91,11 @@ const Header = () => {
     setIsModalOpen(false);
   };
   const showDrawer = () => {
-    setOpen(true);
+    dispatch(setIsOpenToggleDrawer(true))
   };
 
   const onClose = () => {
-    setOpen(false);
+    dispatch(setIsOpenToggleDrawer(false))
   };
   return (
     <div className={"bg-white fixed top-0 left-0 right-0 z-50 shadow-sm"}>
@@ -157,7 +158,7 @@ const Header = () => {
               <Drawer
                 placement="left"
                 onClose={onClose}
-                open={open}
+                open={openToggle}
                 width={240}
               >
                 <NavbarMenu />

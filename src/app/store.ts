@@ -28,6 +28,7 @@ import { feedbackSliceReducer } from "../redux/slices/feedbackSlice";
 import { badgeReducer } from "../redux/slices/badgeOrderSlice";
 import sliderApi, { sliderReducer } from "../redux/api/sliderApi";
 import { timelineReducer } from "../redux/slices/timelineSlice";
+import { toggleDrawerReducer } from "../redux/slices/toggleDrawerSlice";
 
 const persistConfig = {
   key: "root",
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   FeedbackSlice: feedbackSliceReducer,
   BadgeSlice: badgeReducer,
   Timeline: timelineReducer,
+  ToggleDrawer: toggleDrawerReducer,
 });
 const middleware = [
   productApi.middleware,

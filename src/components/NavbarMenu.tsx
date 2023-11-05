@@ -6,6 +6,7 @@ import { useAppDispatch } from "../app/hook";
 import { setCategories } from "../redux/slices/paginationSlice";
 import { Link } from "react-router-dom";
 import { ICategories } from "../interfaces/categories";
+import { setIsOpenToggleDrawer } from "../redux/slices/toggleDrawerSlice";
 const NavbarMenu = () => {
   const { data }:any = useGetCategoriesQuery();
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ const NavbarMenu = () => {
                 key={items._id}
                 onClick={() => {
                   dispatch(setCategories(items._id as any));
+                  dispatch(setIsOpenToggleDrawer(false))
                 }}
               >
                 {items.name}
@@ -28,7 +30,7 @@ const NavbarMenu = () => {
           })}
         </SubMenu>
         <Menu.Item icon={<ShopOutlined />}>
-          <Link to={"/my-order"}>Đơn hàng </Link>
+          <Link to={"/my-order"} onClick={()=> dispatch(setIsOpenToggleDrawer(false))}>Đơn hàng </Link>
         </Menu.Item>
       </Menu>
     </div>
