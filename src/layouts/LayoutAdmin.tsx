@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Layout, Menu, Button, theme, Space, Badge, Avatar } from "antd";
 import { AiFillDashboard } from "@react-icons/all-files/ai/AiFillDashboard";
@@ -27,9 +27,9 @@ const LayoutAdmin = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { useToken } = theme;
   const { token } = useToken();
-  const { bgColormain } = token;
+  const { bgColormain }:any = token;
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
     console.log(info?.source, value);
   };

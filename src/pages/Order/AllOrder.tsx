@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   useGetShoppingQuery,
   useUpdateShoppingMutation,
@@ -12,18 +12,18 @@ import ModalTimeline from "../../components/ModalTimeline";
 import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
 
 const AllOrder = () => {
-  const { data, isLoading, error } = useGetShoppingQuery();
+  const { data, isLoading, error }:any = useGetShoppingQuery();
   const [updateShopping, { isLoading: UpdateOrderLoading }] =
     useUpdateShoppingMutation();
-  const [ProductnotProcessed, setProductnotProcessed] = useState();
+  const [ProductnotProcessed, setProductnotProcessed]:any  = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   // console.log("idItemOrder ", idItemOrder);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
       const lengthProductProcessed = await ProductnotProcessed?.map(
-        (item) => item.productOrder.length
+        (item:any) => item.productOrder.length
       );
       // console.log('lengthProductDelivered',lengthProductDelivered)
       const [length] = lengthProductProcessed;
@@ -34,10 +34,10 @@ const AllOrder = () => {
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(
-        (item) => item.userId === user?._id
+        (item:any) => item.userId === user?._id
       );
       const dataAllOrder = await checkUserOrder?.filter(
-        (items) => items.notProcessed === false
+        (items:any) => items.notProcessed === false
       );
       setProductnotProcessed(dataAllOrder);
     })();
@@ -56,10 +56,10 @@ const AllOrder = () => {
 
   return (
     <div className="space-y-6">
-      {ProductnotProcessed?.map((itemOrder) => (
+      {ProductnotProcessed?.map((itemOrder:any ) => (
         <div className="" key={itemOrder._id}>
           <div className="">Đơn Hàng: #{itemOrder._id}</div>
-          {itemOrder?.productOrder?.map((item) => (
+          {itemOrder?.productOrder?.map((item:any ) => (
             <div
               className="p-2 border-b md:flex md:justify-between"
               key={item._id}

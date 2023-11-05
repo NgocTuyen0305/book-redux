@@ -5,7 +5,7 @@ interface Item {
   children: string;
   color: string;
 }
-const TimelineDetailOrder = ({ id }) => {
+const TimelineDetailOrder = ({ id }:any) => {
   const { data,isLoading } = useGetByIdShoppingQuery(id);
   if (isLoading) {
     return (

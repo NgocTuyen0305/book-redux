@@ -3,9 +3,9 @@ import { useAddCategoryMutation } from "../../../redux/api/categoriesApi";
 import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLoading3Quarters";
 import {AiOutlineUpload} from "@react-icons/all-files/ai/AiOutlineUpload";
 const CreateCategory = () => {
-  const [addCategory,{isLoading,error}] = useAddCategoryMutation();
+  const [addCategory,{isLoading}] = useAddCategoryMutation();
 
-  const onFinish = (values: AnyAction) => {
+  const onFinish = (values: any) => {
     addCategory(values)
       .unwrap()
       .then(() => {
@@ -14,7 +14,8 @@ const CreateCategory = () => {
         });
       })
       .then(() => {
-        return document.querySelector("#form")?.reset();
+        const formReset = document.querySelector("#formCreate") as HTMLFormElement | any;
+        return formReset.reset();
       });
   };
   return (

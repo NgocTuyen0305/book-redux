@@ -20,7 +20,7 @@ const Products = () => {
     (state) => state.Pagination
   );
   const dispatch = useAppDispatch();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, isLoading, error }:any = useGetProductsQuery({
     _page,
     _limit,
     _search,

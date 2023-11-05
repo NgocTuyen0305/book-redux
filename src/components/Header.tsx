@@ -66,7 +66,7 @@ const Header = () => {
 
   if (user) {
     items.push({
-      key: parseInt(items.length + 1),
+      key: items.length + 1,
       label: (
         <Button
           type="text"

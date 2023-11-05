@@ -1,5 +1,4 @@
 import { Badge, Empty, Tabs, TabsProps } from "antd";
-import React from "react";
 import AllOrder from "./AllOrder";
 import ProcessingOrder from "./ProcessingOrder";
 import DeliveringOrder from "./DeliveringOrder";

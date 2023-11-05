@@ -1,12 +1,11 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { AnyAction } from "@reduxjs/toolkit";
 import { Button, Form, Upload, message, notification } from "antd";
-import React from "react";
 import { useCreateSliderMutation } from "../../../redux/api/sliderApi";
 
 const UploadSlider = () => {
-  const [createSlider, { isLoading, error }] = useCreateSliderMutation();
-  const onfinish = (values) => {
+  const [createSlider] = useCreateSliderMutation();
+  const onfinish = (values:any ) => {
     createSlider(values)
       .unwrap()
       .then(() => {
@@ -19,7 +18,7 @@ const UploadSlider = () => {
     return true;
   };
 
-  const onChange = (info) => {
+  const onChange = (info:any ) => {
     if (info.file.status === "done") {
       return message.success("Tải ảnh thành công");
     } else if (info.file.status === "error") {

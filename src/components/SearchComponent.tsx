@@ -7,10 +7,10 @@ const SearchComponent = () => {
   const [textSearch, setTextSearch] = useState("");
   const dispatch = useAppDispatch();
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e:any) => {
     setTextSearch(e.target.value);
   };
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = (e:any) => {
     e.preventDefault();
     dispatch(setSearch(textSearch));
     dispatch(setSort(''));

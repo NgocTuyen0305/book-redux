@@ -10,6 +10,8 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ColumnsType } from "antd/es/table";
+import { AnyObject } from "antd/es/_util/type";
 
 const OderManagerment = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
@@ -56,14 +58,14 @@ const OderManagerment = () => {
       };
     }
   );
-  const columns = [
+  const columns: ColumnsType<AnyObject>= [
     {
       title: "Sản phẩm đã mua",
       dataIndex: "productOrder",
       key: "productOrder",
       render: (record) => {
         // console.log("record: ", record);
-        return record.map((item) => (
+        return record.map((item:any ) => (
           <div className="" key={item._id}>
             <div className="">
               <img
@@ -76,7 +78,7 @@ const OderManagerment = () => {
           </div>
         ));
       },
-      with: 100,
+      width: 100,
       fixed: "left",
     },
     {
@@ -118,7 +120,7 @@ const OderManagerment = () => {
       title: "Chưa xử lí",
       dataIndex: "notProcessed",
       key: "notProcessed",
-      render: (_) => {
+      render: (_: any) => {
         return (
           <span className={_ ? "text-blue-500" : "text-red-500"}>
             {_.toString()}
@@ -130,7 +132,7 @@ const OderManagerment = () => {
       title: "Đang xử lí",
       dataIndex: "isProcessing",
       key: "isProcessing",
-      render: (_) => {
+      render: (_: any) => {
         return (
           <span className={_ ? "text-blue-500" : "text-red-500"}>
             {_.toString()}
@@ -142,7 +144,7 @@ const OderManagerment = () => {
       title: "Đang giao hàng",
       dataIndex: "isDelivering",
       key: "isDelivering",
-      render: (_) => {
+      render: (_: any) => {
         return (
           <span className={_ ? "text-blue-500" : "text-red-500"}>
             {_.toString()}
@@ -154,7 +156,7 @@ const OderManagerment = () => {
       title: "Yêu cầu hủy đơn",
       dataIndex: "deleted",
       key: "deleted",
-      render: (_) => {
+      render: (_: any) => {
         return (
           <span className={_ ? "text-blue-500" : "text-red-500"}>
             {_.toString()}
@@ -166,7 +168,7 @@ const OderManagerment = () => {
       title: "Đã giao hàng",
       dataIndex: "isDelivered",
       key: "isDelivered",
-      render: (_) => {
+      render: (_: any) => {
         return (
           <span className={_ ? "text-blue-500" : "text-red-500"}>
             {_.toString()}
@@ -179,7 +181,7 @@ const OderManagerment = () => {
       key: "action",
       fixed: "right",
       width: 150,
-      render: ({ key: id, deleted }) => {
+      render: ({ key: id, deleted }: any) => {
         console.log("id: ", id);
         console.log("deleted: ", deleted);
         return (

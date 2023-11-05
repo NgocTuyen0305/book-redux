@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
 import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
@@ -14,15 +14,15 @@ const DeliveredOrder = () => {
   const { data, isLoading, error } = useGetShoppingQuery();
   // console.log("processing data: ", data);
 
-  const [ProductDelivered, setProducDelivered] = useState();
+  const [ProductDelivered, setProducDelivered]:any = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   // console.log("ProductDelivered ", ProductDelivered);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
       const lengthProductDelivered = await ProductDelivered?.map(
-        (item) => item.productOrder.length
+        (item:any) => item.productOrder.length
       );
       // console.log('lengthProductDelivered',lengthProductDelivered)
       const [length] = lengthProductDelivered;
@@ -53,10 +53,10 @@ const DeliveredOrder = () => {
   }
   return (
     <div>
-      {ProductDelivered?.map((items) => (
+      {ProductDelivered?.map((items:any) => (
         <div key={items?._id}>
           <div className="">
-            {items?.productOrder?.map((item) => (
+            {items?.productOrder?.map((item:any) => (
               <div
                 className="p-2 border-b md:flex md:justify-between"
                 key={item._id}

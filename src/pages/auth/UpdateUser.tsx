@@ -1,6 +1,6 @@
 import { LoadingOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { Button, Form, Input, notification } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import Lottie from "lottie-react";
 import LottieUpdateUser from "../../assets/UpdateUser-animation.json";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/slices/authSlice";
 
 const UpdateUser = () => {
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any  = useAppSelector((state) => state.Authentication);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
@@ -24,7 +24,7 @@ const UpdateUser = () => {
     });
   }, [user]);
   
-  const onFinish = (values) => {
+  const onFinish = (values:any ) => {
     updateUser({ ...values, _id: user?._id })
       .unwrap()
       .then(() => {

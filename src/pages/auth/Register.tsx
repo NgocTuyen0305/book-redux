@@ -11,7 +11,7 @@ const Register = () => {
       return message.error("Đăng kí tài khoản thất bại");
     }
   }, [error]);
-  const onFinish = async (values) => {
+  const onFinish = async (values:any ) => {
     signup(values)
       .unwrap()
       .then(() => {

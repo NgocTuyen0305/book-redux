@@ -1,7 +1,6 @@
-import { Button, Result } from "antd";
+import { Button } from "antd";
 import Lottie from "lottie-react";
 import LottieNotFound from "../assets/notFound-animation.json";
-import React from "react";
 import { Link } from "react-router-dom";
 
 const NotFoundPage = () => {

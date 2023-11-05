@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -13,17 +12,17 @@ import { useGetProductsQuery } from "../../redux/api/productApi";
 import { useGetAllFeedbackQuery } from "../../redux/api/feedbackApi";
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data }:any = useGetProductsQuery({
     _page: 1,
     _limit: 12,
   });
-  const {data:feedbacks} = useGetAllFeedbackQuery()
+  const {data:feedbacks}:any = useGetAllFeedbackQuery()
   console.log(feedbacks);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }:any) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -71,7 +70,7 @@ const Dashboard = () => {
             fill="#8884d8"
             dataKey="rating"
           >
-            {feedbacks?.feedbacks?.map((entry, index) => (
+            {feedbacks?.feedbacks?.map(( index:any) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>

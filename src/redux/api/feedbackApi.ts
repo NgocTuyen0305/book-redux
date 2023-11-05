@@ -11,7 +11,7 @@ const feedbackApi = createApi({
     },
   }),
   endpoints: (builder)=>({
-    getAllFeedback: builder.query({
+    getAllFeedback: builder.query<any[],void>({
       query: () => `/get-all-feedbacks`
     }),
     getFeedback: builder.query({

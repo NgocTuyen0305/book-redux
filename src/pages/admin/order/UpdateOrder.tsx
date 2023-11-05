@@ -7,12 +7,11 @@ import {
 import { LoadingOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import LottieLoading from "../../../effect/LottieLoading";
-import { warning } from "../../../effect/notification";
 
 const UpdateOrder = () => {
-  const { id } = useParams();
+  const { id }:any = useParams();
   const [form] = Form.useForm();
-  const { data, isLoading, error } = useGetByIdShoppingQuery(id);
+  const { data, isLoading } = useGetByIdShoppingQuery(id);
   const [updateShopping, { isLoading: LoadingUpdate, error: ErrUpdate }] =
     useUpdateShoppingMutation();
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const UpdateOrder = () => {
       </div>
     );
   }
-  const onFinish = (values) => {
+  const onFinish = (values:any) => {
     updateShopping({ _id: id, ...values })
       .unwrap()
       .then(() => {
@@ -51,7 +50,7 @@ const UpdateOrder = () => {
   return (
     <div className="flex justify-center items-center gap-x-3 bg-white">
       <div className="" key={data?._id}>
-        {data?.productOrder?.map((item) => {
+        {data?.productOrder?.map((item:any) => {
           return (
             <div className="flex flex-col items-center gap-y-2" key={item._id}>
               <div className="">

@@ -1,5 +1,5 @@
-import { Button, Modal, Popconfirm, Select, Space, Spin, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Modal, Popconfirm, Select, Space, Table } from "antd";
+import  { useEffect, useState } from "react";
 import {
   useGetCategoriesQuery,
   useRemoveCategoryMutation,
@@ -14,7 +14,7 @@ import CreateCategory from "./CreateCategory";
 import { Link } from "react-router-dom";
 import LottieLoading from "../../../effect/LottieLoading";
 const CategoriesManager = () => {
-  const { data, isLoading, error } = useGetCategoriesQuery();
+  const { data, isLoading }:any = useGetCategoriesQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [removeCategory, { isLoading: removeLoading, error: removeError }] =
     useRemoveCategoryMutation();
@@ -54,7 +54,7 @@ const CategoriesManager = () => {
       title: "Product Id",
       dataIndex: "products",
       key: "products",
-      render: (_, { products }: recod) => {
+      render: (_:any , { products }:any ) => {
         // console.log("recode: ", _);
         return (
           <Select
@@ -63,7 +63,7 @@ const CategoriesManager = () => {
             placeholder="product Id"
             // onChange={handleChange}
           >
-            {products?.map((product) => {
+            {products?.map((product:any) => {
               return <Option value={product} key={product}>{product}</Option>;
             })}
           </Select>
@@ -74,7 +74,7 @@ const CategoriesManager = () => {
       title: "Actions",
       dataIndex: "actions",
       key: "action",
-      render: (_, { key: id }: recod) => {
+      render: (_:any, { key: id }:any) => {
         // console.log("id: ", id);
         return (
           <Space size={"middle"}>

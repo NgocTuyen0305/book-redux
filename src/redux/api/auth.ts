@@ -32,7 +32,7 @@ const authApi = createApi({
         body: user,
       }),
     }),
-    getAllUser: builder.query({
+    getAllUser: builder.query<any,void>({
       query: () => ({
         url: `/user/profile`,
       }),

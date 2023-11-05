@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { useGetAllSliderQuery } from "../redux/api/sliderApi";
 import LottieLoading from "../effect/LottieLoading";
 import { motion } from "framer-motion";
 
 const SliderPage = () => {
-  const { data, isLoading, error } = useGetAllSliderQuery();
-  const [imageSlider, setImageSlider] = useState();
-  const [bannerSlider, setBannerSlider] = useState();
+  const { data, isLoading }:any  = useGetAllSliderQuery();
+  const [imageSlider, setImageSlider]:any = useState();
+  const [bannerSlider, setBannerSlider]:any = useState();
   useEffect(() => {
     (async () => {
       const images = await data?.slider[0].images[0].fileList.map(
-        (items) => items.response
+        (items:any ) => items.response
       );
-      const image = images?.map((items) => items.uploadedFiles[0].url);
+      const image = images?.map((items:any ) => items.uploadedFiles[0].url);
       const banners = await data?.slider[0].banner[0].fileList.map(
-        (items) => items.response
+        (items:any ) => items.response
       );
-      const banner = banners?.map((items) => items.uploadedFiles[0].url);
+      const banner = banners?.map((items:any ) => items.uploadedFiles[0].url);
       // console.log('images :',image)
       setBannerSlider(banner);
       setImageSlider(image);
@@ -41,7 +41,7 @@ const SliderPage = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Carousel autoplay dots={false} className="md:w-[840px]">
-            {imageSlider?.map((items, i) => {
+            {imageSlider?.map((items:any, i:any) => {
               return (
                 <div className="rounded-md" key={i}>
                   <img
@@ -55,7 +55,7 @@ const SliderPage = () => {
           </Carousel>
         </motion.div>
         <div className="md:flex flex-col justify-between hidden">
-          {bannerSlider?.map((items, i) => {
+          {bannerSlider?.map((items:any, i:any) => {
             return (
               <motion.div
                 className=""

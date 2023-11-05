@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import LottieLoading from "../effect/LottieLoading";
 import { convertSlug } from "../utils/convertSlug";
 const Homepage = () => {
-  const { data, isLoading } = useGetProductsQuery({
+  const { data, isLoading }:any  = useGetProductsQuery({
     _order: "desc",
     _limit: 5,
   });

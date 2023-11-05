@@ -35,14 +35,14 @@ const productApi = createApi({
     getProducts: builder.query<
       IProduct[],
       {
-        _page?: number | string;
-        _limit?: number | string;
-        _category?: number | string;
-        _sort?: string;
-        _order?: string;
-        _search?: string;
-        _filterField?: string;
-        _filterValue?: string;
+        _page?: number | string ;
+        _limit?: number | string ;
+        _category?: number | string ;
+        _sort?: string ;
+        _order?: string ;
+        _search?: string ;
+        _filterField?: string ;
+        _filterValue?: string ;
       }
     >({
       query: (args) => {
@@ -65,9 +65,9 @@ const productApi = createApi({
           _category,
           _filterField,
           _filterValue,
-        };
+        } as any;
         //Tìm key:value nào không có giá trị thì tự động xóa
-        Object.keys(queryParams).forEach((key) => {
+        Object.keys(queryParams).forEach((key:any) => {
           if (queryParams[key] === undefined || queryParams[key] === null) {
             delete queryParams[key];
           }

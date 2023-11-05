@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useGetAllUserQuery,
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../../redux/api/auth";
-import { Button, Form, Input, InputNumber, Modal, Switch, Table, notification } from "antd";
-import { Link } from "react-router-dom";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Switch,
+  Table,
+  notification,
+} from "antd";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import LottieLoading from "../../../effect/LottieLoading";
 import { warning } from "../../../effect/notification";
@@ -15,11 +23,7 @@ const ProfileManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [idUser, setIdUser] = useState();
-  const {
-    data: userById,
-    isLoading: LoadingUserById,
-    error: ErrorUserById,
-  } = useGetUserQuery(idUser);
+  const { data: userById }: any = useGetUserQuery(idUser);
   const [updateUser] = useUpdateUserMutation();
   console.log("user by id: ", userById);
 
@@ -31,8 +35,8 @@ const ProfileManager = () => {
       address: userById?.user?.address,
     });
   }, [userById]);
-  const onFinish = (values) => {
-    updateUser({...values,_id:idUser})
+  const onFinish = (values: any) => {
+    updateUser({ ...values, _id: idUser })
       .unwrap()
       .then(() => {
         notification.success({
@@ -67,7 +71,7 @@ const ProfileManager = () => {
     );
   }
 
-  const dataSource = data?.user?.map((items) => {
+  const dataSource = data?.user?.map((items: any) => {
     return {
       key: items._id,
       name: items.name,
@@ -107,7 +111,7 @@ const ProfileManager = () => {
       title: "Actions",
       dataIndex: "actions",
       key: "actions",
-      render: (_, { key: id }) => {
+      render: (_:any, { key: id }:any) => {
         // console.log('record: ',id)
         return (
           <Button
@@ -165,7 +169,7 @@ const ProfileManager = () => {
             <Switch />
           </Form.Item>
           <Form.Item>
-            <Button icon={<UploadOutlined />} htmlType="submit"/>
+            <Button icon={<UploadOutlined />} htmlType="submit" />
           </Form.Item>
         </Form>
       </Modal>

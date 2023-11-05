@@ -1,5 +1,5 @@
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
-import { Pagination, Rate, Spin, message } from "antd";
+import { Pagination, Rate, message } from "antd";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { useAppDispatch } from "../app/hook";
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { motion } from "framer-motion"
 import { convertSlug } from "../utils/convertSlug";
 
-const SimilarProduct = ({ listSilimar }) => {
+const SimilarProduct = ({ listSilimar }:any) => {
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
   // console.log('list silimar: ',listSilimar)
@@ -25,7 +25,7 @@ const SimilarProduct = ({ listSilimar }) => {
       <div className="text-xl font-inclusiveSans mt-12">Sản phẩm tương tự</div>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        {currentData?.map((product: IProduct,i) => {
+        {currentData?.map((product: IProduct,i:any) => {
           return (
             <motion.div
               className="border p-1 group hover:shadow-md bg-white"

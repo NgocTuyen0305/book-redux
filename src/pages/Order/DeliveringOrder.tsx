@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
 import { Button, Empty } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
@@ -7,16 +7,16 @@ import { setDelivering } from "../../redux/slices/badgeOrderSlice";
 import { setIdOrderTimeline, setisModalTimeline } from "../../redux/slices/timelineSlice";
 import ModalTimeline from "../../components/ModalTimeline";
 const DeliveringOrder = () => {
-  const { data, isLoading, error } = useGetShoppingQuery();
-  const [ProductDelivering, setProducDelivering] = useState();
+  const { data, isLoading, error }:any = useGetShoppingQuery();
+  const [ProductDelivering, setProducDelivering]:any = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   // console.log("ProductDelivering ", ProductDelivering);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
       const lengthProduct = await ProductDelivering?.map(
-        (item) => item.productOrder.length
+        (item:any) => item.productOrder.length
       );
       // console.log('lengthProductDelivered',lengthProductDelivered)
       const [length] = lengthProduct;
@@ -27,10 +27,10 @@ const DeliveringOrder = () => {
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(
-        (item) => item.userId === user?._id
+        (item:any) => item.userId === user?._id
       );
       const dataDelivering = await checkUserOrder?.filter(
-        (items) => items.isDelivering === true
+        (items:any) => items.isDelivering === true
       );
       setProducDelivering(dataDelivering);
     })();
@@ -48,10 +48,10 @@ const DeliveringOrder = () => {
   }
   return (
     <div>
-      {ProductDelivering?.map((items) => (
+      {ProductDelivering?.map((items:any) => (
         <div key={items?._id}>
           <div className="">
-            {items?.productOrder?.map((item) => (
+            {items?.productOrder?.map((item:any) => (
               <div
                 className="p-2 border-b md:flex md:justify-between"
                 key={item?._id}

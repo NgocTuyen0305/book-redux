@@ -7,7 +7,7 @@ import {
   Space,
   notification,
 } from "antd";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateShoppingMutation } from "../redux/api/shoppingApi";
@@ -15,14 +15,14 @@ import { afterAddItemCart } from "../redux/slices/cartSlice";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const OrderPage = () => {
-  const { orderItems } = useAppSelector((state) => state.Order);
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { orderItems }:any = useAppSelector((state) => state.Order);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   const [value, setValue] = useState("");
   const [addOrder,{isLoading}] = useCreateShoppingMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const productOrder = orderItems.map(
-    ({ _id, name, images, price, quantity }) => {
+    ({ _id, name, images, price, quantity }:any) => {
       return {
         _id,
         name,
@@ -38,10 +38,10 @@ const OrderPage = () => {
     // console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
-  const totalPriceItem = orderItems.reduce((accumulator, currentValue) => {
+  const totalPriceItem = orderItems.reduce((accumulator:any, currentValue:any) => {
     return accumulator + currentValue.price * currentValue.quantity;
   }, 0);
-  const onFinishOrder = (value) => {
+  const onFinishOrder = (value:any) => {
     addOrder({ value, productOrder, user: user?._id, shippingPrice: 15000 })
       .unwrap()
       .then(() => {
@@ -62,7 +62,7 @@ const OrderPage = () => {
           <div className="md:grid md:grid-cols-2 md:gap-x-8">
             <div className="">
               <h3 className="ml-3 mt-3 text-xl font-poppins">Đơn Hàng</h3>
-              {orderItems.map((item) => (
+              {orderItems.map((item:any) => (
                 <div
                   className="flex space-x-6 items-center my-3"
                   key={item._id}

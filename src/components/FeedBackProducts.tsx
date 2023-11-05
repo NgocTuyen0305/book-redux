@@ -1,5 +1,5 @@
 import { Button, Form, Input, Rate, notification } from "antd";
-import React, { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import {
   useCreateFeedbackMutation,
   useGetFeedbackQuery,
@@ -14,16 +14,16 @@ interface Ifeedback {
   rating: number;
 }
 
-const FeedBackProducts = ({ checkProduct }) => {
+const FeedBackProducts = ({ checkProduct }:any) => {
   const { slug } = useParams();
   const slugParams = slug?.split(".html") ?? [];
   const temp = slugParams[0]?.split("-") as string[];
   const id = temp[temp.length - 1];
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   const { data, isLoading } = useGetFeedbackQuery(id);
   const [createFeedback, { isLoading: FeedbackLoading, error: ErrorFeedback }] =
     useCreateFeedbackMutation();
-  const [feedbackData, setFeedbackData] = useState([]);
+  const [feedbackData, setFeedbackData] = useState<any[]>([]);
   const [isCheck, setIsCheck] = useState<SetStateAction<boolean>>();
   const { idOrder } = useAppSelector((state) => state.FeedbackSlice);
   // console.log("data feedback: ", feedbackData);
@@ -53,8 +53,8 @@ const FeedBackProducts = ({ checkProduct }) => {
       .unwrap()
       .then((newFeedback) => {
         setFeedbackData([newFeedback?.feedback, ...data?.feedbacks]) ;
-        document.querySelector("#formCreate")?.reset();
-        // console.log(newFeedback)
+        const formReset = document.querySelector("#formCreate") as HTMLFormElement | any;
+        formReset.reset();
         notification.success({
           message: "Comment is successly!",
         });

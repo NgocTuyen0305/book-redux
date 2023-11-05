@@ -21,13 +21,13 @@ import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 import { warning } from "../../../effect/notification";
 const UpdateProduct = () => {
-  const { id } = useParams();
+  const { id }:any  = useParams();
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const { data: productById, isLoading } = useGetProductByIdQuery(id);
+  const { data: productById, isLoading }:any  = useGetProductByIdQuery(id);
   const [updateProduct, { isLoading: loadingProduct, error }] =
     useUpdateProductMutation();
-  const { data: category, isLoading: LoadingCategory } =
+  const { data: category }:any  =
     useGetCategoriesQuery();
   console.log("error: ", error);
   useEffect(() => {
@@ -69,7 +69,7 @@ const UpdateProduct = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  const onChange = (info) => {
+  const onChange = (info:any ) => {
     if (info.file.status === "done") {
       return message.success("Tải ảnh thành công");
     } else if (info.file.status === "error") {
@@ -168,7 +168,7 @@ const UpdateProduct = () => {
         </Form.Item>
         <Form.Item label="Category" name="categoryId">
           <Select
-            options={category?.result?.map((item) => {
+            options={category?.result?.map((item:any ) => {
               return {
                 value: item._id,
                 label: item.name,

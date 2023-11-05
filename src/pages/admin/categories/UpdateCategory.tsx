@@ -10,10 +10,10 @@ import {
 import { warning } from "../../../effect/notification";
 
 const UpdateCategory = () => {
-  const { id } = useParams();
+  const { id }:any = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { data: CategoryById, isLoading, error } = useGetCategoryByIdQuery(id);
+  const { data: CategoryById }:any = useGetCategoryByIdQuery(id);
   const [updateCategory, { isLoading: updateLoading, error: updateError }] =
     useUpdateCategoryMutation();
   console.log("category: ", CategoryById);

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useGetShoppingQuery } from "../../redux/api/shoppingApi";
-import { Alert, Button, Empty, notification } from "antd";
+import {  Button, Empty, notification } from "antd";
 import LottieLoading from "../../effect/LottieLoading";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { setProcessing } from "../../redux/slices/badgeOrderSlice";
@@ -11,16 +11,16 @@ import {
 import ModalTimeline from "../../components/ModalTimeline";
 
 const ProcessingOrder = () => {
-  const { data, isLoading, error } = useGetShoppingQuery();
-  const [ProductProcessing, setProducProcessing] = useState();
+  const { data, isLoading, error }:any = useGetShoppingQuery();
+  const [ProductProcessing, setProducProcessing]:any = useState();
   // KIỂM TRA NGƯỜI DÙNG CÓ MUA SẢN PHẨM NÀY KHÔNG
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   // console.log("ProductProcessing ", ProductProcessing);
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => {
       const lengthProduct = await ProductProcessing?.map(
-        (item) => item.productOrder.length
+        (item:any) => item.productOrder.length
       );
       // console.log('lengthProductDelivered',lengthProductDelivered)
       const [length] = lengthProduct;
@@ -30,10 +30,10 @@ const ProcessingOrder = () => {
   useEffect(() => {
     (async () => {
       const checkUserOrder = await data?.filter(
-        (item) => item.userId === user?._id
+        (item:any) => item.userId === user?._id
       );
       const dataProcessing = await checkUserOrder?.filter(
-        (items) => items.isProcessing === true
+        (items:any) => items.isProcessing === true
       );
       setProducProcessing(dataProcessing);
     })();
@@ -51,11 +51,11 @@ const ProcessingOrder = () => {
   }
   return (
     <div>
-      {ProductProcessing?.map((items) => (
+      {ProductProcessing?.map((items:any) => (
         <div key={items?._id}>
           <h2 className="text-blue-500">Đang xử lí đơn hàng</h2>
           <div className="">
-            {items?.productOrder?.map((item) => (
+            {items?.productOrder?.map((item:any) => (
               <div
                 className="p-2 border-b md:flex md:justify-between"
                 key={item._id}

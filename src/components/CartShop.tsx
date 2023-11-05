@@ -8,7 +8,6 @@ import { Avatar, Badge, Button, Popconfirm, Space, Table } from "antd";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
 import React, { useEffect, useState } from "react";
-import { IProduct } from "../interfaces/products";
 import { addItemsCart } from "../redux/slices/orderSlice";
 import { ColumnsType } from "antd/es/table";
 
@@ -25,7 +24,7 @@ const CartShop = () => {
   useEffect(() => {
     if (itemSelectlCart) {
       const totalPriceCart = itemSelectlCart.reduce(
-        (accumulator, currentValue: any) => {
+        (accumulator:any, currentValue: any) => {
           return accumulator + currentValue.price * currentValue.quantity;
         },
         0
@@ -33,7 +32,7 @@ const CartShop = () => {
       setTotalPrice(totalPriceCart);
     }
   }, [itemSelectlCart]);
-  const dataSource = items.map(({ _id, name, price, images, quantity }) => {
+  const dataSource = items.map(({ _id, name, price, images, quantity }:any) => {
     return {
       key: _id,
       name,
@@ -45,11 +44,11 @@ const CartShop = () => {
   // console.log("data cart shop: ", dataSource);
   const columns:
     | ColumnsType<{
-        key: never;
-        name: never;
-        price: never;
-        images: never;
-        quantity: never;
+        key: string;
+        name: string;
+        price: number;
+        images: any;
+        quantity: number;
       }>
     | undefined = [
     {
@@ -57,7 +56,7 @@ const CartShop = () => {
       dataIndex: "name",
       width: 400,
       key: "name",
-      render: (_: any, recod: IProduct) => {
+      render: (_: any, recod: any) => {
         // console.log('recod: ',recod)
         const image = recod.images.map((item: any) => {
           return item.response.uploadedFiles[0].url;

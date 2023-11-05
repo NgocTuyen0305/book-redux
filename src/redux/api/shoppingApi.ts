@@ -30,10 +30,10 @@ const shoppingApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getShopping: builder.query({
+    getShopping: builder.query<any[],void>({
       query: () => "/get-order",
     }),
-    getByIdShopping: builder.query({
+    getByIdShopping: builder.query<any,number | string>({
       query: (id) => `/get-order/${id}`,
     }),
     createShopping: builder.mutation({

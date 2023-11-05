@@ -7,19 +7,19 @@ import { setCategories } from "../redux/slices/paginationSlice";
 import { Link } from "react-router-dom";
 import { ICategories } from "../interfaces/categories";
 const NavbarMenu = () => {
-  const { data } = useGetCategoriesQuery();
+  const { data }:any = useGetCategoriesQuery();
   const dispatch = useAppDispatch();
 
   return (
     <div>
       <Menu mode="inline">
         <SubMenu key="sub1" icon={<GroupOutlined />} title="Thể loại">
-          {data?.result.map((items:ICategories[]) => {
+          {data?.result.map((items:ICategories) => {
             return (
               <Menu.Item
                 key={items._id}
                 onClick={() => {
-                  dispatch(setCategories(items._id));
+                  dispatch(setCategories(items._id as any));
                 }}
               >
                 {items.name}

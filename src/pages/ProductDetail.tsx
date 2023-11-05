@@ -1,4 +1,4 @@
-import { Badge, Button, Rate, Tag, message, theme } from "antd";
+import { Badge, Button, Rate, Tag, message } from "antd";
 import { useEffect, useState } from "react";
 import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -14,9 +14,6 @@ import { useGetUserQuery } from "../redux/api/auth";
 import { motion } from "framer-motion";
 
 const ProductDetail = () => {
-  const { useToken } = theme;
-  const { token } = useToken();
-  const { bgColormain } = token;
   const [count, setCount] = useState(1);
   const [currentImage, setCurrentImage] = useState<number | string>(0);
   const { slug } = useParams();
@@ -24,9 +21,9 @@ const ProductDetail = () => {
   const temp = slugParams[0]?.split("-") as string[];
   const id = temp[temp.length - 1];
   const dispatch = useAppDispatch();
-  const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
+  const { data: productDetail, isLoading }:any = useGetProductByIdQuery(id);
   const [userId, setUserId] = useState();
-  const {user:userStorage} = useAppSelector((state)=> state.Authentication)
+  const {user:userStorage}:any = useAppSelector((state)=> state.Authentication)
   const { data: user } = useGetUserQuery(userId);
   // console.log('user: ',user)
   // kiểm tra người dùng mua sản phẩm này chưa
@@ -46,7 +43,7 @@ const ProductDetail = () => {
     }
   );
 
-  const ListImage = productDetail?.data?.images?.map((items) => {
+  const ListImage = productDetail?.data?.images?.map((items:any) => {
     return items?.response?.uploadedFiles[0].url;
   });
 
@@ -86,7 +83,7 @@ const ProductDetail = () => {
             {/* <img src={ListImage[currentImage]} alt="" /> */}
           </motion.div>
           <div className="grid grid-cols-3 gap-8">
-            {ListImage?.map((image, index: number | string) => {
+            {ListImage?.map((image:any, index:any) => {
               return (
                 <motion.button
                   onClick={() => gotoImage(index)}

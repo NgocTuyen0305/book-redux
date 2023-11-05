@@ -14,13 +14,13 @@ import { AiOutlineLoading3Quarters } from "@react-icons/all-files/ai/AiOutlineLo
 import { AnyAction } from "@reduxjs/toolkit";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
-const CreateProduct = () => {
+const CreateProduct = ():any => {
   const [form] = Form.useForm();
   const [addProduct, { isLoading, error }] = useAddProductMutation();
-  const { data: category, isLoading: LoadingCategory } =
+  const { data: category }:any =
     useGetCategoriesQuery();
-  console.log("category: ", category);
-  const onFinish = (values: AnyAction) => {
+  // console.log("category: ", category);
+  const onFinish = (values:any) => {
     addProduct(values)
       .unwrap()
       .then(() => {
@@ -29,7 +29,8 @@ const CreateProduct = () => {
         });
       })
       .then(() => {
-        return document.querySelector("#form")?.reset();
+        const formReset = document.querySelector("#formCreate") as HTMLFormElement | any;
+        return formReset.reset();
       });
   };
   console.log("error create product: ", error);
@@ -43,7 +44,7 @@ const CreateProduct = () => {
     return true;
   };
 
-  const onChange = (info) => {
+  const onChange = (info:any) => {
     if (info.file.status === "done") {
       return message.success("Tải ảnh thành công");
     } else if (info.file.status === "error") {
@@ -131,7 +132,7 @@ const CreateProduct = () => {
         </Form.Item>
         <Form.Item label="Category" name="categoryId">
           <Select
-            options={category?.result?.map((item)=>{
+            options={category?.result?.map((item:any)=>{
               return {
                 value: item._id,
                 label: item.name

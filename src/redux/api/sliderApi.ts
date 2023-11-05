@@ -19,7 +19,7 @@ const sliderApi = createApi({
       }),
     }),
 
-    getAllSlider: builder.query({
+    getAllSlider: builder.query<any[],void>({
       query: () => ({
         url: `/get-slider`,
       }),

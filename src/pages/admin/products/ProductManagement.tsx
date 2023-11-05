@@ -13,13 +13,14 @@ import { Link } from "react-router-dom";
 import { warning } from "../../../effect/notification";
 import { useGetCategoriesQuery } from "../../../redux/api/categoriesApi";
 import LottieLoading from "../../../effect/LottieLoading";
+import { ColumnsType } from "antd/es/table";
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { data, isLoading: loadingProduct } = useGetProductsQuery({_limit: 100,_order:"desc"});
+  const { data, isLoading: loadingProduct }:any = useGetProductsQuery({_limit: 100,_order:"desc"});
   const [removeProduct, { isLoading: loadingRemove, error: errorRemove }] =
     useRemoveProductMutation();
-  const { data: category } = useGetCategoriesQuery();
+  const { data: category }:any = useGetCategoriesQuery();
 
   useEffect(() => {
     if (errorRemove) {
@@ -76,7 +77,7 @@ const ProductManagement = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const columns = [
+  const columns:ColumnsType<any> | undefined = [
     {
       title: "name",
       width: 150,
@@ -100,7 +101,7 @@ const ProductManagement = () => {
         return (
           <Space>
             {recod.images.map((item:any) => {
-              return item?.response?.uploadedFiles?.map((itemImage) => {
+              return item?.response?.uploadedFiles?.map((itemImage:any) => {
                 return <img src={itemImage.url} alt="" />;
               });
               // <div className="">{item.name}</div>
@@ -121,20 +122,20 @@ const ProductManagement = () => {
       title: "Description",
       key: "description",
       dataIndex: "description",
-      render: (recod) => {
+      render: (recod:any) => {
         return <p className="line-clamp-3">{recod}</p>;
       },
     },
     {
       title: "CategoryId",
       key: "categoryId",
-      render: ({ categoryId }: recod) => {
+      render: ({ categoryId }:any) => {
         // console.log('category: ',categoryId);
-        const findCategoryId = category?.result?.filter((item) => {
+        const findCategoryId = category?.result?.filter((item:any) => {
           return item._id === categoryId;
         });
         // console.log('find id:', findCategoryId);
-        return findCategoryId?.map((categoryId) => {
+        return findCategoryId?.map((categoryId:any) => {
           return <Tag color="magenta" key={categoryId._id}>{categoryId.name}</Tag>;
         });
 
@@ -146,7 +147,7 @@ const ProductManagement = () => {
       key: "action",
       fixed: "right",
       width: 150,
-      render: ({ key: id }) => (
+      render: ({ key: id }:any) => (
         <Space size={"middle"}>
           <Popconfirm
             placement="topLeft"
@@ -188,9 +189,9 @@ const ProductManagement = () => {
       {
         key: "odd",
         text: "Select Odd Row",
-        onSelect: (changeableRowKeys) => {
+        onSelect: (changeableRowKeys:any)=> {
           let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+          newSelectedRowKeys = changeableRowKeys.filter((_:any, index:any) => {
             if (index % 2 !== 0) {
               return false;
             }
@@ -202,9 +203,9 @@ const ProductManagement = () => {
       {
         key: "even",
         text: "Select Even Row",
-        onSelect: (changeableRowKeys) => {
+        onSelect: (changeableRowKeys:any) => {
           let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+          newSelectedRowKeys = changeableRowKeys.filter((_:any, index:any) => {
             if (index % 2 !== 0) {
               return true;
             }

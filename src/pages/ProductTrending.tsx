@@ -1,5 +1,5 @@
 import { Button, Empty, Rate } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 import { useGetProductsQuery } from "../redux/api/productApi";
 import { useAppDispatch, useAppSelector } from "../app/hook";
@@ -20,7 +20,7 @@ const ProductTrending = () => {
     data: listProducts,
     isLoading,
     error,
-  } = useGetProductsQuery({
+  }:any = useGetProductsQuery({
     _filterField,
     _filterValue,
     _limit: 6,

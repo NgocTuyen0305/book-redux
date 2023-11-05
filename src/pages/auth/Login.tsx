@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [signin, { isLoading, error }] = useSigninMutation();
+  const [signin, { isLoading, error }]: any = useSigninMutation();
   console.log("error: ", error);
   useEffect(() => {
     if (error) {
