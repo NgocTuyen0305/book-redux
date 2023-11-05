@@ -9,6 +9,8 @@ const paginationSlice = createSlice({
     _order: "",
     _search: "",
     _category: "",
+    _filterValue: "5",
+    _filterField: "rate_gte",
   },
   reducers: {
     setCurrentPage: (state, action:PayloadAction<number>) => {
@@ -28,6 +30,12 @@ const paginationSlice = createSlice({
     },
     setCategories: (state, action:PayloadAction<string>) => {
       state._category = action.payload;
+    },
+    setFilterValue: (state, action:PayloadAction<string>) => {
+      state._filterValue = action.payload;
+    },
+    setFilterField: (state, action:PayloadAction<string>) => {
+      state._filterField = action.payload;
     },
   },
 });

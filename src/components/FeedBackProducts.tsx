@@ -1,5 +1,5 @@
 import { Button, Form, Input, Rate, notification } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
   useCreateFeedbackMutation,
   useGetFeedbackQuery,
@@ -9,6 +9,10 @@ import { useAppSelector } from "../app/hook";
 import { LoadingOutlined } from "@ant-design/icons";
 import LottieLoading from "../effect/LottieLoading";
 import { motion } from "framer-motion";
+interface Ifeedback {
+  comment: string;
+  rating: number;
+}
 
 const FeedBackProducts = ({ checkProduct }) => {
   const { slug } = useParams();
@@ -16,14 +20,14 @@ const FeedBackProducts = ({ checkProduct }) => {
   const temp = slugParams[0]?.split("-") as string[];
   const id = temp[temp.length - 1];
   const { user } = useAppSelector((state) => state.Authentication);
-  const { data, isLoading, error } = useGetFeedbackQuery(id);
+  const { data, isLoading } = useGetFeedbackQuery(id);
   const [createFeedback, { isLoading: FeedbackLoading, error: ErrorFeedback }] =
     useCreateFeedbackMutation();
   const [feedbackData, setFeedbackData] = useState([]);
-  const [isCheck, setIsCheck] = useState();
+  const [isCheck, setIsCheck] = useState<SetStateAction<boolean>>();
   const { idOrder } = useAppSelector((state) => state.FeedbackSlice);
   // console.log("data feedback: ", feedbackData);
-  // console.log("data: ", data);
+  // console.log("isCheck: ", isCheck);
   useEffect(() => {
     setIsCheck(checkProduct);
     if (user === null) {
@@ -39,7 +43,7 @@ const FeedBackProducts = ({ checkProduct }) => {
     }
   }, [ErrorFeedback]);
 
-  const onFinish = (value) => {
+  const onFinish = (value: Ifeedback) => {
     createFeedback({
       ...value,
       productId: id,
@@ -70,7 +74,9 @@ const FeedBackProducts = ({ checkProduct }) => {
             <span>
               <Rate value={5} className="text-sm" />
             </span>
-            <span className="text-gray-400">({data?.feedbacks.length} đánh giá)</span>
+            <span className="text-gray-400">
+              ({data?.feedbacks.length} đánh giá)
+            </span>
           </div>
           <div className="">
             <div className="flex items-center gap-x-4">
@@ -142,13 +148,13 @@ const FeedBackProducts = ({ checkProduct }) => {
           </div>
         ) : (
           (feedbackData.length === 0 ? data?.feedbacks : feedbackData)?.map(
-            (item,i) => (
+            (item, i) => (
               <motion.div
                 className="flex items-center gap-x-6"
                 key={item._id}
-                initial={{opacity: 0,y:-20 }}
-                animate={{ opacity: 1,y:0 }}
-                transition={{ duration: 0.3 , delay:i * .1 }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: i * 0.1 }}
               >
                 <div className="flex flex-col items-center">
                   <span>{item.userId.name}</span>

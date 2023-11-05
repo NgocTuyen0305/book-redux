@@ -5,12 +5,11 @@ import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/api/productApi";
 import SimilarProduct from "../components/SimilarProduct";
 import { IProduct } from "../interfaces/products";
-import { useAppDispatch } from "../app/hook";
+import { useAppDispatch, useAppSelector } from "../app/hook";
 import LottieLoading from "../effect/LottieLoading";
 import { addItemCart } from "../redux/slices/cartSlice";
 import { addItemsCart } from "../redux/slices/orderSlice";
 import FeedBackProducts from "../components/FeedBackProducts";
-import { useGetShoppingQuery } from "../redux/api/shoppingApi";
 import { useGetUserQuery } from "../redux/api/auth";
 import { motion } from "framer-motion";
 
@@ -26,20 +25,20 @@ const ProductDetail = () => {
   const id = temp[temp.length - 1];
   const dispatch = useAppDispatch();
   const { data: productDetail, isLoading } = useGetProductByIdQuery(id);
-  const { data, isLoading: OrderLoading, error } = useGetShoppingQuery();
   const [userId, setUserId] = useState();
+  const {user:userStorage} = useAppSelector((state)=> state.Authentication)
   const { data: user } = useGetUserQuery(userId);
+  // console.log('user: ',user)
   // kiểm tra người dùng mua sản phẩm này chưa
   const idProductToOrder = user?.user?.products.flat();
-  const checkProduct = idProductToOrder?.includes(id);
+  const checkProduct = idProductToOrder?.includes(id) as boolean;
   // console.log("checkProduct: ",checkProduct)
   useEffect(() => {
     (async () => {
-      const idUser = await data?.map((item) => item.userId);
-      const [userId] = idUser;
-      setUserId(userId);
+      const idUser = userStorage?._id
+      setUserId(idUser);
     })();
-  }, [data]);
+  }, [userStorage]);
 
   const listSilimar = productDetail?.listProductSimilar?.filter(
     (item: IProduct) => {
