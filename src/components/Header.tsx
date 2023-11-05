@@ -22,7 +22,7 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fixNavba, setFixNavba] = useState(false);
   const { items: itemsCart } = useAppSelector((state) => state.Cart);
-  const { user } = useAppSelector((state) => state.Authentication);
+  const { user }:any = useAppSelector((state) => state.Authentication);
   const dispatch = useAppDispatch();
   // console.log("height fixed: ", fixNavba);
 

@@ -1,14 +1,14 @@
-import { Button, Dropdown, MenuProps, Space, Spin } from "antd";
+import { Dropdown, MenuProps, Space } from "antd";
 import { useGetCategoriesQuery } from "../redux/api/categoriesApi";
 import { useAppDispatch } from "../app/hook";
 import { setCategories } from "../redux/slices/paginationSlice";
 
 const DropdownCate = () => {
-  const { data } = useGetCategoriesQuery();
+  const { data }:any = useGetCategoriesQuery();
   const dispatch = useAppDispatch();
   // console.log("categories: ", data);
 
-  const items: MenuProps["items"] = data?.result.map((item) => {
+  const items: MenuProps["items"] = data?.result.map((item:any) => {
     return {
       key: item._id,
       label: (

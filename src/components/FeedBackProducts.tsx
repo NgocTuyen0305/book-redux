@@ -52,7 +52,7 @@ const FeedBackProducts = ({ checkProduct }) => {
     })
       .unwrap()
       .then((newFeedback) => {
-        setFeedbackData([newFeedback?.feedback, ...data?.feedbacks]);
+        setFeedbackData([newFeedback?.feedback, ...data?.feedbacks]) ;
         document.querySelector("#formCreate")?.reset();
         // console.log(newFeedback)
         notification.success({
@@ -148,7 +148,7 @@ const FeedBackProducts = ({ checkProduct }) => {
           </div>
         ) : (
           (feedbackData.length === 0 ? data?.feedbacks : feedbackData)?.map(
-            (item, i) => (
+            (item:any, i:any) => (
               <motion.div
                 className="flex items-center gap-x-6"
                 key={item._id}

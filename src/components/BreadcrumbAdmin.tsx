@@ -1,12 +1,12 @@
 import React from "react";
 import { Breadcrumb } from "antd";
-import { HomeOutlined, RightOutlined } from "@ant-design/icons";
+import { RightOutlined } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
 const BreadcrumbAdmin = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
-  const breadcrumbItems = [
+  const breadcrumbItems:any[] = [
     
   ];
   pathnames.forEach((pathname, index) => {

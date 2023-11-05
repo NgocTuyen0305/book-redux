@@ -1,11 +1,10 @@
-import React from "react";
 import { AiFillFacebook } from "@react-icons/all-files/ai/AiFillFacebook";
 import { SiGmail } from "@react-icons/all-files/si/SiGmail";
 import { AiFillInstagram } from "@react-icons/all-files/ai/AiFillInstagram";
 import { Input, } from 'antd';
 const Footer = () => {
   const { Search } = Input;
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+  // const onSearch = (value, _e, info) => console.log(info?.source, value);
   return (
     <div className="p-2 bg-[#F0F0F0]">
       <div className="flex justify-between flex-col md:max-w-6xl md:mx-auto">
@@ -37,7 +36,7 @@ const Footer = () => {
           <div className="flex flex-col gap-y-4">
             <label htmlFor="" className="font-inclusiveSans">Get our newsletters</label>
             <div className="">
-            <Search placeholder="your email" onSearch={onSearch} enterButton />
+            <Search placeholder="your email" enterButton />
             </div>
           </div>
          

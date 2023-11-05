@@ -10,12 +10,14 @@ import { decrease, increase, removeItemCart } from "../redux/slices/cartSlice";
 import React, { useEffect, useState } from "react";
 import { IProduct } from "../interfaces/products";
 import { addItemsCart } from "../redux/slices/orderSlice";
+import { ColumnsType } from "antd/es/table";
+
 const CartShop = () => {
   const { items } = useAppSelector((state) => state.Cart);
   const dispatch = useAppDispatch();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const itemSelectlCart = items.filter((item) =>
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const itemSelectlCart = items.filter((item: any) =>
     selectedRowKeys.includes(item._id)
   );
   // console.log("item select cart: ", itemSelectlCart);
@@ -23,7 +25,7 @@ const CartShop = () => {
   useEffect(() => {
     if (itemSelectlCart) {
       const totalPriceCart = itemSelectlCart.reduce(
-        (accumulator, currentValue) => {
+        (accumulator, currentValue: any) => {
           return accumulator + currentValue.price * currentValue.quantity;
         },
         0
@@ -41,15 +43,23 @@ const CartShop = () => {
     };
   });
   // console.log("data cart shop: ", dataSource);
-  const columns = [
+  const columns:
+    | ColumnsType<{
+        key: never;
+        name: never;
+        price: never;
+        images: never;
+        quantity: never;
+      }>
+    | undefined = [
     {
       title: "Sản phẩm",
       dataIndex: "name",
       width: 400,
       key: "name",
-      render: (_: string, recod: IProduct) => {
+      render: (_: any, recod: IProduct) => {
         // console.log('recod: ',recod)
-        const image = recod.images.map((item) => {
+        const image = recod.images.map((item: any) => {
           return item.response.uploadedFiles[0].url;
         });
         return (
@@ -74,7 +84,7 @@ const CartShop = () => {
       title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
-      render: (_, { quantity, key }: record) => {
+      render: (_: any, { quantity, key }: any) => {
         // console.log("quantity: ", quantity, key);
         return (
           <Space>
@@ -97,7 +107,7 @@ const CartShop = () => {
       title: "Thành tiền",
       dataIndex: "total",
       key: "total",
-      render: (_, recod) => {
+      render: (_: any, recod: any) => {
         return (
           <span className=" text-blue-500 text-base">
             {(recod.quantity * recod.price) / 1000 + ".000"} đ
@@ -109,7 +119,7 @@ const CartShop = () => {
       title: <DeleteOutlined />,
       dataIndex: "total",
       key: "total",
-      render: (_, recod) => {
+      render: (_: any, recod: any) => {
         // console.log('infor item delete: ',_,recod);
         // return <Button onClick={() => handleRemove(recod.key)}>click</Button>;
         return (
@@ -131,7 +141,6 @@ const CartShop = () => {
     },
   ];
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    // console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection = {
