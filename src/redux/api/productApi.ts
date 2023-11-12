@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/products";
 import queryString from "query-string";
 import { getToken, parseJwt } from "../../config/getToken";
+import { notification } from "antd";
 const productApi = createApi({
   reducerPath: "product",
   tagTypes: ["Product"],
@@ -14,11 +15,12 @@ const productApi = createApi({
         console.log("token không tồn tại");
       } else {
         const decotedToken = parseJwt(token);
-        // console.log('decotedToken',decotedToken)
         const currentTimestamp = Date.now() / 1000;
         if (decotedToken.exp && decotedToken.exp < currentTimestamp) {
           // Token đã hết hạn, xử lý lỗi hoặc đăng nhập lại
-          throw new Error("Token đã hết hạn vui lòng đăng nhập lại");
+          notification.warning({
+            message: "Token đã hết hạn vui lòng đăng nhập lại",
+          });
         } else {
           // Token hợp lệ và chưa hết hạn, bạn có thể sử dụng nó
           headers.set("authorization", `Bearer ${token}`);
@@ -35,14 +37,14 @@ const productApi = createApi({
     getProducts: builder.query<
       IProduct[],
       {
-        _page?: number | string ;
-        _limit?: number | string ;
-        _category?: number | string ;
-        _sort?: string ;
-        _order?: string ;
-        _search?: string ;
-        _filterField?: string ;
-        _filterValue?: string ;
+        _page?: number | string;
+        _limit?: number | string;
+        _category?: number | string;
+        _sort?: string;
+        _order?: string;
+        _search?: string;
+        _filterField?: string;
+        _filterValue?: string;
       }
     >({
       query: (args) => {
@@ -67,7 +69,7 @@ const productApi = createApi({
           _filterValue,
         } as any;
         //Tìm key:value nào không có giá trị thì tự động xóa
-        Object.keys(queryParams).forEach((key:any) => {
+        Object.keys(queryParams).forEach((key: any) => {
           if (queryParams[key] === undefined || queryParams[key] === null) {
             delete queryParams[key];
           }

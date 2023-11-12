@@ -1,4 +1,4 @@
-import { Pagination, Rate, message } from "antd";
+import { Empty, Pagination, Rate, message } from "antd";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { FaShoppingBasket } from "@react-icons/all-files/fa/FaShoppingBasket";
@@ -10,9 +10,8 @@ import { addItemCart } from "../redux/slices/cartSlice";
 import { setCurrentPage, setLimitPage } from "../redux/slices/paginationSlice";
 import { queryParams } from "../utils/queryParams";
 import { useEffect } from "react";
-import { warning } from "../effect/notification";
 import LottieLoading from "../effect/LottieLoading";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import { convertSlug } from "../utils/convertSlug";
 
 const Products = () => {
@@ -20,18 +19,14 @@ const Products = () => {
     (state) => state.Pagination
   );
   const dispatch = useAppDispatch();
-  const { data, isLoading, error }:any = useGetProductsQuery({
+  const { data, isLoading, error }: any = useGetProductsQuery({
     _page,
     _limit,
     _search,
     _category,
   });
   // console.log(isLoading)
-  useEffect(() => {
-    if (error) {
-      return warning(error);
-    }
-  }, [error]);
+
   const params = { _page, _limit, _sort, _order, _search, _category };
   const navigate = useNavigate();
   const queries = queryParams(params);
@@ -39,6 +34,9 @@ const Products = () => {
   useEffect(() => {
     navigate(`?${queries}`);
   }, [queries, navigate]);
+  if (error) {
+    return <Empty />;
+  }
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
@@ -46,7 +44,6 @@ const Products = () => {
       </div>
     );
   }
-  
 
   return (
     <div className="my-6 p-2 rounded-lg">
@@ -55,14 +52,14 @@ const Products = () => {
       </h3>
       <div className="grid grid-cols-2 gap-3 md:gap-6 my-3 md:grid-cols-4">
         {/* item */}
-        {data?.products?.map((product: IProduct,i:any) => {
+        {data?.products?.map((product: IProduct, i: any) => {
           return (
             <motion.div
               className="border p-1 group hover:shadow-md bg-white"
               key={product._id}
-              initial={{opacity: 0,y:-20}}
-              animate={{opacity: 1,y: 0}}
-              transition={{duration: 1,delay:i * 0.2 }}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: i * 0.2 }}
             >
               <div className="relative">
                 <img
@@ -77,7 +74,11 @@ const Products = () => {
                     >
                       <AiOutlineHeart />
                     </button>
-                    <Link to={`books/${convertSlug(product.name)}-${product._id}.html/detail`}>
+                    <Link
+                      to={`books/${convertSlug(product.name)}-${
+                        product._id
+                      }.html/detail`}
+                    >
                       <button
                         className={`bg-white text-xl p-1 hover:bg-custom-main hover:text-white rounded-sm`}
                       >
